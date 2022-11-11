@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Briqolage
+
+A futuristic, psychedelic digital landscape where members of the Briqolage community can hang out, experience art, listen to music and vibe.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+## Instructions
+
+1. Clone repo `git clone https://github.com/uzoma-studio/briqolage.git briqolage`
+
+2. From inside the project directory, run `npm install`
+
+3. Run any of the following scripts as needed
+
 
 ## Available Scripts
 
@@ -38,6 +50,9 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+____________________________________________
+
 
 ## Learn More
 
