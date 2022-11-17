@@ -3,7 +3,7 @@ import '../styles/background.css'
 import helpers from '../utils/helpers'
 import Contentful from '../utils/contentful'
 
-const Background = () => {
+const Background = ({ children }) => {
 
     const { getRandomItem } = helpers
 
@@ -32,7 +32,9 @@ const Background = () => {
   }, [query, getRandomItem]);
   
   return (
-    <div id="background" style={{backgroundImage: `url(${bgImage})`}}></div>
+    <div id="background" style={{backgroundImage: `url(${bgImage})`}}>
+      {children}
+    </div>
   )
 }
 

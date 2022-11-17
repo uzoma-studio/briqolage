@@ -3,7 +3,7 @@
 const Contentful = {
 
     get: (query) => {
-        window
+        return window
             .fetch(`https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/`, {
                 method: "POST",
                 headers: {
