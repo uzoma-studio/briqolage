@@ -13,6 +13,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 3. Run any of the following scripts as needed
 
+### Environment Variables
+
+Setup a `.env` file in the root of your directory with the following variables whose values can be found by going to the API keys section in the Contentful UI (top-level navigation -> Settings -> API keys)
+
+```
+REACT_APP_CONTENTFUL_SPACE_ID=
+REACT_APP_CONTENTFUL_ACCESS_TOKEN=
+```
+
 
 ## Available Scripts
 
