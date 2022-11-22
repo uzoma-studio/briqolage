@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '@mui/material';
 import '../styles/screen.css'
 
 const Login = () => {
@@ -11,11 +12,11 @@ const Login = () => {
         <ul className='login-options'>
             <li>
                 <div className="login-img"></div>
-                <p>Login as user</p>
+                <Button variant="contained">Login as user</Button>
             </li>
             <li>
                 <div className="login-img"></div>
-                <p>Login as user</p>
+                <Button variant="contained">Login as user</Button>
             </li>
         </ul>
     </>
