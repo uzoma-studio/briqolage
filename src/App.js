@@ -1,13 +1,17 @@
-import React from "react"; 
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
 import { Button } from '@mui/material';
+import Background from './components/background'
 
+import Login from './screens/login'
 
-export default function App() {
+const App = () => {
+  
   return (
-    <div className="App">
-        <h1 variant="contained" >HELLO</h1>
-    </div>
-  );
+      <Background>
+        <Login />
+      </Background>
+  )
 }
+
+export default App
