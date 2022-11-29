@@ -57,3 +57,51 @@ h1.login-title {
 }
 
 
+.FooterTag{
+    position: fixed !important;
+    background-image: url('https://res.cloudinary.com/nieleche/image/upload/v1669711201/docker_fxvrbr.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+}
+
+.MenuTag{
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+.MenuTag li {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    color:#fff;
+}
+
+.MTright {
+    float: right !important;
+}
+
+.HomeMenu {
+    background-color: red !important;
+    color: #fff !important;
+    font-size: 10px !important;
+}
+
+.MainMenu{ 
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.css-imwso6-MuiBottomNavigationAction-label {
+    color:#fff !important;
+}
+
+.padding0 {
+    padding: 0px !important;
+}
+
