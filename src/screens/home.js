@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import Tooltip from '@mui/material/Tooltip';
 import '../styles/screen.css'
 
 function Home() {
@@ -123,11 +124,48 @@ function Home() {
           
       </Box>
 
+      <div>
+        <div id="title-container">
+          <div>
+            <Tooltip title="Briq Art">
+              <img  label="briq FM" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png"  width={130} height={130}  />
+            </Tooltip>
+            <Tooltip title=" About">
+              <img id="aboutIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png"  width={120} height={120}  />
+              </Tooltip>
+          </div>
+          <div>
+              <Tooltip title="Briq FM">
+                <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png"  width={130} height={130}  />
+              </Tooltip>
+          </div>
+          <div>
+            <Tooltip title="Instagram">
+              <img  src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png"  width={120} height={120}  />
+            </Tooltip>
+          </div>
+        </div>
+
+        <div className="fav-container">
+        <ul>
+            <li>
+                <a>
+                    <img src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
+                    <Typography variant="body2" gutterBottom>
+                       Your Favourites
+                    </Typography>
+                </a>
+            </li>
+        </ul>
+        </div>
+
+      </div>
+
       <BottomNavigation className="FooterTag" sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         showLabels >
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={ <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png" width={100} height={100} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={   <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png" width={100} height={100} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={  <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png" width={100} height={100} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={ <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={   <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={  <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png" width={80} height={80} /> } />
       </BottomNavigation>
     </>
   )
