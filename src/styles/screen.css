@@ -13,6 +13,14 @@
     background: transparent;
 }
 
+.fav-container {
+    position: absolute;
+    bottom: 70%;
+    right: 5%;
+    text-align: center;
+    color: #fff;
+}
+
 
 #homeImg {
     opacity: .5;
@@ -65,6 +73,9 @@ h1.login-title {
     background-color: transparent !important;
 }
 
+.FooterTag .css-8ci153-MuiButtonBase-root-MuiBottomNavigationAction-root {
+max-width: 80px;
+}
 .MenuTag{
     height: 100%;
     float: left;
@@ -105,3 +116,11 @@ h1.login-title {
     padding: 0px !important;
 }
 
+#aboutIcon{
+    padding-top: 20px !important;
+    padding-left: 30px;
+}
+
+#fmIcon{
+    padding-left: 45px;
+}
