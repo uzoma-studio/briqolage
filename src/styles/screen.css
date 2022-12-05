@@ -94,6 +94,19 @@ max-width: 80px;
     color:#fff;
 }
 
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+   border-radius:11px !important;
+   border: 3px solid black;
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+    padding: 0px !important;
+}
+
+.DialogTags{
+    display: flex !important;
+}
+
 .MTright {
     float: right !important;
 }
