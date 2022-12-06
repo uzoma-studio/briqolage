@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,6 +16,12 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import '../styles/music.css';
+import SearchIcon from '@mui/icons-material/Search';
 
 function PaperComponent(props) {
   return (
@@ -26,8 +34,90 @@ function PaperComponent(props) {
   );
 }
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  fontSize: '12',
+
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '8ch',
+      '&:focus': {
+        width: '13ch',
+      },
+    },
+  },
+}));
+
 export default function Music() {
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,34 +179,61 @@ export default function Music() {
               <SkipPreviousIcon  sx={{ 
                     position: 'absolute',
                     left: 75,
-                    top: 8, }} />
+                    top: 6, }} />
 
               <PlayArrowIcon sx={{ 
                     position: 'absolute',
                     left: 100,
-                    top: 8, }} />
+                    top: 6, }} />
 
               <SkipNextIcon sx={{ 
                     position: 'absolute',
                     left: 125,
-                    top: 8, }} />
+                    top: 6, }} />
 
             <Typography sx={{
-                position: 'absolute',
+              position: 'absolute', 
               width: '100%',
               textAlign: 'center',
-              top: 8,
+              pt: 1,
             }} variant="body2" gutterBottom>
                     Briqolage
                     </Typography>
 
-           
-                    
+         
+
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase 
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+     
           </div>
+
+         
          
         </DialogTitle>
-        <hr></hr>
         <DialogContent>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist One" {...a11yProps(0)} />
+              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist Two" {...a11yProps(1)} />
+              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist Three" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            Playlist 1
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            Playlist 2
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            Playlist 3
+          </TabPanel>
           <DialogContentText>
            test test test test test test tets test test test test test test test test 
           </DialogContentText>
