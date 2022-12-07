@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useRef } from "react";
+import styledd from "styled-components";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
@@ -24,6 +25,23 @@ import '../styles/music.css';
 import SearchIcon from '@mui/icons-material/Search';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlay,
+  faPause,
+  faForward,
+  faBackward,
+} from "@fortawesome/free-solid-svg-icons";
+
+
+// Import components
+import Player from "../components/Player";
+import Song from "../components/Song";
+import Library from "../components/Library";
+
+// Import data
+import data from "../data";
+
 
 
 function PaperComponent(props) {
@@ -115,6 +133,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
+
+
+
 export default function Music() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -129,6 +152,51 @@ export default function Music() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  	// Ref
+	const audioRef = useRef(null);
+
+	// State
+	const [songs, setSongs] = useState(data());
+	const [currentSong, setCurrentSong] = useState(songs[0]);
+	const [isPlaying, setIsPlaying] = useState(false);
+	const [libraryStatus, setLibraryStatus] = useState(false);
+	const [songInfo, setSongInfo] = useState({
+		currentTime: 0,
+		duration: 0,
+	});
+
+	// Functions
+	const updateTimeHandler = (e) => {
+		const currentTime = e.target.currentTime;
+		const duration = e.target.duration;
+		setSongInfo({ ...songInfo, currentTime, duration });
+	};
+
+	const songEndHandler = async () => {
+		let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+		let nextSong = songs[(currentIndex + 1) % songs.length];
+		await setCurrentSong(nextSong);
+
+		const newSongs = songs.map((song) => {
+			if (song.id === nextSong.id) {
+				return {
+					...song,
+					active: true,
+				};
+			} else {
+				return {
+					...song,
+					active: false,
+				};
+			}
+		});
+		setSongs(newSongs);
+
+		if (isPlaying) {
+			audioRef.current.play();
+		}
+	};
 
   return (
     <div>
@@ -146,172 +214,121 @@ export default function Music() {
         aria-labelledby="draggable-dialog-title"
       >
 
-        <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
-          <div className="DialogTags">
-            <DialogActions className="DialogTags" > 
-                <Brightness1Icon sx={{ 
-                    position: 'absolute',
-                    left: 8,
-                    top: 8,
-                    cursor: 'pointer',
-                    fontSize: 'medium',
-                    pr: '10px',
-                    color: '#FF4A92'}} autoFocus onClick={handleClose} />
+        <AppContainer libraryStatus={libraryStatus}>
+          <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
+            <div className="DialogTags">
+              <DialogActions className="DialogTags" > 
+                  <Brightness1Icon sx={{ 
+                      left: 8,
+                      top: 2,
+                      cursor: 'pointer',
+                      fontSize: 'small',
+                      pl: '0px',
+                      color: '#FF4A92'}} autoFocus onClick={handleClose} />
 
-                    <Brightness1Icon sx={{ 
-                    position: 'absolute',
-                    left: 8,
-                    top: 8,
-                    cursor: 'pointer',
-                    fontSize: 'medium',
-                    pl: '10px',
-                    color: '#FFCF14'}} autoFocus onClick={handleClose} />
+                      <Brightness1Icon sx={{ 
+                      left: 8,
+                      top: 2,
+                      cursor: 'pointer',
+                      fontSize: 'small',
+                      pl: '0px',
+                      color: '#FFCF14'}} autoFocus onClick={handleClose} />
 
-                    <Brightness1Icon sx={{ 
-                    position: 'absolute',
-                    left: 8,
-                    top: 8,
-                    cursor: 'pointer',
-                    fontSize: 'medium',
-                    pl: '30px',
-                    color: '#3D6AFC'}} autoFocus onClick={handleClose} />
-            
-            </DialogActions>
+                      <Brightness1Icon sx={{ 
+                      left: 8,
+                      top: 2,
+                      cursor: 'pointer',
+                      fontSize: 'small',
+                      pl: '0px',
+                      color: '#3D6AFC'}} autoFocus onClick={handleClose} />
+              
+              </DialogActions>
 
+                {/*<div>      
+                  <SkipPreviousIcon  sx={{ 
+                        position: 'absolute',
+                        left: 75,
+                        top: 6, }} />
 
-              <SkipPreviousIcon  sx={{ 
-                    position: 'absolute',
-                    left: 75,
-                    top: 6, }} />
+                  <PlayArrowIcon sx={{ 
+                        position: 'absolute',
+                        left: 100,
+                        top: 6, }} />
 
-              <PlayArrowIcon sx={{ 
-                    position: 'absolute',
-                    left: 100,
-                    top: 6, }} />
+                  
 
-              <SkipNextIcon sx={{ 
-                    position: 'absolute',
-                    left: 125,
-                    top: 6, }} />
+                  <SkipNextIcon sx={{ 
+                        position: 'absolute',
+                        left: 125,
+                        top: 6, }} />
+                </div>*/}
+                <div className="PlaySongContainer">
+                  <Player
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    currentSong={currentSong}
+                    setCurrentSong={setCurrentSong}
+                    audioRef={audioRef}
+                    songInfo={songInfo}
+                    setSongInfo={setSongInfo}
+                    songs={songs}
+                    setSongs={setSongs}
+                  />
+                  <Song currentSong={currentSong} />
+                </div>
 
-              <Typography sx={{
-              position: 'absolute', 
-              width: '100%',
-              textAlign: 'center',
-              pt: 1,
-            }} variant="body2" gutterBottom>
-                    Briqolage
-                    </Typography>
+                {/*<Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase 
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </Search>*/}
+            </div>
 
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase 
-                  placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search' }}
+          
+          </DialogTitle>
+          
+          <DialogContent>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Channel" {...a11yProps(0)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+
+         
+                <Library
+                  songs={songs}
+                  setCurrentSong={setCurrentSong}
+                  audioRef={audioRef}
+                  isPlaying={isPlaying}
+                  setSongs={setSongs}
+                  libraryStatus={libraryStatus}
                 />
-              </Search>
-          </div>
-        </DialogTitle>
-        
-        <DialogContent>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist One" {...a11yProps(0)} />
-              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist Two" {...a11yProps(1)} />
-              <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Playlist Three" {...a11yProps(2)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-              <ImageList sx={{ width: 500, height: 480 }} cols={4} rowHeight={100}>
-                {itemData.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img
-                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                    <Typography sx={{
-                      mb: '0',
-                      fontWeight: 'bold',
-                      fontSize: 10,
-                    }} variant="body3" gutterBottom>
-                               Title
-                    </Typography>
-                    <Typography sx={{
-                      fontSize: 8,
-                    }} variant="body2" gutterBottom>
-                                Artist Name
-                    </Typography>
-                  </ImageListItem>
-                ))}
-              </ImageList>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-                    
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Playlist 3
-          </TabPanel>
-          <DialogContentText>
-            
-          </DialogContentText>
-        </DialogContent>
+              
+                <audio
+                  onLoadedMetadata={updateTimeHandler}
+                  onTimeUpdate={updateTimeHandler}
+                  onEnded={songEndHandler}
+                  ref={audioRef}
+                  src={currentSong.audio}
+                />
+            </TabPanel>
+    
+          </DialogContent>
+        </AppContainer>
       </Dialog>
     </div>
   );
 }
 
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-  },
-];
+const AppContainer = styledd.div`
+	transition: all 0.5s ease;
+	margin-left: ${(p) => (p.libraryStatus ? "20rem" : "0")};
+	@media screen and (max-width: 768px) {
+		margin-left: 0;
+	}
+`;

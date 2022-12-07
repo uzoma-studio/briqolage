@@ -30,3 +30,24 @@
     left: 65% !important;
     font-size: 10px !important;
 }
+
+
+.PlaySongContainer{
+	display: flex !important;
+    justify-content: space-between;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    width: 100%;
+}
+
+.MusicTime {
+    display: flex !important;
+}
+
+.css-hlj6pa-MuiDialogActions-root>:not(:first-of-type) {
+    margin-left: 0px !important;
+}
+
+.css-ypiqx9-MuiDialogContent-root {
+    padding: 10px 0px !important;
+}

@@ -105,6 +105,7 @@ max-width: 80px;
 
 .DialogTags{
     display: flex !important;
+    align-items: flex-start;
 }
 
 .MTright {
