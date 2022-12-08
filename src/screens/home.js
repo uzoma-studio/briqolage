@@ -13,7 +13,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import Tooltip from '@mui/material/Tooltip';
-import '../styles/screen.css'
+import '../styles/screen.css';
+import Music from '../apps/music';
 
 function Home() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,6 +33,7 @@ function Home() {
     hour: "2-digit",
     minute: "2-digit",
   });
+
 
 
   return (
@@ -135,9 +137,7 @@ function Home() {
               </Tooltip>
           </div>
           <div>
-              <Tooltip title="Briq FM">
-                <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png"  width={130} height={130}  />
-              </Tooltip>
+              <Music />
           </div>
           <div>
             <Tooltip title="Instagram">
