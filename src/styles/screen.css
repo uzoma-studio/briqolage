@@ -139,3 +139,6 @@ max-width: 80px;
     padding-left: 45px;
 }
 
+.flex-container{
+    display: flex !important;
+}
