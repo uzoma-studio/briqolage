@@ -6,15 +6,10 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import IconButton from '@mui/material/IconButton';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
@@ -22,9 +17,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/music.css';
-import SearchIcon from '@mui/icons-material/Search';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -35,9 +27,9 @@ import {
 
 
 // Import components
-import Player from "../components/Player";
-import Song from "../components/Song";
-import Library from "../components/Library";
+import Player from "../components/music/Player";
+import Song from "../components/music/Song";
+import Library from "../components/music/Library";
 
 // Import data
 import data from "../data";
@@ -135,9 +127,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-
-
-
 export default function Music() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -211,8 +200,7 @@ export default function Music() {
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
-      >
+        aria-labelledby="draggable-dialog-title">
 
         <AppContainer libraryStatus={libraryStatus}>
           <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
