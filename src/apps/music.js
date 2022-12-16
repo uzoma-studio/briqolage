@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styledd from "styled-components";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -32,7 +32,7 @@ import Song from "../components/music/Song";
 import Library from "../components/music/Library";
 
 // Import data
-import data from "../data";
+import { getTracks } from "../data";
 
 
 
@@ -146,7 +146,8 @@ export default function Music() {
 	const audioRef = useRef(null);
 
 	// State
-	const [songs, setSongs] = useState(data());
+	const [songs, setSongs] = useState(getTracks());
+
 	const [currentSong, setCurrentSong] = useState(songs[0]);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [libraryStatus, setLibraryStatus] = useState(false);
@@ -154,6 +155,12 @@ export default function Music() {
 		currentTime: 0,
 		duration: 0,
 	});
+
+  // TODO: finish this up
+  useEffect(() => {
+    setSongs(getTracks())
+  }, [])
+  
 
 	// Functions
 	const updateTimeHandler = (e) => {
@@ -251,18 +258,26 @@ export default function Music() {
                         top: 6, }} />
                 </div>*/}
                 <div className="PlaySongContainer">
-                  <Player
-                    isPlaying={isPlaying}
-                    setIsPlaying={setIsPlaying}
-                    currentSong={currentSong}
-                    setCurrentSong={setCurrentSong}
-                    audioRef={audioRef}
-                    songInfo={songInfo}
-                    setSongInfo={setSongInfo}
-                    songs={songs}
-                    setSongs={setSongs}
-                  />
-                  <Song currentSong={currentSong} />
+                  {
+                    currentSong ?
+                      <>
+                        <Player
+                          isPlaying={isPlaying}
+                          setIsPlaying={setIsPlaying}
+                          currentSong={currentSong}
+                          setCurrentSong={setCurrentSong}
+                          audioRef={audioRef}
+                          songInfo={songInfo}
+                          setSongInfo={setSongInfo}
+                          songs={songs}
+                          setSongs={setSongs}
+                        />
+                        <Song currentSong={currentSong} />
+                      </>
+                      :
+                      <p>Loading...</p>
+                  }
+                  
                 </div>
 
                 {/*<Search>
@@ -287,23 +302,29 @@ export default function Music() {
             </Box>
             <TabPanel value={value} index={0}>
 
-         
-                <Library
-                  songs={songs}
-                  setCurrentSong={setCurrentSong}
-                  audioRef={audioRef}
-                  isPlaying={isPlaying}
-                  setSongs={setSongs}
-                  libraryStatus={libraryStatus}
-                />
-              
-                <audio
-                  onLoadedMetadata={updateTimeHandler}
-                  onTimeUpdate={updateTimeHandler}
-                  onEnded={songEndHandler}
-                  ref={audioRef}
-                  src={currentSong.audio}
-                />
+                {
+                  currentSong ?
+                    <>
+                      <Library
+                        songs={songs}
+                        setCurrentSong={setCurrentSong}
+                        audioRef={audioRef}
+                        isPlaying={isPlaying}
+                        setSongs={setSongs}
+                        libraryStatus={libraryStatus}
+                      />
+                    
+                      <audio
+                        onLoadedMetadata={updateTimeHandler}
+                        onTimeUpdate={updateTimeHandler}
+                        onEnded={songEndHandler}
+                        ref={audioRef}
+                        src={currentSong.audio}
+                      />
+                    </>
+                    :
+                    <p>Loading...</p>
+                }
             </TabPanel>
     
           </DialogContent>
