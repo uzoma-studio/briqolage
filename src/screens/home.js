@@ -2,8 +2,6 @@ import React from 'react'
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Container from "@mui/material/Container";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Menu from '@mui/material/Menu';
