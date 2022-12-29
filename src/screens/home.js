@@ -2,8 +2,6 @@ import React from 'react'
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Container from "@mui/material/Container";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Menu from '@mui/material/Menu';
@@ -13,7 +11,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import Tooltip from '@mui/material/Tooltip';
-import '../styles/screen.css'
+import '../styles/screen.css';
+import Music from '../apps/music';
+import About from '../apps/about';
+import Gallery from '../apps/gallery';
 
 function Home() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,6 +33,7 @@ function Home() {
     hour: "2-digit",
     minute: "2-digit",
   });
+
 
 
   return (
@@ -73,18 +75,14 @@ function Home() {
                   </div>
                 </li>
                 <li>
-                    <a >
                        <Typography variant="body2" gutterBottom>
                           About
                         </Typography>
-                    </a>
                 </li>
                 <li>
-                    <a >
                        <Typography variant="body2" gutterBottom>
                           Help
                         </Typography>
-                    </a>
                 </li>
           </ul>
         </div>
@@ -126,18 +124,18 @@ function Home() {
 
       <div>
         <div id="title-container">
-          <div>
-            <Tooltip title="Briq Art">
-              <img  label="briq FM" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png"  width={130} height={130}  />
-            </Tooltip>
-            <Tooltip title=" About">
-              <img id="aboutIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png"  width={120} height={120}  />
-              </Tooltip>
+          <div className="flex-container">
+              <div>
+                <Gallery/>
+              </div>
+
+              <div>
+                <About/>
+              </div>
           </div>
+          
           <div>
-              <Tooltip title="Briq FM">
-                <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png"  width={130} height={130}  />
-              </Tooltip>
+              <Music />
           </div>
           <div>
             <Tooltip title="Instagram">
