@@ -1,7 +1,5 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import styledd from "styled-components";
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,14 +15,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-  faPause,
-  faForward,
-  faBackward,
-} from "@fortawesome/free-solid-svg-icons";
-
 
 function PaperComponent(props) {
   return (
@@ -92,7 +82,7 @@ export default function About() {
     <div>
       <Button onClick={handleClickOpen}>
         <Tooltip title=" About">
-              <img id="aboutIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png"  width={120} height={120}  />
+              <img id="aboutIcon" alt="about" src="https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png"  width={120} height={120}  />
               </Tooltip>
       </Button>
 
@@ -104,7 +94,7 @@ export default function About() {
         aria-labelledby="draggable-dialog-title">
 
         <AppContainer>
-          <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move',   border: '3px solid black;' }} id="draggable-dialog-title">
             <div className="DialogTags">
               <DialogActions className="DialogTags" > 
                   <Brightness1Icon sx={{ 
@@ -142,11 +132,10 @@ export default function About() {
                 <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="About Briqolage" {...a11yProps(0)} />
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
+            <TabPanel sx={{p: '20px'}} value={value} index={0}>
               
                 <Typography  variant="body2" gutterBottom sx={{
                     width: '100%',
-                    py: '2px',
 
                 }}>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
