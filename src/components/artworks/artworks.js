@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../client'
-import '../../styles/artworks.css'
-import { ImagerDisplay, imagerShow, ImagerImg } from '../../apps/imager/index.js'
 import '../../styles/screen.css';
-import ImageList from '@mui/material/ImageList'
-import ImageListItem from '@mui/material/ImageListItem'
-import ImageListItemBar from '@mui/material/ImageListItemBar'
+import IMGGallery from './IMGGallery.js';
 
 
 const Artworks = () => {
@@ -48,41 +44,23 @@ const Artworks = () => {
     getArtworkImages()
   }, [getArtworkImages])
 
-  console.log(artworkImages)
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
-      {artworkImages.map((item) => {
-        const {id, galleryImage, galleryTitle, galleryDescription} = item
-        return (
 
-              <ImageListItem key={id}>
-                          
-                    <ImagerDisplay z-index="3000" />
-                    <ImagerImg 
-                      src={`${galleryImage}`} 
-                      srcSet={`${galleryImage}`}
-                      alt={galleryTitle}   loading="lazy" />
-                    {/*<ImagerImg 
-                      src={`${item.img}?w=248&fit=crop&auto=format`} 
-                      srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}  loading="lazy" />
-
-                    <ImagerImg 
-                      src="imgs/1.jpg" 
-                      srcSet="imgs/1.jpg" alt={item.title} images={imgs}  loading="lazy" />*/}
-
-                <ImageListItemBar
-                subtitle={galleryTitle}
-               />
-                <p>{galleryDescription}</p>
-
-            </ImageListItem>
-          
-        )
-      })}
-     </ImageList> 
-
+    <div className="Gallery">
+        <IMGGallery
+        galleryImages={artworkImages}
+        />
+   </div>
   )
 }
 

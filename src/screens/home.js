@@ -10,11 +10,11 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import Tooltip from '@mui/material/Tooltip';
 import '../styles/screen.css';
 import Music from '../apps/music';
 import About from '../apps/about';
 import Gallery from '../apps/gallery';
+import Insta from '../apps/insta';
 
 function Home() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -90,32 +90,24 @@ function Home() {
         <div>
           <ul className='MenuTag MTright'>
                 <li>
-                    <a>
                     <IconButton className="padding0" aria-label="account" color="inherit">
                       <VolumeUpIcon sx={{ fontSize: 'medium'}} />
                     </IconButton>
-                    </a>
                 </li>
                 <li>
-                    <a>
                     <IconButton className="padding0" aria-label="account" color="inherit">
                       <AccountCircleIcon sx={{ fontSize: 'medium'}} />
                     </IconButton>
-                    </a>
                 </li>
                 <li>
-                    <a>
                     <IconButton className="padding0" aria-label="search" color="inherit">
                       <SearchIcon sx={{ fontSize: 'medium'}} />
                     </IconButton>
-                    </a>
                 </li>
                 <li>
-                    <a >
                        <Typography variant="body2" gutterBottom>
                           {date} {time}
                         </Typography>
-                    </a>
                 </li>
             </ul>
         </div>
@@ -138,21 +130,17 @@ function Home() {
               <Music />
           </div>
           <div>
-            <Tooltip title="Instagram">
-              <img  src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png"  width={120} height={120}  />
-            </Tooltip>
+            <Insta />
           </div>
         </div>
 
         <div className="fav-container">
         <ul>
             <li>
-                <a>
-                    <img src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
-                    <Typography variant="body2" gutterBottom>
-                       Your Favourites
-                    </Typography>
-                </a>
+                <img alt="favourites" src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
+                <Typography variant="body2" gutterBottom>
+                    Your Favourites
+                </Typography>
             </li>
         </ul>
         </div>
@@ -161,9 +149,9 @@ function Home() {
 
       <BottomNavigation className="FooterTag" sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         showLabels >
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={ <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png" width={80} height={80} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={   <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png" width={80} height={80} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={  <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={ <img alt="briq fm" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={   <img alt="briq art" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={  <img alt="instagram" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png" width={80} height={80} /> } />
       </BottomNavigation>
     </>
   )
