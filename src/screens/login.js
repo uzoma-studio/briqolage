@@ -13,20 +13,16 @@ const Login = () => {
         </div>
         <ul className='login-options'>
             <li>
-                <a>
-                    <img src="https://res.cloudinary.com/nieleche/image/upload/v1669113287/Sample_User_Icon_mos5vr.png" width={60} height={60} />
-                    <Typography variant="body2" gutterBottom>
-                        Login as user
-                    </Typography>
-                </a>
+                <img alt="login as user" src="https://res.cloudinary.com/nieleche/image/upload/v1669113287/Sample_User_Icon_mos5vr.png" width={60} height={60} />
+                <Typography variant="body2" gutterBottom>
+                    Login as user
+                </Typography>
             </li>
             <li>
-                <a >
-                    <img src="https://res.cloudinary.com/nieleche/image/upload/v1669113287/door_waglrw.png" width={60} height={60} />
-                    <Typography variant="body2" gutterBottom>
-                        Login as guest
-                    </Typography>
-                </a>
+                <img alt="login as guest" src="https://res.cloudinary.com/nieleche/image/upload/v1669113287/door_waglrw.png" width={60} height={60} />
+                <Typography variant="body2" gutterBottom>
+                    Login as guest
+                </Typography>
             </li>
         </ul>
     </>
