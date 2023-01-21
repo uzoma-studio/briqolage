@@ -1,3 +1,7 @@
+.aligncenter{
+    text-align: center;
+}
+
 #title-container {
     position: absolute;
     bottom: 20%;
@@ -72,6 +76,46 @@ h1.login-title {
     background-repeat: no-repeat;
     background-color: transparent !important;
 }
+
+
+.FooterTag .artsec img{
+    width: 80px !important;
+    height: 80px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.FooterTag .fmsec img{
+    width: 80px !important;
+    height: 80px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.FooterTag .instasec img{
+    width: 80px !important;
+    height: 80px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.abouttext .abtImg{
+   display: none !important;
+}
+
+.abtTypo{
+    color: #fff !important;
+    font-size: 10px !important;
+}
+
+.helpTypo{
+    color: #fff !important;
+    font-size: 10px !important;
+}
+
+.aboutimage .abtTypo{
+    display: none !important;
+ }
 
 .FooterTag .css-8ci153-MuiButtonBase-root-MuiBottomNavigationAction-root {
 max-width: 80px;

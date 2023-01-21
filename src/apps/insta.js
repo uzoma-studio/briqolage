@@ -78,7 +78,7 @@ export default function Insta() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <Button  className="instasec"  onClick={handleClickOpen}>
 
         <Tooltip title="Instagram">
               <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png"  width={120} height={120}  />

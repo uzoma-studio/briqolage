@@ -190,7 +190,7 @@ export default function Music() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <Button className="fmsec" onClick={handleClickOpen}>
       <Tooltip title="Briq FM">
                 <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png"  width={130} height={130}  />
               </Tooltip>
