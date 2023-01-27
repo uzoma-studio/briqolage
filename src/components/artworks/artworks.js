@@ -2,11 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../client'
 import '../../styles/screen.css';
 import IMGGallery from './IMGGallery.js';
+import AddFavourites from '../favourite/AddFavourites';
+import RemoveFavourites from '../favourite/RemoveFavourites';
 
 
 const Artworks = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
   const [artworkImages, setArtworkImages] = useState([])
+	const [favourites, setFavourites] = useState([]);
 
   const cleanUpArtworkImages = useCallback((rawData) =>  {
     const cleanArtworks = rawData.map((gallery) => {
@@ -46,20 +49,26 @@ const Artworks = () => {
 
 
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+ 
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
+  
+
+
+
+
+
+
+ 
   return (
+    
 
     <div className="Gallery">
         <IMGGallery
         galleryImages={artworkImages}
         />
+
+        
    </div>
   )
 }

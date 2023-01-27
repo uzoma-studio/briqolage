@@ -1,0 +1,120 @@
+
+
+/* Forms */
+
+label {
+  display: block;
+  margin: 5px 0;
+  color: var(--custom-color-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+input {
+  width: 100%;
+  border-radius: 5px;
+  border: var(--custom-border);
+  text-decoration: none;
+  outline: none;
+  padding: 8px;
+  font-size: 0.9rem;
+  background-color: white ;
+  color: purple;
+}
+
+input[disabled] {
+  color: purple;
+}
+
+/* Utils */
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.inline-block {
+  display: inline-block;
+  width: 100%;
+}
+
+/* Button */
+
+button,
+.button {
+  color: white;
+  border: var(--custom-border);
+  background-color: purple ;
+  display: inline-block;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  margin:10px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border-radius: 30px;
+}
+
+button.primary,
+.button.primary {
+  background-color: orange;
+  color: white;
+  border: 1px solid var(--custom-color-brand);
+}
+
+
+
+.mainHeader {
+  width: 100%;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.avatarPlaceholder {
+  border: var(--custom-border);
+  border-radius: var(--custom-border-radius);
+  width: 35px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.form-widget > .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #444444;
+  text-transform: none !important;
+  transition: all 0.2s ease;
+}
+
+.form-widget .button:hover {
+  background-color: #2a2a2a;
+}
+
+.form-widget .button > .loader {
+  width: 17px;
+  animation: spin 1s linear infinite;
+  filter: invert(1);
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
