@@ -1,4 +1,5 @@
 import React, { useState }  from 'react';
+import styledd from "styled-components";
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -9,9 +10,9 @@ import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
 
-import './img-gallery.css'
+import '../artworks/img-gallery.css'
 
-const IMGGallery = (props) => {
+const FAVGallery = (props) => {
   const [slideNumber, setSlideNumber] = useState(0)
   const [openModal, setOpenModal] = useState(false)
 
@@ -83,6 +84,8 @@ const IMGGallery = (props) => {
           
           <div className='fullScreenImage'>
             <img src={props.artworkImages[slideNumber].galleryImage} alt='' />
+            <ImageListItemBar
+                   subtitle={props.artworkImages[slideNumber].galleryTitle} />
           </div>
         </div>
       }
@@ -93,7 +96,7 @@ const IMGGallery = (props) => {
       Total Slides: {props.artworkImages.length}
       <br /><br /> */}
 
-      
+        <AppContainer>
         <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
 
             {
@@ -101,30 +104,36 @@ const IMGGallery = (props) => {
                 const {id, galleryImage, galleryTitle, galleryDescription} = slide
                 return(
                   <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={id}>
+                    
+                    <div 
+                        className='single' 
+                        key={index}
+                        onClick={ () => handleOpenModal(index) }
+                    >
+                        <img src={`${galleryImage}`} alt='' />
+                    </div>
                    
-                  <div 
-                    className='single' 
-                    key={index}
-                    onClick={ () => handleOpenModal(index) }
-                  >
-                    <img src={`${galleryImage}`} alt='' />
-                  </div>
-                   <ImageListItemBar
-                   subtitle={galleryTitle} />
-                    <GreyButton className='btnPrev'  onClick={() => props.handleFavouritesClick(slide)}  sx={{position: 'absolute', border: 2, borderRadius: 10, color: 'black', fontSize: 6, fontWeight: 'bold', px: 1, mt: 1, borderColor: 'black'}} size="small" variant="contained">
-                        Favourite
+                    <GreyButton className='btnPrev'  onClick={() => props.handleFavouritesClick(slide)}  sx={{position: 'absolute', border: 2, borderRadius: 10, color: 'black', fontSize: 8, fontWeight: 'bold', px: 1, mt: 1, borderColor: 'black'}} size="small" variant="contained">
+                        Remove
                     </GreyButton>
-                   </ImageListItem>
-             
-                   
+                  
+                </ImageListItem>
                 )
               })
             }
 
-        </ImageList>     
+        </ImageList>   
+        </AppContainer>  
 
     </div>
   )
 }
 
-export default IMGGallery
+export default FAVGallery
+
+const AppContainer = styledd.div`
+
+.css-uym98a-MuiImageList-root{
+    height: 100% !important;
+  }
+`;

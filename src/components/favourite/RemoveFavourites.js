@@ -1,28 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react'
+import { client } from '../../client'
+import '../../styles/screen.css';
+import FAVGallery from './FavGallery.js';
 
-const RemoveFavourites = () => {
-	return (
-		<>
-			<span className='mr-2'>Remove from favourites</span>
-			<svg
-				width='1em'
-				height='1em'
-				viewBox='0 0 16 16'
-				class='bi bi-x-square'
-				fill='currentColor'
-				xmlns='http://www.w3.org/2000/svg'
-			>
-				<path
-					fill-rule='evenodd'
-					d='M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z'
-				/>
-				<path
-					fill-rule='evenodd'
-					d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'
-				/>
-			</svg>
-		</>
-	);
-};
 
-export default RemoveFavourites;
+const Artworks = () => {
+  const [isArtworkLoading, setIsArtworkLeading] = useState(false)
+  const [artworkImages, setArtworkImages] = useState([])
+	const [favourites, setFavourites] = useState([]);
+
+  const cleanUpArtworkImages = useCallback((rawData) =>  {
+    const cleanArtworks = rawData.map((gallery) => {
+      const {sys, fields} = gallery
+      const {id} = sys
+      const galleryTitle = fields.title
+      const galleryDescription = fields.description
+      const galleryImage = fields.image.fields.file.url
+      const updatedArtworks = {id, galleryTitle, galleryDescription, galleryImage}
+      return updatedArtworks
+
+    })
+
+    setArtworkImages(cleanArtworks)
+  }, [])
+
+  const getArtworkImages = useCallback(async () => {
+    setIsArtworkLeading(true)
+      try {
+        const response = await client.getEntries({ content_type: 'artworks' })
+        const responseData = response.items
+        if (responseData) {
+          cleanUpArtworkImages(responseData)
+        } else {
+          setArtworkImages([])
+        }
+        setIsArtworkLeading(false)
+      } catch (error) {
+        console.log(error)
+        setIsArtworkLeading(false)
+      }
+    }, [cleanUpArtworkImages])
+
+  useEffect(() => {
+    getArtworkImages()
+  }, [getArtworkImages])
+
+
+  
+
+
+
+  // only run once the first time this component is rendered
+  useEffect(() => {
+		const ArtFavourites = JSON.parse(
+			localStorage.getItem('briq-app-favourites')
+		);
+
+		if (ArtFavourites) {
+			setFavourites(ArtFavourites);
+		}
+	}, []);
+
+
+  // run every time our art state changes
+  const saveToLocalStorage = (items) => {
+		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
+	};
+
+  const addFavouriteArt = (slide) => {
+		const newFavouriteList = [...favourites, slide];
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
+
+  const removeFavouriteArt = (slide) => {
+		const newFavouriteList = favourites.filter(
+			(favourite) => favourite.id !== slide.id
+		);
+
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
+
+ 
+  return (
+
+    <>
+    <div className='Gallery'>
+     <FAVGallery
+        artworkImages={favourites}
+        handleFavouritesClick={removeFavouriteArt}
+        />
+    </div>
+    </>
+  )
+}
+
+export default Artworks

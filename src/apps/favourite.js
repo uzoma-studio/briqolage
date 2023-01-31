@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styledd from "styled-components";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -15,6 +15,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
+
+import Favourites from '../components/favourite/RemoveFavourites'
 
 function PaperComponent(props) {
   return (
@@ -63,6 +65,25 @@ function a11yProps(index) {
 
 
 export default function Favourite() {
+  const [artworkImages, setArtworkImages] = useState([])
+	const [favourites, setFavourites] = useState([]);
+
+  // only run once the first time this component is rendered
+  useEffect(() => {
+		const ArtFavourites = JSON.parse(
+			localStorage.getItem('briq-app-favourites')
+		);
+
+		if (ArtFavourites) {
+			setFavourites(ArtFavourites);
+		}
+	}, []);
+
+
+
+
+  
+
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -134,17 +155,12 @@ export default function Favourite() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Art" {...a11yProps(0)} />
-                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />
+                {/*<Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />*/}
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
+            <TabPanel px={0} value={value} index={0}>
               
-                <Typography  variant="body2" gutterBottom sx={{
-                    width: '100%',
-
-                }}>
-                      ADDTING THE FAVOURITE COMPONENT HERE LOREM IPSUM
-                </Typography>
+              <Favourites className="ArtworksCon" />
 
             
             </TabPanel>
@@ -173,4 +189,7 @@ const AppContainer = styledd.div`
 	@media screen and (max-width: 768px) {
 		margin-left: 0;
 	}
+  .css-19kzrtu{
+    padding: 0px !important;
+  }
 `;

@@ -72,7 +72,7 @@ export default function Gallery() {
       <Button className='artsec' onClick={handleClickOpen}>
        
       <Tooltip title="Briq Art">
-                  <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png"  width={130} height={130}  />
+                  <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1674823099/art_xdauuc.png"  width={120} height={120}  />
                 </Tooltip>
       </Button>
 
