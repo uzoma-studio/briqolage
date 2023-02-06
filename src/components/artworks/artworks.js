@@ -88,18 +88,16 @@ const Artworks = () => {
     setIsShown(false);
   };
 
-  
 
  
   return (
-
     <>
     <div className="Gallery">
         <IMGGallery
         artworkImages={artworkImages}
         handleFavouritesClick={addFavouriteArt}
         />
-   </div>
+    </div>
 
 
           {/* show alert on favourite */}
