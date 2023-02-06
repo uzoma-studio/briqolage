@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
@@ -10,13 +11,81 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import Tooltip from '@mui/material/Tooltip';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import '../styles/screen.css';
 import Music from '../apps/music';
 import About from '../apps/about';
 import Gallery from '../apps/gallery';
+import Insta from '../apps/insta';
+import Help from '../apps/help';
+import Favourite from '../apps/favourite';
+import Search from '../apps/search';
 
-function Home() {
+const Home = ({ session }) =>  {
+  const [loading, setLoading] = useState(true)
+  const [username, setUsername] = useState(null)
+  const [website, setWebsite] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState(null)
+
+  useEffect(() => {
+    getProfile()
+  }, [session])
+
+  const getProfile = async () => {
+    try {
+      setLoading(true)
+      const { user } = session
+
+      let { data, error, status } = await supabase
+        .from('profiles')
+        .select(`username, website, avatar_url`)
+        .eq('id', user.id)
+        .single()
+
+      if (error && status !== 406) {
+        throw error
+      }
+
+      if (data) {
+        setUsername(data.username)
+        setWebsite(data.website)
+        setAvatarUrl(data.avatar_url)
+      }
+    } catch (error) {
+      alert(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const updateProfile = async (e) => {
+    e.preventDefault()
+
+    try {
+      setLoading(true)
+      const { user } = session
+
+      const updates = {
+        id: user.id,
+        username,
+        website,
+        avatar_url,
+        updated_at: new Date(),
+      }
+
+      let { error } = await supabase.from('profiles').upsert(updates)
+
+      if (error) {
+        throw error
+      }
+    } catch (error) {
+      alert(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -25,6 +94,7 @@ function Home() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
 
   const current = new Date().toLocaleString('en-us', {weekday:'short'});
   const date = current.toString().split(' ')[0]; 
@@ -43,19 +113,55 @@ function Home() {
           <ul className='MenuTag'>
                 <li>
                   <div>
+                    <PopupState variant="popover" popupId="demo-popup-menu">
+                    {(popupState) => (
+                      <React.Fragment>
+                        <Button  className="HomeMenu" {...bindTrigger(popupState)}>
+                        B Menu
+                        </Button>
+                        <Menu {...bindMenu(popupState)}>
+                          <MenuItem onClick={popupState.close}>Screen Saver</MenuItem>
+                          <MenuItem onClick={popupState.close}>Pick Playist</MenuItem>
+                          <MenuItem onClick={popupState.close}>Login</MenuItem>
+                        </Menu>
+                      </React.Fragment>
+                    )}
+                    </PopupState>
+                  </div>
+                </li>
+                <li className="abouttext">
+                    <About/> 
+                </li>
+                <li>
+                    <Help/>
+                </li>
+          </ul>
+        </div>
+
+        <div>
+          <ul className='MenuTag MTright'>
+                <li>
+                    <IconButton className="padding0" aria-label="account" color="inherit">
+                      <VolumeUpIcon sx={{ fontSize: 'medium'}} />
+                    </IconButton>
+                </li>
+                <li>
+                  <div>
                     <Button
-                      id="demo-positioned-button"
-                      aria-controls={open ? 'demo-positioned-menu' : undefined}
+                      id="demo-positioned-button1"
+                      aria-controls={open ? 'demo-positioned-menu1' : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? 'true' : undefined}
                       onClick={handleClick}
-                      className="HomeMenu"
+                      sx={{color: 'white'}}
                     >
-                      B Menu
+                       <IconButton className="padding0" aria-label="account" color="inherit">
+                        <AccountCircleIcon sx={{ fontSize: 'medium'}} />
+                      </IconButton>
                     </Button>
                     <Menu
-                      id="demo-positioned-menu"
-                      aria-labelledby="demo-positioned-button"
+                      id="demo-positioned-menu1"
+                      aria-labelledby="demo-positioned-button1"
                       anchorEl={anchorEl}
                       open={open}
                       onClose={handleClose}
@@ -68,58 +174,62 @@ function Home() {
                         horizontal: 'left',
                       }}
                     >
-                      <MenuItem onClick={handleClose}>Screen Saver</MenuItem>
-                      <MenuItem onClick={handleClose}>Pick Playist</MenuItem>
-                      <MenuItem onClick={handleClose}>Login</MenuItem>
+                      <MenuItem>
+                      <div className="aligncenter" aria-live="polite">
+                        {loading ? (
+                          'Saving ...'
+                        ) : (
+                          <form onSubmit={updateProfile} className="form-widget">
+                            {/*<div>
+                              <label htmlFor="username"> {session.user.email}</label>
+                        </div>*/}
+                            <div>
+                              <label htmlFor="username">Name</label>
+                              <input
+                                id="username"
+                                type="text"
+                                value={username || ''}
+                                onChange={(e) => setUsername(e.target.value)}
+                              />
+                            </div>
+                            {/*<div>
+                              <label htmlFor="website">Website</label>
+                              <input
+                                id="website"
+                                type="url"
+                                value={website || ''}
+                                onChange={(e) => setWebsite(e.target.value)}
+                              />
+                            </div>*/}
+                            <div>
+                              <button className="button primary" disabled={loading}>
+                                Update profile
+                              </button>
+                            </div>
+                          </form>
+                        )}
+                        <button type="button" sx={{color: 'white'}} className="button" onClick={() => supabase.auth.signOut()}>
+                          Sign Out
+                        </button>
+                      </div>
+          
+                      </MenuItem>
                     </Menu>
                   </div>
                 </li>
-                <li>
-                       <Typography variant="body2" gutterBottom>
-                          About
-                        </Typography>
-                </li>
-                <li>
-                       <Typography variant="body2" gutterBottom>
-                          Help
-                        </Typography>
-                </li>
-          </ul>
-        </div>
 
-        <div>
-          <ul className='MenuTag MTright'>
                 <li>
-                    <a>
-                    <IconButton className="padding0" aria-label="account" color="inherit">
-                      <VolumeUpIcon sx={{ fontSize: 'medium'}} />
-                    </IconButton>
-                    </a>
+                    <Search/>
                 </li>
                 <li>
-                    <a>
-                    <IconButton className="padding0" aria-label="account" color="inherit">
-                      <AccountCircleIcon sx={{ fontSize: 'medium'}} />
-                    </IconButton>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                    <IconButton className="padding0" aria-label="search" color="inherit">
-                      <SearchIcon sx={{ fontSize: 'medium'}} />
-                    </IconButton>
-                    </a>
-                </li>
-                <li>
-                    <a >
                        <Typography variant="body2" gutterBottom>
                           {date} {time}
                         </Typography>
-                    </a>
                 </li>
             </ul>
         </div>
-          
+
+     
       </Box>
 
       <div>
@@ -129,7 +239,7 @@ function Home() {
                 <Gallery/>
               </div>
 
-              <div>
+              <div className="aboutimage">
                 <About/>
               </div>
           </div>
@@ -138,32 +248,21 @@ function Home() {
               <Music />
           </div>
           <div>
-            <Tooltip title="Instagram">
-              <img  src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png"  width={120} height={120}  />
-            </Tooltip>
+            <Insta />
           </div>
         </div>
 
         <div className="fav-container">
-        <ul>
-            <li>
-                <a>
-                    <img src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
-                    <Typography variant="body2" gutterBottom>
-                       Your Favourites
-                    </Typography>
-                </a>
-            </li>
-        </ul>
+          <Favourite />
         </div>
 
       </div>
 
       <BottomNavigation className="FooterTag" sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         showLabels >
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={ <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png" width={80} height={80} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={   <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/art_i12sdq.png" width={80} height={80} /> } />
-        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={  <img src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/instaa_a2hir1.png" width={80} height={80} /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq FM" icon={  <Music /> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={ <Gallery/> } />
+        <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={   <Insta /> } />
       </BottomNavigation>
     </>
   )

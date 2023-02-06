@@ -12,8 +12,11 @@
 
 // const apiClient = axios.create
 
-const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+//const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+//const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+
+const clientId = '590e239df9b74f9890f70c6fb9847f49';
+const clientSecret ='3a03578e4753488b8333090ea1c45814';
 
 const spotifyAuth = () => {
    return fetch(`https://accounts.spotify.com/api/token`, {

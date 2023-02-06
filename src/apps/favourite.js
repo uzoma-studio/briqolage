@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
 import styledd from "styled-components";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -11,11 +11,12 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import Typography from '@mui/material/Typography'; 
 import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 
-import Artworks from '../components/artworks/artworks'
-
+import Favourites from '../components/favourite/RemoveFavourites'
 
 function PaperComponent(props) {
   return (
@@ -54,10 +55,41 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
-export default function Gallery() {
-  const [open, setOpen] = React.useState(false);
+
+
+export default function Favourite() {
+  const [artworkImages, setArtworkImages] = useState([])
+	const [favourites, setFavourites] = useState([]);
+
+  // only run once the first time this component is rendered
+  useEffect(() => {
+		const ArtFavourites = JSON.parse(
+			localStorage.getItem('briq-app-favourites')
+		);
+
+		if (ArtFavourites) {
+			setFavourites(ArtFavourites);
+		}
+	}, []);
+
+
+
+
   
+
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -69,11 +101,14 @@ export default function Gallery() {
 
   return (
     <div>
-      <Button className='artsec' onClick={handleClickOpen}>
-       
-      <Tooltip title="Briq Art">
-                  <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1674823099/art_xdauuc.png"  width={120} height={120}  />
+      <Button onClick={handleClickOpen}>
+        <ul>
+            <li>
+              <Tooltip title="Your Favourite">
+                <img alt="favourites" src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
                 </Tooltip>
+            </li>
+        </ul>
       </Button>
 
       
@@ -84,7 +119,7 @@ export default function Gallery() {
         aria-labelledby="draggable-dialog-title">
 
         <AppContainer>
-          <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move',   border: '3px solid black;' }} id="draggable-dialog-title">
             <div className="DialogTags">
               <DialogActions className="DialogTags" > 
                   <Brightness1Icon sx={{ 
@@ -112,26 +147,34 @@ export default function Gallery() {
                       color: '#3D6AFC'}} autoFocus onClick={handleClose} />
               
               </DialogActions>
-
-              <Typography  variant="body2" gutterBottom sx={{
-                    width: '100%',
-                    pt: '0.4rem',
-                    textAlign: 'center',
-
-                }}>
-                    Artworks
-                </Typography>
             </div>
           
           </DialogTitle>
           
-          <DialogContent >
-            <Box sx={{ borderBottom: 2, borderColor: 'black' }}>
+          <DialogContent>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Art" {...a11yProps(0)} />
+                {/*<Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />*/}
+              </Tabs>
             </Box>
+            <TabPanel px={0} value={value} index={0}>
               
-                  <Artworks className="ArtworksCon" />
-                
+              <Favourites className="ArtworksCon" />
+
             
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              
+              <Typography  variant="body2" gutterBottom sx={{
+                  width: '100%',
+
+              }}>
+                 tttts PageMaker including versions of Lorem Ipsum.
+              </Typography>
+
+          
+          </TabPanel>
     
           </DialogContent>
         </AppContainer>
@@ -140,15 +183,13 @@ export default function Gallery() {
   );
 }
 
-document.getElementById('root')
-
-
 const AppContainer = styledd.div`
 	transition: all 0.5s ease;
 	margin-left: ${(p) => (p.libraryStatus ? "20rem" : "0")};
 	@media screen and (max-width: 768px) {
 		margin-left: 0;
 	}
+  .css-19kzrtu{
+    padding: 0px !important;
+  }
 `;
-
-

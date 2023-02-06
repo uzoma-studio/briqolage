@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styledd from "styled-components";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -27,6 +27,7 @@ import Library from "../components/music/Library";
 
 // Import data
 import { getTracks } from "../data";
+
 
 
 
@@ -140,8 +141,7 @@ export default function Music() {
 	const audioRef = useRef(null);
 
 	// State
-	const [songs, setSongs] = useState(getTracks());
-
+  const [songs, setSongs] = useState(getTracks());
 	const [currentSong, setCurrentSong] = useState(songs[0]);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [libraryStatus, setLibraryStatus] = useState(false);
@@ -154,7 +154,7 @@ export default function Music() {
   useEffect(() => {
     setSongs(getTracks())
   }, [])
-  
+    
 
 	// Functions
 	const updateTimeHandler = (e) => {
@@ -190,9 +190,9 @@ export default function Music() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <Button className="fmsec" onClick={handleClickOpen}>
       <Tooltip title="Briq FM">
-                <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1669288824/sound_c1kbdo.png"  width={130} height={130}  />
+                <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png"  width={168} height={120}  />
               </Tooltip>
       </Button>
 
@@ -252,26 +252,18 @@ export default function Music() {
                         top: 6, }} />
                 </div>*/}
                 <div className="PlaySongContainer">
-                  {
-                    currentSong ?
-                      <>
-                        <Player
-                          isPlaying={isPlaying}
-                          setIsPlaying={setIsPlaying}
-                          currentSong={currentSong}
-                          setCurrentSong={setCurrentSong}
-                          audioRef={audioRef}
-                          songInfo={songInfo}
-                          setSongInfo={setSongInfo}
-                          songs={songs}
-                          setSongs={setSongs}
-                        />
-                        <Song currentSong={currentSong} />
-                      </>
-                      :
-                      <p>Loading...</p>
-                  }
-                  
+                  <Player
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    currentSong={currentSong}
+                    setCurrentSong={setCurrentSong}
+                    audioRef={audioRef}
+                    songInfo={songInfo}
+                    setSongInfo={setSongInfo}
+                    songs={songs}
+                    setSongs={setSongs}
+                  />
+                  <Song currentSong={currentSong} />
                 </div>
 
                 {/*<Search>
@@ -296,29 +288,23 @@ export default function Music() {
             </Box>
             <TabPanel value={value} index={0}>
 
-                {
-                  currentSong ?
-                    <>
-                      <Library
-                        songs={songs}
-                        setCurrentSong={setCurrentSong}
-                        audioRef={audioRef}
-                        isPlaying={isPlaying}
-                        setSongs={setSongs}
-                        libraryStatus={libraryStatus}
-                      />
-                    
-                      <audio
-                        onLoadedMetadata={updateTimeHandler}
-                        onTimeUpdate={updateTimeHandler}
-                        onEnded={songEndHandler}
-                        ref={audioRef}
-                        src={currentSong.audio}
-                      />
-                    </>
-                    :
-                    <p>Loading...</p>
-                }
+         
+                <Library
+                  songs={songs}
+                  setCurrentSong={setCurrentSong}
+                  audioRef={audioRef}
+                  isPlaying={isPlaying}
+                  setSongs={setSongs}
+                  libraryStatus={libraryStatus}
+                />
+              
+                <audio
+                  onLoadedMetadata={updateTimeHandler}
+                  onTimeUpdate={updateTimeHandler}
+                  onEnded={songEndHandler}
+                  ref={audioRef}
+                  src={currentSong.audio}
+                />
             </TabPanel>
     
           </DialogContent>

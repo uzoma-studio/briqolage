@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../client'
 import '../../styles/screen.css';
-import IMGGallery from './IMGGallery.js';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import FAVGallery from './FavGallery.js';
 
 
 const Artworks = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
   const [artworkImages, setArtworkImages] = useState([])
 	const [favourites, setFavourites] = useState([]);
-  const [open, setIsShown] = useState(false);
 
   const cleanUpArtworkImages = useCallback((rawData) =>  {
     const cleanArtworks = rawData.map((gallery) => {
@@ -49,6 +46,8 @@ const Artworks = () => {
   }, [getArtworkImages])
 
 
+  
+
 
 
   // only run once the first time this component is rendered
@@ -72,42 +71,27 @@ const Artworks = () => {
 		const newFavouriteList = [...favourites, slide];
 		setFavourites(newFavouriteList);
 		saveToLocalStorage(newFavouriteList);
-    setIsShown(true);
 	};
 
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-  
+  const removeFavouriteArt = (slide) => {
+		const newFavouriteList = favourites.filter(
+			(favourite) => favourite.id !== slide.id
+		);
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setIsShown(false);
-  };
-
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
 
  
   return (
+
     <>
-    <div className="Gallery">
-        <IMGGallery
-        artworkImages={artworkImages}
-        handleFavouritesClick={addFavouriteArt}
+    <div className='Gallery'>
+     <FAVGallery
+        artworkImages={favourites}
+        handleFavouritesClick={removeFavouriteArt}
         />
     </div>
-
-
-          {/* show alert on favourite */}
-         
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            Favourited successfully
-          </Alert>
-        </Snackbar>
-
     </>
   )
 }
