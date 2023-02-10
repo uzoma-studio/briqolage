@@ -19,6 +19,7 @@ import Gallery from '../apps/gallery';
 import Insta from '../apps/insta';
 import Help from '../apps/help';
 import Favourite from '../apps/favourite';
+import Search from '../apps/search';
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
@@ -218,9 +219,7 @@ const Home = ({ session }) =>  {
                 </li>
 
                 <li>
-                    <IconButton className="padding0" aria-label="search" color="inherit">
-                      <SearchIcon sx={{ fontSize: 'medium'}} />
-                    </IconButton>
+                    <Search/>
                 </li>
                 <li>
                        <Typography variant="body2" gutterBottom>

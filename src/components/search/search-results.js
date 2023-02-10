@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../client'
 import '../../styles/screen.css';
-import FAVGallery from './FavGallery.js';
+import SearchPage from './SearchPage';
 
 
-const Artworks = () => {
+const SearchResult = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
   const [artworkImages, setArtworkImages] = useState([])
-	const [favourites, setFavourites] = useState([]);
 
   const cleanUpArtworkImages = useCallback((rawData) =>  {
     const cleanArtworks = rawData.map((gallery) => {
@@ -46,54 +45,13 @@ const Artworks = () => {
   }, [getArtworkImages])
 
 
-  
-
-
-
-  // only run once the first time this component is rendered
-  useEffect(() => {
-		const ArtFavourites = JSON.parse(
-			localStorage.getItem('briq-app-favourites')
-		);
-
-		if (ArtFavourites) {
-			setFavourites(ArtFavourites);
-		}
-	}, []);
-
-
-  // run every time our art state changes
-  const saveToLocalStorage = (items) => {
-		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
-	};
-
-  const addFavouriteArt = (slide) => {
-		const newFavouriteList = [...favourites, slide];
-		setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
-
-  const removeFavouriteArt = (slide) => {
-		const newFavouriteList = favourites.filter(
-			(favourite) => favourite.id !== slide.id
-		);
-
-		setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
-
- 
   return (
-
     <>
-    <div className='Gallery'>
-     <FAVGallery
-        artworkImages={favourites}
-        handleFavouritesClick={removeFavouriteArt}
-        />
+    <div className="tc bg-green ma0 pa4 min-vh-100">
+        <SearchPage details={artworkImages}/>
     </div>
     </>
   )
 }
 
-export default Artworks
+export default SearchResult
