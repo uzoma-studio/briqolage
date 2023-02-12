@@ -9,6 +9,7 @@ const Artworks = () => {
   const [artworkImages, setArtworkImages] = useState([])
 	const [favourites, setFavourites] = useState([]);
 
+  // TODO: This code is repeated in another component. Can we clean it up?
   const cleanUpArtworkImages = useCallback((rawData) =>  {
     const cleanArtworks = rawData.map((gallery) => {
       const {sys, fields} = gallery
@@ -24,6 +25,7 @@ const Artworks = () => {
     setArtworkImages(cleanArtworks)
   }, [])
 
+  // TODO: This code is repeated in another component. Can we clean it up?
   const getArtworkImages = useCallback(async () => {
     setIsArtworkLeading(true)
       try {
