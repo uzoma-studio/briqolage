@@ -7,6 +7,8 @@ import Snackbar from '@mui/material/Snackbar';
 import AddFavourites from './AddFavourites';
 import RemoveFavourites from './RemoveFavourites';
 
+import IntroScreen from './intro-screen';
+import helpers from '../../utils/helpers';
 
 const Artworks = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
@@ -90,17 +92,29 @@ const Artworks = () => {
     setIsShown(false);
   };
 
+  const [ isExploreClicked, setIsExploreClicked ] = useState(false)
 
+  const { getRandomItem } = helpers
+  const bgImage = artworkImages.length > 0 ? getRandomItem(artworkImages).galleryImage : null
  
-  return (
+  return (  
     <>
-    <div className="Gallery">
-        <IMGGallery
-        artworkImages={artworkImages}
-        handleFavouritesClick={addFavouriteArt}
-        favouriteComponent={AddFavourites}
+    {
+      isExploreClicked ?
+        <div className="Gallery">
+            <IMGGallery
+              artworkImages={artworkImages}
+              handleFavouritesClick={addFavouriteArt}
+              favouriteComponent={AddFavourites}
+            />
+        </div>
+        :
+        <IntroScreen 
+          isExploreClicked={isExploreClicked}
+          setIsExploreClicked={setIsExploreClicked} 
+          bgImage={bgImage}
         />
-    </div>
+    }
 
 
           {/* show alert on favourite */}
