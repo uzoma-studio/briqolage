@@ -4,6 +4,8 @@ import '../../styles/screen.css';
 import IMGGallery from './IMGGallery.js';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import AddFavourites from './AddFavourites';
+import RemoveFavourites from './RemoveFavourites';
 
 
 const Artworks = () => {
@@ -96,6 +98,7 @@ const Artworks = () => {
         <IMGGallery
         artworkImages={artworkImages}
         handleFavouritesClick={addFavouriteArt}
+        favouriteComponent={AddFavourites}
         />
     </div>
 
