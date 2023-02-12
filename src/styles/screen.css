@@ -183,3 +183,9 @@ max-width: 120px;
 .flex-container{
     display: flex !important;
 }
+
+/* General styling */
+
+.padding-m {
+    padding: 5rem;
+}

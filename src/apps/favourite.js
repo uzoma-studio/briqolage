@@ -77,12 +77,7 @@ export default function Favourite() {
 		if (ArtFavourites) {
 			setFavourites(ArtFavourites);
 		}
-	}, []);
-
-
-
-
-  
+	}, []);  
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -98,13 +93,25 @@ export default function Favourite() {
     setOpen(false);
   };
 
+  const tabNames =['Art', 'Music']
+
+  const defaultText = 
+    <Box sx={{padding: 5}}>
+      <Typography variant="body2" align="center" >
+        Nothing to show yet.
+      </Typography>
+      <Typography variant="body2" align="center">
+        Your favourite items from the {tabNames[value]} app will show up here
+      </Typography>
+    </Box>
+
 
   return (
     <div>
       <Button onClick={handleClickOpen}>
         <ul>
             <li>
-              <Tooltip title="Your Favourite">
+              <Tooltip title="Your Favourites">
                 <img alt="favourites" src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
                 </Tooltip>
             </li>
@@ -155,26 +162,22 @@ export default function Favourite() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Art" {...a11yProps(0)} />
-                {/*<Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />*/}
+                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />
               </Tabs>
             </Box>
             <TabPanel px={0} value={value} index={0}>
               
-              <Favourites className="ArtworksCon" />
-
+              {
+                favourites.length > 0 ?
+                  <Favourites className="ArtworksCon" />
+                  :
+                  defaultText
+              }
             
             </TabPanel>
             <TabPanel value={value} index={1}>
-              
-              <Typography  variant="body2" gutterBottom sx={{
-                  width: '100%',
-
-              }}>
-                 tttts PageMaker including versions of Lorem Ipsum.
-              </Typography>
-
-          
-          </TabPanel>
+                {defaultText}
+            </TabPanel>
     
           </DialogContent>
         </AppContainer>

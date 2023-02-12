@@ -57,7 +57,6 @@ TabPanel.propTypes = {
 
 export default function Gallery() {
   const [open, setOpen] = React.useState(false);
-  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -71,9 +70,9 @@ export default function Gallery() {
     <div>
       <Button className='artsec' onClick={handleClickOpen}>
        
-      <Tooltip title="Briq Art">
-                  <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1674823099/art_xdauuc.png"  width={120} height={120}  />
-                </Tooltip>
+        <Tooltip title="Briq Art">
+          <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1674823099/art_xdauuc.png"  width={120} height={120}  />
+        </Tooltip>
       </Button>
 
       
@@ -129,10 +128,7 @@ export default function Gallery() {
             <Box sx={{ borderBottom: 2, borderColor: 'black' }}>
             </Box>
               
-                  <Artworks className="ArtworksCon" />
-                
-            
-    
+            <Artworks className="ArtworksCon" />
           </DialogContent>
         </AppContainer>
       </Dialog>

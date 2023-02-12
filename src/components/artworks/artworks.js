@@ -4,7 +4,8 @@ import '../../styles/screen.css';
 import IMGGallery from './IMGGallery.js';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-
+import IntroScreen from './intro-screen';
+import helpers from '../../utils/helpers';
 
 const Artworks = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
@@ -88,16 +89,28 @@ const Artworks = () => {
     setIsShown(false);
   };
 
+  const [ isExploreClicked, setIsExploreClicked ] = useState(false)
 
+  const { getRandomItem } = helpers
+  const bgImage = artworkImages.length > 0 ? getRandomItem(artworkImages).galleryImage : null
  
-  return (
+  return (  
     <>
-    <div className="Gallery">
-        <IMGGallery
-        artworkImages={artworkImages}
-        handleFavouritesClick={addFavouriteArt}
+    {
+      isExploreClicked ?
+        <div className="Gallery">
+            <IMGGallery
+              artworkImages={artworkImages}
+              handleFavouritesClick={addFavouriteArt}
+            />
+        </div>
+        :
+        <IntroScreen 
+          isExploreClicked={isExploreClicked}
+          setIsExploreClicked={setIsExploreClicked} 
+          bgImage={bgImage}
         />
-    </div>
+    }
 
 
           {/* show alert on favourite */}
