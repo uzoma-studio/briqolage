@@ -106,16 +106,18 @@ export default function About() {
   return (
     <div>
       <Button className="abtTypo" sx={{px: 0}} onClick={handleClickOpen}>
-        <Typography sx={{fontSize: 12}} variant="body2" gutterBottom>
-          About
-        </Typography>
+          <Typography sx={{fontSize: 12}} variant="body2" gutterBottom>
+            About
+          </Typography>
       </Button>
 
 
       <Button  className="abtImg" onClick={handleClickOpen}>
-        <Tooltip title=" About">
+        <Draggable>
+          <Tooltip title=" About">
               <img id="aboutIcon" alt="about" src="https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png"  width={120} height={120}  />
-              </Tooltip>
+          </Tooltip>
+        </Draggable>
       </Button>
 
       

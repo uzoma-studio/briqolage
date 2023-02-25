@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 
+
 import Artworks from '../components/artworks/artworks'
 
 
@@ -72,10 +73,11 @@ export default function Gallery() {
   return (
     <div>
       <Button className='artsec' onClick={handleClickOpen}>
-       
+       <Draggable>
         <Tooltip title="Briq Art">
-          <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1676945963/art_s9ina0.png"  width={150} height={150}  />
+          <img  label="briq ART" src="https://res.cloudinary.com/nieleche/image/upload/v1676945963/art_s9ina0.png"  width={145} height={145}  />
         </Tooltip>
+        </Draggable>
       </Button>
 
       

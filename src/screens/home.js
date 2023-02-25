@@ -235,46 +235,37 @@ const Home = ({ session }) =>  {
         <div id="title-container">
           <div className="flex-container">
               <div>
-                  <Draggable>
+            
                     <div className="drag-wrapper">
                       <Gallery/>
                     </div>
-                  </Draggable>
               </div>
 
               <div className="aboutimage">
-                  <Draggable>
                     <div className="drag-wrapper">
                         <About/>
                     </div>
-                  </Draggable>
               </div>
           </div>
           
           <div>
-            <Draggable>
               <div className="drag-wrapper">
                 <Music />
               </div>
-            </Draggable>
           </div>
 
 
           <div>
-            <Draggable>
               <div className="drag-wrapper">
                 <Insta />
               </div>
-            </Draggable>
           </div>
         </div>
 
         <div className="fav-container"> 
-          <Draggable>
           <div className="drag-wrapper">
               <Favourite />
           </div>
-          </Draggable>
         </div>
 
       </div>
