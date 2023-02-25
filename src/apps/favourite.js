@@ -109,6 +109,7 @@ export default function Favourite() {
   return (
     <div>
       <Button onClick={handleClickOpen}>
+        <Draggable>
         <ul>
             <li>
               <Tooltip title="Your Favourites">
@@ -116,6 +117,7 @@ export default function Favourite() {
                 </Tooltip>
             </li>
         </ul>
+        </Draggable>
       </Button>
 
       

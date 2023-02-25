@@ -79,10 +79,11 @@ export default function Insta() {
   return (
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
-
-        <Tooltip title="Instagram">
-              <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1674822636/insta_1_m6lryh.png"  width={110} height={110}  />
-            </Tooltip>
+        <Draggable>
+          <Tooltip title="Instagram">
+                <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1674822636/insta_1_m6lryh.png"  width={100} height={100}  />
+          </Tooltip>
+        </Draggable>
       </Button>
 
       
