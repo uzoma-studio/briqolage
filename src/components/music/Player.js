@@ -17,6 +17,7 @@ const Player = ({
 	songs,
 	setSongs,
 }) => {
+
 	// Event handlers
 	const playSongHandler = () => {
 		if (isPlaying) {
@@ -152,7 +153,7 @@ const Track = styled.div`
 	position: relative;
 	border-radius: 1rem;
 	overflow: hidden;
-	background: linear-gradient(to right, ${(p) => p.currentSong.color[0]}, ${(p) => p.currentSong.color[1]});
+	background: linear-gradient(to right, #205950, #2AB3BF);
 `;
 
 const AnimateTrack = styled.div`
