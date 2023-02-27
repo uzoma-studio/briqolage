@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const LibrarySong = ({ song, setCurrentSong, audioRef, isPlaying, songs, setSongs }) => {
+
 	// Function
 	const songSelectHandler = async () => {
 		await setCurrentSong(song);
@@ -30,10 +31,10 @@ const LibrarySong = ({ song, setCurrentSong, audioRef, isPlaying, songs, setSong
 	};
 
 	return (
-		<LibrarySongContainer onClick={songSelectHandler} isActive={song.active}>
-			 {/* <Img src={song.cover} alt={song.name}></Img>*/}
+		<LibrarySongContainer onClick={songSelectHandler} isActive={song.active} bgArt={song.coverArt.url}>
+			<Img src={song.coverArt.url} alt={song.title}></Img>
 			<LibrarySongDescription>
-				<H1>{song.name}</H1>
+				<H1>{song.title}</H1>
 				<H2>{song.artist}</H2>
 			</LibrarySongDescription>
 		</LibrarySongContainer>
@@ -48,10 +49,13 @@ const LibrarySongContainer = styled.div`
 	&:hover {
 		background-color: lightblue;
 		transition: all 0.3s ease;
+		height: 125px;
 	}
 	&.active {
-		background-color: pink;
+		border: 2px solid white;
 	}
+	background-image: ${(p) => `url(${p.bgArt})`};
+	cursor: pointer;
 `;
 
 const LibrarySongDescription = styled.div`

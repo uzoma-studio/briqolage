@@ -55,6 +55,7 @@ const LibraryContainer = styled.div`
 
 const SongContainer = styled.div`
 	display: flex;
+	width: 100%;
 	flex-wrap: wrap;
 	background-color: transparent;
 `;

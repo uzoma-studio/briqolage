@@ -18,18 +18,13 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/music.css';
 
-
-
 // Import components
 import Player from "../components/music/Player";
 import Song from "../components/music/Song";
 import Library from "../components/music/Library";
 
-// Import data
-import { getTracks } from "../data";
-
-
-
+import Contentful from "../utils/contentful";
+import { v4 as uuidv4 } from "uuid";
 
 function PaperComponent(props) {
   return (
@@ -75,53 +70,6 @@ function a11yProps(index) {
   };
 }
 
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  fontSize: '12',
-
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '8ch',
-      '&:focus': {
-        width: '13ch',
-      },
-    },
-  },
-}));
-
-
-
 export default function Music() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -141,7 +89,7 @@ export default function Music() {
 	const audioRef = useRef(null);
 
 	// State
-  const [songs, setSongs] = useState(getTracks());
+  const [songs, setSongs] = useState([]);
 	const [currentSong, setCurrentSong] = useState(songs[0]);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [libraryStatus, setLibraryStatus] = useState(false);
@@ -149,12 +97,44 @@ export default function Music() {
 		currentTime: 0,
 		duration: 0,
 	});
+  
+  // Query Contentful for music
+  const query = `
+    {
+      musicCollection {
+        items {
+          title
+          audioUrl
+          artist
+          genre
+          coverArt {
+            url
+          }
+        }
+      }
+    }
+  `
 
-  // TODO: finish this up
   useEffect(() => {
-    setSongs(getTracks())
-  }, [])
-    
+    Contentful.get(query)
+      .then(({ data, errors }) => {
+        if (errors) {
+          console.error(errors);
+        }
+
+        const songs = data.musicCollection.items
+        // set the first song in the collection as 'active'
+        songs[0].active = true
+        // every other song is therefore 'inactive'
+        songs.slice(1).forEach((song) => {
+          song.active = false 
+          // set id for each song as well
+          song.id = uuidv4()
+        })
+        setSongs(songs)
+        setCurrentSong(songs[0])
+      });
+  }, []);
 
 	// Functions
 	const updateTimeHandler = (e) => {
@@ -235,48 +215,27 @@ export default function Music() {
               
               </DialogActions>
 
-                {/*<div>      
-                  <SkipPreviousIcon  sx={{ 
-                        position: 'absolute',
-                        left: 75,
-                        top: 6, }} />
-
-                  <PlayArrowIcon sx={{ 
-                        position: 'absolute',
-                        left: 100,
-                        top: 6, }} />
-
-                  
-
-                  <SkipNextIcon sx={{ 
-                        position: 'absolute',
-                        left: 125,
-                        top: 6, }} />
-                </div>*/}
                 <div className="PlaySongContainer">
-                  <Player
-                    isPlaying={isPlaying}
-                    setIsPlaying={setIsPlaying}
-                    currentSong={currentSong}
-                    setCurrentSong={setCurrentSong}
-                    audioRef={audioRef}
-                    songInfo={songInfo}
-                    setSongInfo={setSongInfo}
-                    songs={songs}
-                    setSongs={setSongs}
-                  />
-                  <Song currentSong={currentSong} />
+                  {
+                    currentSong ?
+                      <>
+                        <Player
+                          isPlaying={isPlaying}
+                          setIsPlaying={setIsPlaying}
+                          currentSong={currentSong}
+                          setCurrentSong={setCurrentSong}
+                          audioRef={audioRef}
+                          songInfo={songInfo}
+                          setSongInfo={setSongInfo}
+                          songs={songs}
+                          setSongs={setSongs}
+                        />
+                        <Song currentSong={currentSong} />
+                      </>
+                      :
+                      <p>Loading...</p>
+                  }
                 </div>
-
-                {/*<Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase 
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
-                </Search>*/}
             </div>
 
           
@@ -288,25 +247,31 @@ export default function Music() {
                 <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Channel" {...a11yProps(0)} />
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
 
-         
-                <Library
-                  songs={songs}
-                  setCurrentSong={setCurrentSong}
-                  audioRef={audioRef}
-                  isPlaying={isPlaying}
-                  setSongs={setSongs}
-                  libraryStatus={libraryStatus}
-                />
-              
-                <audio
-                  onLoadedMetadata={updateTimeHandler}
-                  onTimeUpdate={updateTimeHandler}
-                  onEnded={songEndHandler}
-                  ref={audioRef}
-                  src={currentSong.audio}
-                />
+            <TabPanel value={value} index={0}>
+              {
+                currentSong ?
+                <>
+                  <Library
+                    songs={songs}
+                    setCurrentSong={setCurrentSong}
+                    audioRef={audioRef}
+                    isPlaying={isPlaying}
+                    setSongs={setSongs}
+                    libraryStatus={libraryStatus}
+                  />
+                
+                  <audio
+                    onLoadedMetadata={updateTimeHandler}
+                    onTimeUpdate={updateTimeHandler}
+                    onEnded={songEndHandler}
+                    ref={audioRef}
+                    src={currentSong.audioUrl}
+                  />
+                </>
+                :
+                <p>Loading...</p>
+              }
             </TabPanel>
     
           </DialogContent>
