@@ -58,28 +58,6 @@ const Artworks = () => {
 			setFavourites(ArtFavourites);
 		}
 	}, []);
-
-
-  // run every time our art state changes
-  const saveToLocalStorage = (items) => {
-		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
-	};
-
-  const addFavouriteArt = (slide) => {
-		const newFavouriteList = [...favourites, slide];
-		setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
-
-  const removeFavouriteArt = (slide) => {
-		const newFavouriteList = favourites.filter(
-			(favourite) => favourite.id !== slide.id
-		);
-
-		setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
-
  
   return (
 
@@ -87,7 +65,6 @@ const Artworks = () => {
     <div className='Gallery'>
      <FAVGallery
         artworkImages={favourites}
-        handleFavouritesClick={removeFavouriteArt}
       />
     </div>
     </>
