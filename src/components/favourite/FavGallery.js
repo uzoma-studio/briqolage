@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 
 import '../artworks/img-gallery.css'
 
-const FAVGallery = (props) => {
+const FAVGallery = () => {
   const [slideNumber, setSlideNumber] = useState(0)
   const [openModal, setOpenModal] = useState(false)
 

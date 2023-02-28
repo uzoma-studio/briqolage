@@ -16,7 +16,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 
-import Favourites from '../components/favourite/favourites'
+import FAVGallery from "../components/favourite/FavGallery";
 
 function PaperComponent(props) {
   return (
@@ -171,7 +171,7 @@ export default function Favourite() {
               
               {
                 favourites.length > 0 ?
-                  <Favourites className="ArtworksCon" />
+                  <FAVGallery className="ArtworksCon" />
                   :
                   defaultText
               }
