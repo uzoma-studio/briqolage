@@ -66,6 +66,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function Insta() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
+  const [fullscreen, setFullScreen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,8 +74,16 @@ export default function Insta() {
 
   const handleClose = () => {
     setOpen(false);
+    setFullScreen(false)
   };
 
+  const handleFull = () => {
+    setFullScreen(true)
+  };
+
+  const handleCloseFull = () => {
+    setFullScreen(false)
+  };
 
   return (
     <div>
@@ -88,6 +97,7 @@ export default function Insta() {
 
       
       <Dialog
+       fullScreen={fullscreen}
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
@@ -104,26 +114,26 @@ export default function Insta() {
                         fontSize: 'small',
                         pl: '0px',
                         color: '#FF4A92'}} autoFocus onClick={handleClose} />
+                       
+                      <Brightness1Icon sx={{ 
+                      left: 8,
+                      top: 2,
+                      cursor: 'pointer',
+                      fontSize: 'small',
+                      pl: '0px',
+                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
 
-                        <Brightness1Icon sx={{ 
-                        left: 8,
-                        top: 2,
-                        cursor: 'pointer',
-                        fontSize: 'small',
-                        pl: '0px',
-                        color: '#FFCF14'}} autoFocus onClick={handleClose} />
-
-                        <Brightness1Icon sx={{ 
-                        left: 8,
-                        top: 2,
-                        cursor: 'pointer',
-                        fontSize: 'small',
-                        pl: '0px',
-                        color: '#3D6AFC'}} autoFocus onClick={handleClose} />
+                      <Brightness1Icon sx={{ 
+                      left: 8,
+                      top: 2,
+                      cursor: 'pointer',
+                      fontSize: 'small',
+                      pl: '0px',
+                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
                 
                 </DialogActions>
 
-                <Typography  variant="body2" gutterBottom sx={{
+                <Typography className='font-face-nmB' variant="body2" gutterBottom sx={{
                         width: '100%',
                         pt: '0.4rem',
                         textAlign: 'center',

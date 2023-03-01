@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: "NeueMachinaRegular", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -8,8 +8,31 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: "NeueMachinaRegular", source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+@font-face {
+font-family: "NeueMachinaRegular";
+src: local("NeueMachinaRegular"),
+	url("./fonts/NeueMachina/NeueMachina-Regular.otf") format("opentype");
+font-weight: bold;
+}
+
+@font-face {
+	font-family: "NeueMachinaBold";
+	src: local("NeueMachinaBold"),
+		url("./fonts/NeueMachina/NeueMachina-Ultrabold.otf") format("opentype");
+	font-weight: bold;
+	}
+
+.font-face-nmR {
+	font-family: "NeueMachinaRegular" !important;
+}
+
+.font-face-nmB {
+	font-family: "NeueMachinaBold" !important;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 

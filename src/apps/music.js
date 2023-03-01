@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import styledd from "styled-components";
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -73,6 +71,8 @@ function a11yProps(index) {
 export default function Music() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
+  const [fullscreen, setFullScreen] = React.useState(false);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -83,8 +83,17 @@ export default function Music() {
 
   const handleClose = () => {
     setOpen(false);
+    setFullScreen(false)
   };
 
+  const handleFull = () => {
+    setFullScreen(true)
+  };
+
+  const handleCloseFull = () => {
+    setFullScreen(false)
+  };
+  
   	// Ref
 	const audioRef = useRef(null);
 
@@ -173,13 +182,14 @@ export default function Music() {
       <Button className="fmsec" onClick={handleClickOpen}>
         <Draggable>
           <Tooltip title="Briq FM">
-            <img id="fmIcon" src="https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png"  width={148} height={100}  />
+            <img id="fmIcon" alt="BriqFM icon" src="https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png"  width={148} height={100}  />
           </Tooltip>
         </Draggable>
       </Button>
 
       
       <Dialog
+       fullScreen={fullscreen}
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
@@ -197,13 +207,14 @@ export default function Music() {
                       pl: '0px',
                       color: '#FF4A92'}} autoFocus onClick={handleClose} />
 
-                      <Brightness1Icon sx={{ 
+                      
+                    <Brightness1Icon sx={{ 
                       left: 8,
                       top: 2,
                       cursor: 'pointer',
                       fontSize: 'small',
                       pl: '0px',
-                      color: '#FFCF14'}} autoFocus onClick={handleClose} />
+                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
 
                       <Brightness1Icon sx={{ 
                       left: 8,
@@ -211,7 +222,7 @@ export default function Music() {
                       cursor: 'pointer',
                       fontSize: 'small',
                       pl: '0px',
-                      color: '#3D6AFC'}} autoFocus onClick={handleClose} />
+                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
               
               </DialogActions>
 

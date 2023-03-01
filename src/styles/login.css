@@ -16,7 +16,7 @@ input {
   border: var(--custom-border);
   text-decoration: none;
   outline: none;
-  padding: 8px;
+  padding: 8px 0px;
   font-size: 0.9rem;
   background-color: white ;
   color: purple;
@@ -47,7 +47,7 @@ button,
   background-color: purple ;
   display: inline-block;
   text-align: center;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 0rem;
   margin:10px;
   cursor: pointer;
   text-align: center;
@@ -62,8 +62,6 @@ button.primary,
   color: white;
   border: 1px solid var(--custom-color-brand);
 }
-
-
 
 .mainHeader {
   width: 100%;

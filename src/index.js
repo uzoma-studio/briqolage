@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import './fonts/NeueMachina/NeueMachina-Light.otf';
+import './fonts/NeueMachina/NeueMachina-Regular.otf';
+import './fonts/NeueMachina/NeueMachina-Ultrabold.otf';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

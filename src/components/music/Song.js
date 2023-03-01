@@ -17,23 +17,17 @@ const SongContainer = styled.div`
 	text-align:right;
 `;
 
-const Img = styled.img`
-	width: 5%;
-	border-radius: 50%;
-	@media screen and (max-width: 768px) {
-		width: 12%;
-	}
-`;
-
 const H1 = styled.h2`
 	padding: 0rem 1rem 0rem 1rem;
 	font-weight:bold;
 	font-size: 0.8rem;
+	font-family: "NeueMachinaBold" !important;
 `;
 
 const H2 = styled.h3`
 	padding: 0rem 1rem 0rem 1rem;
 	font-size: 0.7rem;
+	font-family: "NeueMachinaRegular" !important;
 `;
 
 export default Song;

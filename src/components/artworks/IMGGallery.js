@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { pink } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
-import { grey } from '@mui/material/colors';
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
@@ -40,13 +39,6 @@ const IMGGallery = (props) => {
     },
   }));
 
-  const GreyButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(grey[500]),
-    backgroundColor: grey[500],
-    '&:hover': {
-      backgroundColor: grey[700],
-    },
-  }));
 
   // Close Modal
   const handleCloseModal = () => {
@@ -97,7 +89,7 @@ const IMGGallery = (props) => {
       <br /><br /> */}
 
       
-        <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
+        <ImageList cols={3} >
 
             {
                props.artworkImages.map((slide, index) => {

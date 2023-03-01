@@ -62,7 +62,7 @@ const Artworks = () => {
             />
         </div>
         :
-        <IntroScreen 
+        <IntroScreen
           isExploreClicked={isExploreClicked}
           setIsExploreClicked={setIsExploreClicked} 
           bgImage={bgImage}

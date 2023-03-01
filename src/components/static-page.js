@@ -67,6 +67,8 @@ function a11yProps(index) {
 export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, tabLabel, isTooltip }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
+  const [fullscreen, setFullScreen] = React.useState(false);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -77,6 +79,15 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
 
   const handleClose = () => {
     setOpen(false);
+    setFullScreen(false)
+  };
+
+  const handleFull = () => {
+    setFullScreen(true)
+  };
+
+  const handleCloseFull = () => {
+    setFullScreen(false)
   };
 
   const [pageContent, setPageContent] = useState('')
@@ -105,7 +116,7 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
   return (
     <div>
       <Button className="abtTypo" sx={{px: 0}} onClick={handleClickOpen}>
-        <Typography sx={{fontSize: 12}} variant="body2" gutterBottom>
+        <Typography className="font-face-nmR" sx={{fontSize: 12}} variant="body2" gutterBottom>
           {pageTitle}
         </Typography>
       </Button>
@@ -120,6 +131,7 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
 
       
       <Dialog
+      fullScreen={fullscreen}
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
@@ -137,13 +149,13 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
                       pl: '0px',
                       color: '#FF4A92'}} autoFocus onClick={handleClose} />
 
-                      <Brightness1Icon sx={{ 
+                    <Brightness1Icon sx={{ 
                       left: 8,
                       top: 2,
                       cursor: 'pointer',
                       fontSize: 'small',
                       pl: '0px',
-                      color: '#FFCF14'}} autoFocus onClick={handleClose} />
+                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
 
                       <Brightness1Icon sx={{ 
                       left: 8,
@@ -151,7 +163,7 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
                       cursor: 'pointer',
                       fontSize: 'small',
                       pl: '0px',
-                      color: '#3D6AFC'}} autoFocus onClick={handleClose} />
+                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
               
               </DialogActions>
             </div>
@@ -161,12 +173,12 @@ export default function StaticPageComponent({ contentfulQuery, pageTitle, icon, 
           <DialogContent className='DIALOGRESIZE'>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label={tabLabel} {...a11yProps(0)} />
+                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} className="font-face-nmB" label={tabLabel} {...a11yProps(0)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
               
-                <Typography  variant="body2" gutterBottom sx={{
+                <Typography className="font-face-nmR" variant="body2" gutterBottom sx={{
                     width: '100%',
                 }}>
                   {pageContent}

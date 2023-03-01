@@ -8,7 +8,7 @@ const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage }) => {
     const image = bgImage ? `http://${bgImage.slice(2)}` : null
 
   return (
-    <Box sx={{ padding: 5, backgroundImage: `url(${image})` }}>
+    <Box className="font-face-nmR" sx={{ padding: 5, backgroundImage: `url(${image})` }}>
         <Typography paragraph={true} variant="h5" align="center" color='#fff'>
             Welcome to the Briqolage Art Explorer
         </Typography>
