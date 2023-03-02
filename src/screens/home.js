@@ -24,7 +24,6 @@ import Search from '../apps/search';
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const Home = ({ session }) =>  {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username, avatar_url`)
         .eq('id', user.id)
         .single()
 
@@ -48,7 +47,6 @@ const Home = ({ session }) =>  {
 
       if (data) {
         setUsername(data.username)
-        setWebsite(data.website)
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
@@ -68,7 +66,6 @@ const Home = ({ session }) =>  {
       const updates = {
         id: user.id,
         username,
-        website,
         avatar_url,
         updated_at: new Date(),
       }
@@ -192,15 +189,6 @@ const Home = ({ session }) =>  {
                                 onChange={(e) => setUsername(e.target.value)}
                               />
                             </div>
-                            {/*<div>
-                              <label htmlFor="website">Website</label>
-                              <input
-                                id="website"
-                                type="url"
-                                value={website || ''}
-                                onChange={(e) => setWebsite(e.target.value)}
-                              />
-                            </div>*/}
                             <div>
                               <button className="button primary" disabled={loading}>
                                 Update profile
