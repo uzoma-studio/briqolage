@@ -4,7 +4,6 @@ import './App.css'
 import Background from './components/background'
 import Login from './screens/login'
 import Home from './screens/home'
-import { Route, Link, Routes } from 'react-router-dom'
 
 const App = () => {
   const [session, setSession] = useState(null)

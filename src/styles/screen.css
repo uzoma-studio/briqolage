@@ -2,13 +2,6 @@
     text-align: center;
 }
 
-#title-container {
-    position: absolute;
-    bottom: 20%;
-    left: 5%;
-}
-
-
 #footer-container {
     width: '100%';
     position: 'fixed';
@@ -31,27 +24,19 @@
 }
 
 h1.login-title {
-    font-size: 150px;
+    font-size: 100px;
     font-style: italic;
     font-family: sans-serif;
     color: #fff;
 }
 
 .login-options {
-    width: 60%;
-    height: 100%;
-    float: right;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.login-options li {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .login-options li .login-img {
     width: 100px;
@@ -192,4 +177,18 @@ max-width: 120px;
     padding: 0rem;
     resize: both !important;
     overflow: auto !important;
+}
+
+
+p , li , button{
+    font-family: "NeueMachinaRegular" !important;
+}
+
+h1{
+ font-family: "NeueMachinaBold" !important;
+}
+
+.css-hk6gwf-MuiImageListItemBar-subtitle ,
+.css-imwso6-MuiBottomNavigationAction-label {
+    font-family: "NeueMachinaRegular" !important;
 }

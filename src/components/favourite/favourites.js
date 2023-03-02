@@ -65,11 +65,7 @@ const Artworks = () => {
 		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
 	};
 
-  const addFavouriteArt = (slide) => {
-		const newFavouriteList = [...favourites, slide];
-		setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
+ 
 
   const removeFavouriteArt = (slide) => {
 		const newFavouriteList = favourites.filter(

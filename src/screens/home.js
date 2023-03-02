@@ -19,7 +19,6 @@ import Insta from '../apps/insta';
 import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
-import Draggable from 'react-draggable';
 
 
 const Home = ({ session }) =>  {
@@ -117,7 +116,7 @@ const Home = ({ session }) =>  {
                     <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                       <React.Fragment>
-                        <Button  className="HomeMenu" {...bindTrigger(popupState)}>
+                        <Button  className="HomeMenu font-face-nmR" {...bindTrigger(popupState)}>
                         B Menu
                         </Button>
                         <Menu {...bindMenu(popupState)}>
@@ -176,14 +175,14 @@ const Home = ({ session }) =>  {
                       }}
                     >
                       <MenuItem>
-                      <div className="aligncenter" aria-live="polite">
+                      <div className="aligncenter font-face-nmR" aria-live="polite">
                         {loading ? (
                           'Saving ...'
                         ) : (
                           <form onSubmit={updateProfile} className="form-widget">
                             {/*<div>
                               <label htmlFor="username"> {session.user.email}</label>
-                        </div>*/}
+                            </div>*/}
                             <div>
                               <label htmlFor="username">Name</label>
                               <input
@@ -223,9 +222,9 @@ const Home = ({ session }) =>  {
                     <Search/>
                 </li>
                 <li>
-                       <Typography variant="body2" gutterBottom>
-                          {date} {time}
-                        </Typography>
+                  <Typography variant="body2" className='font-face-nmR' gutterBottom>
+                    {date} {time}
+                  </Typography>
                 </li>
             </ul>
         </div>
