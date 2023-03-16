@@ -17,6 +17,7 @@ import Box from '@mui/material/Box';
 import '../styles/screen.css';
 
 import Favourites from '../components/favourite/favourites'
+import { getFavourites } from "../components/favourite/set-favourites";
 
 function PaperComponent(props) {
   return (
@@ -65,20 +66,12 @@ function a11yProps(index) {
 
 
 export default function Favourite() {
-	const [favourites, setFavourites] = useState([]);
+	// const [favourites, setFavourites] = useState([]);
 
   // only run once the first time this component is rendered
-  useEffect(() => {
-		const ArtFavourites = JSON.parse(
-			localStorage.getItem('briq-app-favourites')
-		);
-
-    console.log(ArtFavourites)
-
-		if (ArtFavourites) {
-			setFavourites(ArtFavourites);
-		}
-	}, []);  
+  // useEffect(() => {
+	// 	setFavourites(getFavourites())
+	// }, []);
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -185,7 +178,7 @@ export default function Favourite() {
             <TabPanel px={0} value={value} index={0}>
               
               {
-                favourites.length > 0 ?
+                getFavourites().length > 0 ?
                   <Favourites className="ArtworksCon" />
                   :
                   defaultText
