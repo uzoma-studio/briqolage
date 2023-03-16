@@ -4,7 +4,7 @@ import MuiAlert from '@mui/material/Alert';
 
 const SetFavourite = ({ artworkData }) => {
 
-	const favourites = JSON.parse(localStorage.getItem('briq-app-favourites'));
+	const favourites = JSON.parse(localStorage.getItem('briq-app-favourites')) || [];
 
 	const saveToLocalStorage = (items) => {
 		localStorage.setItem('briq-app-favourites', JSON.stringify(items));

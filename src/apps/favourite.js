@@ -73,6 +73,8 @@ export default function Favourite() {
 			localStorage.getItem('briq-app-favourites')
 		);
 
+    console.log(ArtFavourites)
+
 		if (ArtFavourites) {
 			setFavourites(ArtFavourites);
 		}
