@@ -19,6 +19,7 @@ import Insta from '../apps/insta';
 import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
+import Chat from '../apps/chat';
 
 
 const Home = ({ session }) =>  {
@@ -242,9 +243,12 @@ const Home = ({ session }) =>  {
           </div>
 
 
-          <div>
+          <div className="flex-container">
               <div className="drag-wrapper">
                 <Insta />
+              </div>
+              <div className="drag-wrapper">
+                 <Chat />
               </div>
           </div>
         </div>

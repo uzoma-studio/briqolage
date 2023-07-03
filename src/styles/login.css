@@ -12,15 +12,16 @@ label {
 
 input {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 15px;
   border: var(--custom-border);
   text-decoration: none;
   outline: none;
-  padding: 8px 0px;
+  padding: 10px;
   font-size: 0.9rem;
   background-color: white ;
   color: purple;
 }
+
 
 input[disabled] {
   color: purple;

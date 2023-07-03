@@ -42,6 +42,7 @@ export default function Login() {
                 ) : (
                 <form onSubmit={handleLogin}>
                     <input
+                    sx={{mx: 3}}
                     id="email"
                     className="inputField"
                     type="email"
