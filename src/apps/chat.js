@@ -15,9 +15,8 @@ import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import { pink } from '@mui/material/colors';
-import InstaFeeds from './insta/InstaFeeds'
 import '../styles/screen.css';
-import Card from "./card";
+import '../styles/chat.css';
 import { supabase } from '../supabaseClient';
 
 function PaperComponent(props) {
@@ -89,58 +88,60 @@ export default function Chat() {
     setFullScreen(false)
   };
 
+ 
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState({ username: "", content: "" });
-  const { username, content } = message;
+  const [username, setUsername] = useState('');
+  const [content, setContent] = useState('');
+
   useEffect(() => {
-    const profiles = supabase
-      .channel("*")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "profiles" },
-        (payload) => {
-          console.log({ payload });
-          payload &&
-            setMessages((oldMessages) => [...oldMessages, payload.new]);
+    fetchMessages();
+  }, []);
+
+  const fetchMessages = async () => {
+    const { data, error } = await supabase.from('messages').select();
+    if (error) {
+      console.error('Error fetching messages:', error);
+    } else {
+      setMessages(data);
+    }
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (username.trim() !== '' && content.trim() !== '') {
+      const newMessage = { username, content };
+      setMessages((prevMessages) => [...prevMessages, newMessage]); // Add the new message to the messages array
+  
+      const { data, error } = await supabase.from('messages').insert([newMessage]);
+      if (error) {
+        console.error('Error sending message:', error);
+      } else {
+        if (data && data.length > 0) {
+          // Update the new message with its actual ID returned from the database
+          const updatedMessage = { ...newMessage, id: data[0].id };
+          setMessages((prevMessages) => {
+            // Replace the temporary message with the updated message in the messages array
+            const updatedMessages = prevMessages.map((message) => {
+              return message === newMessage ? updatedMessage : message;
+            });
+            return updatedMessages;
+          });
         }
-      )
-      .subscribe();
-    return () => {
-      profiles.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    Init();
-  }, []);
-
-   //Seleciona a tabela PROFILES e joga o retorno para dentro de MESSAGES
-   async function Init() {
-    const { data: profiles } = await supabase.from("profiles").select("*");
-    if (profiles == null) return;
-    setMessages(profiles);
-  }
-
-  //Insere USERNAME e CONTENT dentro da tabela
-  async function createPost() {
-    await supabase.from("profiles").insert([{ username, content }]).single();
-    setMessage({ username: message.username, content: "" });
-    Init();
-    submit();
-    console.log(messages);
-  }
-
-  function submit() {
-    localStorage.setItem("name", message.username);
-  }
-
+      }
+  
+      setUsername('');
+      setContent('');
+    }
+  };
+  
+  
 
   return (
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
         <Draggable>
           <Tooltip title="Instagram">
-                <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1674822636/insta_1_m6lryh.png"  width={100} height={100}  />
+                <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"  width={90} height={90}  />
           </Tooltip>
         </Draggable>
       </Button>
@@ -189,75 +190,56 @@ export default function Chat() {
                         textAlign: 'center',
 
                     }}>
-                        Instagram
+                        Chat room
                     </Typography>
                 </div>
             
             </DialogTitle>
           
           <DialogContent className='DIALOGRESIZE'>
-            <Box sx={{ borderBottom: 2, borderTop: 2, borderColor: 'black', display: 'flex', justifyContent: 'space-between', p: 2}}>
-                <img src="https://res.cloudinary.com/nieleche/image/upload/v1671988936/Instagram_logo.svg_hj7wtg.png"  width={100} height={36} alt="insta"/>
-                <ColorButton href="https://www.instagram.com/uzzzoma/" target="_blank" sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 12, fontWeight: 'bold', px: 3,  borderColor: 'black'}} size="small" variant="contained">FOLLOW</ColorButton>
-            </Box>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
            
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             </Box>
 
            
            
            
             <TabPanel value={value} index={0}>
-              
-            <div className="container">
-                <div className="separator">
-                    {messages?.map((message) => (
-                    <Card message={message} key={message.id} />
-                  
-                    ))}
-                </div>
-                
-                <div className="form">
-                    <div className="username">
-                    <input
-                        className="input"
-                        id="name"
-                        autoCapitalize="on"
-                        placeholder="Username"
-                        value={localStorage.getItem(message.username)}
-                        onChange={(e) =>
-                        setMessage({ ...message, username: e.target.value })
-                        }
-                    />
+            <div className="chatbox ">
+            {messages && messages.map((message) => (
+                  <div className="message chatcard" key={message.id}>
+                      <div className='image-name'>
+                       <p className='username name'>{message.username}</p>
                     </div>
-                    <div className="content">
-                    <input
-                        id="message"
-                        className="input"
-                        placeholder="Message"
-                        value={content}
-                        onChange={(e) =>
-                        setMessage({ ...message, content: e.target.value })
-                        }
-                    />
+                    <div className='content'>   
+                        <p className='text'>{message.content}</p>
                     </div>
-                    <button className="button" onClick={createPost}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="feather feather-send"
-                    >
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                    </button>
-                </div>
-                </div>
+
+                  </div>
+                ))}
+
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            </Box>
+
+
+                <form className="form" onSubmit={handleSubmit}>
+                  <input
+                  className="input w50"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                  />
+                  <input
+                    className="input w100"
+                    type="text"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Message"
+                  />
+                  <button className="button w50" type="submit">Send</button>
+                </form>
+              </div>
 
             
             </TabPanel>

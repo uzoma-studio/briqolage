@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "react-app-rewired": "^2.2.1",
     "react-scripts": "^5.0.1"
   }
 }

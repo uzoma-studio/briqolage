@@ -236,7 +236,11 @@ const Home = ({ session }) =>  {
               </div>
           </div>
           
-          <div>
+          <div className="flex-container">
+              
+              <div className="drag-wrapper">
+                 <Chat />
+              </div>
               <div className="drag-wrapper">
                 <Music />
               </div>
@@ -247,9 +251,7 @@ const Home = ({ session }) =>  {
               <div className="drag-wrapper">
                 <Insta />
               </div>
-              <div className="drag-wrapper">
-                 <Chat />
-              </div>
+             
           </div>
         </div>
 
