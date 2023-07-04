@@ -205,26 +205,31 @@ export default function Chat() {
            
            
             <TabPanel value={value} index={0}>
-            <div className="chatbox ">
-            {messages && messages.map((message) => (
-                  <div className="message chatcard" key={message.id}>
-                      <div className='image-name'>
-                       <p className='username name'>{message.username}</p>
-                    </div>
-                    <div className='content'>   
-                        <p className='text'>{message.content}</p>
-                    </div>
+              <div className=" chatbox-container">
+                <div className="messages-container">
+                  {messages &&
+                    messages
+                      .slice()
+                      .reverse()
+                      .map((message) => (
+                        <div className="message chatcard" key={message.id}>
+                          <div className='image-name'>
+                            <p className='username name'>{message.username}</p>
+                          </div>
+                          <div className='content'>   
+                            <p className='text'>{message.content}</p>
+                          </div>
+                        </div>
+                      ))}
+                </div>
 
-                  </div>
-                ))}
 
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            </Box>
-
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                </Box>
 
                 <form className="form" onSubmit={handleSubmit}>
                   <input
-                  className="input w50"
+                    className="input w50"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -241,7 +246,6 @@ export default function Chat() {
                 </form>
               </div>
 
-            
             </TabPanel>
     
           </DialogContent>
