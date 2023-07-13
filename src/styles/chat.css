@@ -1,0 +1,85 @@
+
+
+.form {
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    margin-top: 25px;
+}
+
+.input {
+    border-style: solid;
+    font-size: 15px;
+    border-radius: 50px;
+    border: none;
+    color: #ffffff;
+    background-color: #3d3d3d;
+    padding: 14px;
+    outline: none;
+}
+.input::placeholder {
+    color: rgb(173, 173, 173);
+}
+.w50 {
+    width: 50%;
+}
+
+.w100 {
+    width: 100%;
+    margin: 5px;
+}
+
+.button:hover {
+    background: linear-gradient(200deg, #3c9fc3 10%, #0975f1 100%);
+}
+.button:active {
+    background: #0975f1;
+}
+
+
+.chatcard {
+    display: flex;
+    height: auto;
+    width: 100%;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.image-name {
+    margin: 5px;
+    width: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.name {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.content {
+    width: 480px;
+    padding: 5px;
+}
+
+.text { 
+    text-align: left;
+}
+
+.chatbox-container {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+  }
+  
+  .messages-container {
+    flex: 1;
+    overflow-y: scroll;
+  }
+
