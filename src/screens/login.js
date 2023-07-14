@@ -1,28 +1,42 @@
 import React, { useState }  from 'react'
 import { supabase } from '../supabaseClient'
 import Typography from '@mui/material/Typography';
-import '../styles/screen.css'
 import '../styles/login.css'
 
 export default function Login() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('');
 
-    const handleLogin = async (e) => {
-        e.preventDefault()
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOtp({ email });
+    if (error) throw error;
+
+    // Save user data to local storage
+    const { data: user } = await supabase.auth.getUser();
+    localStorage.setItem('user', JSON.stringify(user));
+    console.log(user);
+
+    // Redirect or perform other actions upon successful login
+    // For example, you can navigate to the home page
+    window.location.href = '/home';
+
+    // Display alert box with message
+    alert('Check your mail for the login link');
+  } catch (error) {
+    alert(error.error_description || error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
     
-        try {
-          setLoading(true)
-          const { error } = await supabase.auth.signInWithOtp({ email })
-          if (error) throw error
-          alert('Check your email for the login link!')
-        } catch (error) {
-          alert(error.error_description || error.message)
-        } finally {
-          setLoading(false)
-        }
-      }    
-
+    
   return (
     <>
     <div className='login-options' sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -49,6 +63,8 @@ export default function Login() {
                     placeholder="Your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}/>
+
+              
                     <button className="Loginbtn button block" aria-live="polite">
                     Send magic link
                     </button>
