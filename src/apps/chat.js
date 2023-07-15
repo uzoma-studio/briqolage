@@ -65,7 +65,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 
-export default function Chat() {
+export default function Chat({ username, setUsername }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [fullscreen, setFullScreen] = React.useState(false);
@@ -90,7 +90,6 @@ export default function Chat() {
 
  
   const [messages, setMessages] = useState([]);
-  const [username, setUsername] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
@@ -129,6 +128,7 @@ export default function Chat() {
         }
       }
   
+      setUsername('');
       setUsername('');
       setContent('');
     }
@@ -228,13 +228,14 @@ export default function Chat() {
                 </Box>
 
                 <form className="form" onSubmit={handleSubmit}>
-                  <input
-                    className="input w50"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
-                  />
+              
+                <input
+                className="input chatinput w50"
+                type="text"
+                value={username}
+                disabled
+                placeholder="Username"
+              />
                   <input
                     className="input w100"
                     type="text"

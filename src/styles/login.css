@@ -20,6 +20,7 @@ input {
   font-size: 0.9rem;
   background-color: white ;
   color: purple;
+  margin-top: 5px;
 }
 
 
@@ -48,7 +49,7 @@ button,
   background-color: purple ;
   display: inline-block;
   text-align: center;
-  padding: 0.7rem 0rem;
+  padding: 0.7rem 0.7rem;
   margin:10px;
   cursor: pointer;
   text-align: center;
