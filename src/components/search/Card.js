@@ -1,6 +1,5 @@
 import React, { useState }  from 'react';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
-import { styled } from '@mui/material/styles';
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
 import '../artworks/img-gallery.css'

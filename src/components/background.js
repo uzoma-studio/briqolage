@@ -5,15 +5,22 @@ import Contentful from '../utils/contentful'
 
 const Background = ({ children }) => {
 
-    const { getRandomItem } = helpers
+  const { getRandomItem } = helpers
 
+  const [ bgImageList, setBgImageList ] = useState(null)
   const [bgImage, setBgImage] = useState(null)
 
   const query = `
-    query {
-      assetCollection {
-        items {
-          url
+  query {
+    assetCollection {
+      items {
+        url
+        contentfulMetadata {
+          tags {
+              id
+              name
+            }
+          }
         }
       }
     }
@@ -26,13 +33,43 @@ const Background = ({ children }) => {
           console.error(errors);
         }
 
-        // rerender the entire component with new data
-        setBgImage(getRandomItem(data.assetCollection.items).url);
+        setBgImageList(data.assetCollection.items.filter(
+          (asset) => 
+            asset.contentfulMetadata.tags[0] && 
+            asset.contentfulMetadata.tags[0].id === 'backgroundVideo'
+        ))
       });
-  }, [query, getRandomItem]);
+  }, [query]);
+
+  useEffect(() => {
+
+    bgImageList && setBgImage(getRandomItem(bgImageList).url);
+  
+    return () => {}
+
+  }, [getRandomItem, bgImageList])
   
   return (
-    <div id="background" style={{backgroundImage: `url(${bgImage})`}}>
+    // <div id="background">
+    //   <img src={bg} alt='glitch' style={{
+    //     position: 'absolute',
+    //     top: 0,
+    //     left: 0,
+    //     width: '100%',
+    //     height: '100vh'
+    //   }}/>
+    <div>
+      { bgImage &&
+          <video loop autoPlay style={{
+            zIndex: '-1',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%'
+          }}>
+            <source src={bgImage} type="video/webm" />
+          </video>
+      }
       {children}
     </div>
   )

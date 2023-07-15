@@ -1,5 +1,5 @@
 // File to contain helper functions and utilities needed throughout the project
-
+import { format } from 'date-fns'
 
 const helpers = {
     // returns a random item from an array of items
@@ -9,6 +9,10 @@ const helpers = {
 
     saveToLocalStorage : (items) => {
         localStorage.setItem('briq-app-favourites', JSON.stringify(items));
+    },
+    
+    formatDate : (date) => {
+        return format(date, 'd/L/y HH:mm')
     }
 }
 

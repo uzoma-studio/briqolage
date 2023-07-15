@@ -19,72 +19,79 @@ import Insta from '../apps/insta';
 import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
-import Draggable from 'react-draggable';
+import Chat from '../apps/chat';
 
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState(null); // Add this line to define 'data' variable
 
-  useEffect(() => {
-    getProfile()
-  }, [session])
+useEffect(() => {
 
   const getProfile = async () => {
     try {
-      setLoading(true)
-      const { user } = session
-
+      setLoading(true);
+      const { user } = session;
+  
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username, avatar_url`)
         .eq('id', user.id)
-        .single()
-
+        .single();
+  
       if (error && status !== 406) {
-        throw error
+        throw error;
       }
-
+  
       if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
+        setUsername(data.username);
+        setAvatarUrl(data.avatar_url);
+      } else {
+        setIsModalOpen(true);
       }
+      setData(data); // Update 'data' state with the retrieved profile data
+     
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const updateProfile = async (e) => {
-    e.preventDefault()
+  getProfile()
+}, [session])
 
-    try {
-      setLoading(true)
-      const { user } = session
+const updateProfile = async (e) => {
+  e.preventDefault();
 
-      const updates = {
-        id: user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      }
+  try {
+    setLoading(true);
+    const { user } = session;
 
-      let { error } = await supabase.from('profiles').upsert(updates)
+    const updates = {
+      id: user.id,
+      username,
+      avatar_url,
+    };
 
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
+    let { error } = await supabase.from('profiles').upsert(updates);
+
+    if (error) {
+      throw error;
+    } else {
+      // Refresh the page
+      window.location.reload();
     }
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    setLoading(false);
   }
+};
+
 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -96,7 +103,6 @@ const Home = ({ session }) =>  {
     setAnchorEl(null);
   };
 
-
   const current = new Date().toLocaleString('en-us', {weekday:'short'});
   const date = current.toString().split(' ')[0]; 
 
@@ -104,8 +110,6 @@ const Home = ({ session }) =>  {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-
 
   return (
     <>   
@@ -117,7 +121,7 @@ const Home = ({ session }) =>  {
                     <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                       <React.Fragment>
-                        <Button  className="HomeMenu" {...bindTrigger(popupState)}>
+                        <Button  className="HomeMenu font-face-nmR" {...bindTrigger(popupState)}>
                         B Menu
                         </Button>
                         <Menu {...bindMenu(popupState)}>
@@ -176,14 +180,14 @@ const Home = ({ session }) =>  {
                       }}
                     >
                       <MenuItem>
-                      <div className="aligncenter" aria-live="polite">
+                      <div className="aligncenter font-face-nmR" aria-live="polite">
                         {loading ? (
-                          'Saving ...'
+                          <p>Loading...</p>
                         ) : (
                           <form onSubmit={updateProfile} className="form-widget">
                             {/*<div>
                               <label htmlFor="username"> {session.user.email}</label>
-                        </div>*/}
+                            </div>*/}
                             <div>
                               <label htmlFor="username">Name</label>
                               <input
@@ -193,15 +197,6 @@ const Home = ({ session }) =>  {
                                 onChange={(e) => setUsername(e.target.value)}
                               />
                             </div>
-                            {/*<div>
-                              <label htmlFor="website">Website</label>
-                              <input
-                                id="website"
-                                type="url"
-                                value={website || ''}
-                                onChange={(e) => setWebsite(e.target.value)}
-                              />
-                            </div>*/}
                             <div>
                               <button className="button primary" disabled={loading}>
                                 Update profile
@@ -223,13 +218,42 @@ const Home = ({ session }) =>  {
                     <Search/>
                 </li>
                 <li>
-                       <Typography variant="body2" gutterBottom>
-                          {date} {time}
-                        </Typography>
+                  <Typography variant="body2" className='font-face-nmR' gutterBottom>
+                    {date} {time}
+                  </Typography>
                 </li>
             </ul>
         </div>
       </Box>
+
+      {isModalOpen && (
+        <div className="modal">
+        <div className="modalContent">
+       {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <form onSubmit={updateProfile} className="form-widget">
+              <div>
+                <p className="modalHeading">Hi there, your profile isn't available, please add your username to continue</p>
+                <input
+                  id="username"
+                  type="text"
+                  style={{ border: '1px solid purple',marginTop: '1rem' }}
+                  value={username || ''}
+                  placeholder="Enter a username..."
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div>
+                <button className="button primary p20" disabled={loading}>
+                  Update profile
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+      )}
 
       <div>
         <div id="title-container">
@@ -248,17 +272,23 @@ const Home = ({ session }) =>  {
               </div>
           </div>
           
-          <div>
+          <div className="flex-container">
+              
+              <div className="drag-wrapper">
+              <Chat username={data ? data.username : session.user.email} setUsername={setUsername} />
+
+              </div>
               <div className="drag-wrapper">
                 <Music />
               </div>
           </div>
 
 
-          <div>
+          <div className="flex-container">
               <div className="drag-wrapper">
                 <Insta />
               </div>
+             
           </div>
         </div>
 

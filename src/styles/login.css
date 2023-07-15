@@ -12,15 +12,17 @@ label {
 
 input {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 15px;
   border: var(--custom-border);
   text-decoration: none;
   outline: none;
-  padding: 8px;
+  padding: 10px;
   font-size: 0.9rem;
   background-color: white ;
   color: purple;
+  margin-top: 5px;
 }
+
 
 input[disabled] {
   color: purple;
@@ -47,13 +49,13 @@ button,
   background-color: purple ;
   display: inline-block;
   text-align: center;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 0.7rem;
   margin:10px;
   cursor: pointer;
   text-align: center;
   font-size: 0.9rem;
   text-transform: uppercase;
-  border-radius: 30px;
+  border-radius: 15px;
 }
 
 button.primary,
@@ -62,8 +64,6 @@ button.primary,
   color: white;
   border: 1px solid var(--custom-color-brand);
 }
-
-
 
 .mainHeader {
   width: 100%;

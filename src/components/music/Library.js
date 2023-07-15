@@ -59,9 +59,4 @@ const SongContainer = styled.div`
 	flex-wrap: wrap;
 	background-color: transparent;
 `;
-
-const H1 = styled.h2`
-	padding: 2rem;
-`;
-
 export default Library;

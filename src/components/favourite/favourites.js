@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { client } from '../../client'
 import '../../styles/screen.css';
-import IMGGallery from './IMGGallery.js';
+import FAVGallery from './FavGallery.js';
 
-import IntroScreen from './intro-screen';
-import helpers from '../../utils/helpers';
 
 const Artworks = () => {
   const [isArtworkLoading, setIsArtworkLeading] = useState(false)
   const [artworkImages, setArtworkImages] = useState([])
+	const [favourites, setFavourites] = useState([]);
 
+  // TODO: This code is repeated in another component. Can we clean it up?
   const cleanUpArtworkImages = useCallback((rawData) =>  {
     const cleanArtworks = rawData.map((gallery) => {
       const {sys, fields} = gallery
@@ -25,6 +25,7 @@ const Artworks = () => {
     setArtworkImages(cleanArtworks)
   }, [])
 
+  // TODO: This code is repeated in another component. Can we clean it up?
   const getArtworkImages = useCallback(async () => {
     setIsArtworkLeading(true)
       try {
@@ -45,29 +46,46 @@ const Artworks = () => {
   useEffect(() => {
     getArtworkImages()
   }, [getArtworkImages])
-  
 
-  const [ isExploreClicked, setIsExploreClicked ] = useState(false)
 
-  const { getRandomItem } = helpers
-  const bgImage = artworkImages.length > 0 ? getRandomItem(artworkImages).galleryImage : null
+  // only run once the first time this component is rendered
+  useEffect(() => {
+		const ArtFavourites = JSON.parse(
+			localStorage.getItem('briq-app-favourites')
+		);
+
+		if (ArtFavourites) {
+			setFavourites(ArtFavourites);
+		}
+	}, []);
+
+
+  // run every time our art state changes
+  const saveToLocalStorage = (items) => {
+		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
+	};
+
  
-  return (  
+
+  const removeFavouriteArt = (slide) => {
+		const newFavouriteList = favourites.filter(
+			(favourite) => favourite.id !== slide.id
+		);
+
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
+
+ 
+  return (
+
     <>
-    {
-      isExploreClicked ?
-        <div className="Gallery">
-            <IMGGallery
-              artworkImages={artworkImages}
-            />
-        </div>
-        :
-        <IntroScreen
-          isExploreClicked={isExploreClicked}
-          setIsExploreClicked={setIsExploreClicked} 
-          bgImage={bgImage}
-        />
-    }
+    <div className='Gallery'>
+     <FAVGallery
+        artworkImages={favourites}
+        handleFavouritesClick={removeFavouriteArt}
+      />
+    </div>
     </>
   )
 }

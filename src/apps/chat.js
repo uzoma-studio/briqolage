@@ -1,6 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import styledd from "styled-components";
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,9 +13,11 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import { pink } from '@mui/material/colors';
-import InstaFeeds from './insta/InstaFeeds'
 import '../styles/screen.css';
+import '../styles/chat.css';
+import { supabase } from '../supabaseClient';
+
+import helpers from '../utils/helpers'
 
 function PaperComponent(props) {
   return (
@@ -54,19 +56,12 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(pink[500]),
-  backgroundColor: pink[500],
-  '&:hover': {
-    backgroundColor: pink[700],
-  },
-}));
 
-
-export default function Insta() {
+export default function Chat({ username, setUsername }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [fullscreen, setFullScreen] = React.useState(false);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,12 +80,61 @@ export default function Insta() {
     setFullScreen(false)
   };
 
+ 
+  const [messages, setMessages] = useState([]);
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+
+  const fetchMessages = async () => {
+    const { data, error } = await supabase
+      .from('messages').select()
+      .order('created_at', { ascending: false })
+    if (error) {
+      console.error('Error fetching messages:', error);
+    } else {
+      setMessages(data);
+    }
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (username.trim() !== '' && content.trim() !== '') {
+      const newMessage = { username, content };
+      setMessages((prevMessages) => [newMessage, ...prevMessages]); // Add the new message to the messages array
+  
+      const { data, error } = await supabase.from('messages').insert([newMessage]);
+      if (error) {
+        console.error('Error sending message:', error);
+      } else {
+        if (data && data.length > 0) {
+          // Update the new message with its actual ID returned from the database
+          const updatedMessage = { ...newMessage, id: data[0].id };
+          setMessages((prevMessages) => {
+            // Replace the temporary message with the updated message in the messages array
+            const updatedMessages = prevMessages.map((message) => {
+              return message === newMessage ? updatedMessage : message;
+            });
+            return updatedMessages;
+          });
+        }
+      }
+  
+      setUsername('');
+      setContent('');
+    }
+  };
+  
+  const { formatDate } = helpers
+
   return (
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
         <Draggable>
-          <Tooltip title="Instagram">
-                <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1674822636/insta_1_m6lryh.png"  width={100} height={100}  />
+          <Tooltip title="Chat">
+            <img alt="chat"  src="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"  width={90} height={90}  />
           </Tooltip>
         </Draggable>
       </Button>
@@ -139,41 +183,66 @@ export default function Insta() {
                         textAlign: 'center',
 
                     }}>
-                        Instagram
+                        Chat room
                     </Typography>
                 </div>
             
             </DialogTitle>
           
           <DialogContent className='DIALOGRESIZE'>
-            <Box sx={{ borderBottom: 2, borderTop: 2, borderColor: 'black', display: 'flex', justifyContent: 'space-between', p: 2}}>
-                <img src="https://res.cloudinary.com/nieleche/image/upload/v1671988936/Instagram_logo.svg_hj7wtg.png"  width={100} height={36} alt="insta"/>
-                <ColorButton href="https://www.instagram.com/uzzzoma/" target="_blank" sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 12, fontWeight: 'bold', px: 3,  borderColor: 'black'}} size="small" variant="contained">FOLLOW</ColorButton>
-            </Box>
+           
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-           
             </Box>
-
-           
-           
            
             <TabPanel value={value} index={0}>
+              <div className=" chatbox-container">
+                <div className="messages-container">
+                  {messages &&
+                    messages
+                      .slice()
+                      .reverse()
+                      .map((message) => (
+                        <div className="message chatcard" key={message.id}>
+                          {message.created_at ?
+                            <small style={{fontSize: '12px'}}>{formatDate(Date.parse(message.created_at))}</small>
+                            :
+                            <small style={{fontSize: '12px'}}>just now</small>
+                          }
+                          <div className='image-name'>
+                            <p className='username name'>{message.username}</p>
+                          </div>
+                          <div className='content'>   
+                            <p className='text'>{message.content}</p>
+                          </div>
+                        </div>
+                      ))}
+                </div>
+
+
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                </Box>
+
+                <form className="form" onSubmit={handleSubmit}>
               
-            <InstaFeeds token={process.env.REACT_APP_INS_TOKEN} limit={12}/>
-            
-                <Typography  variant="body2" gutterBottom sx={{
-                    width: '100%',
+                  <input
+                    className="input chatinput w50"
+                    type="text"
+                    value={username}
+                    disabled
+                    placeholder="Username"
+                  />
 
-                }}>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                  of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                   but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised
-                    in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                     with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </Typography>
+                  <input
+                    className="input w100"
+                    type="text"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Message"
+                  />
+                  <button className="button w50" type="submit">Send</button>
+                </form>
+              </div>
 
-            
             </TabPanel>
     
           </DialogContent>
