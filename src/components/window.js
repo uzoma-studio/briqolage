@@ -53,8 +53,8 @@ TabPanel.propTypes = {
 };
 
 
-export default function Window({ children, title, iconUrl }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Window({ children, title, iconUrl, isOpenByDefault }) {
+  const [isOpen, setIsOpen] = useState(isOpenByDefault);
   const [value, setValue] = useState(0);
   const [fullscreen, setFullScreen] = useState(false);
   

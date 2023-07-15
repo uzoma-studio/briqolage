@@ -60,7 +60,8 @@ export default function Chat({ username, setUsername }) {
   const { formatDate } = helpers
 
   return (
-    <Window title="Chat room" iconUrl="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png">
+    <Window title="Chat room" iconUrl="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
+      isOpenByDefault={true}>
       <div className=" chatbox-container">
         <div className="messages-container">
           {messages &&
