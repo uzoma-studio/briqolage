@@ -29,44 +29,40 @@ const Home = ({ session }) =>  {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState(null); // Add this line to define 'data' variable
 
+useEffect(() => {
 
-  const closeModal = () => {
-  setIsModalOpen(false);
-};
-
-  useEffect(() => {
-    getProfile()
-  }, [session])
-
-const getProfile = async () => {
-  try {
-    setLoading(true);
-    const { user } = session;
-
-    let { data, error, status } = await supabase
-      .from('profiles')
-      .select(`username, avatar_url`)
-      .eq('id', user.id)
-      .single();
-
-    if (error && status !== 406) {
-      throw error;
+  const getProfile = async () => {
+    try {
+      setLoading(true);
+      const { user } = session;
+  
+      let { data, error, status } = await supabase
+        .from('profiles')
+        .select(`username, avatar_url`)
+        .eq('id', user.id)
+        .single();
+  
+      if (error && status !== 406) {
+        throw error;
+      }
+  
+      if (data) {
+        setUsername(data.username);
+        setAvatarUrl(data.avatar_url);
+      } else {
+        setIsModalOpen(true);
+      }
+      setData(data); // Update 'data' state with the retrieved profile data
+     
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (data) {
-      setUsername(data.username);
-      setAvatarUrl(data.avatar_url);
-    } else {
-      setIsModalOpen(true);
-    }
-    setData(data); // Update 'data' state with the retrieved profile data
-   
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  getProfile()
+}, [session])
 
 const updateProfile = async (e) => {
   e.preventDefault();
@@ -107,7 +103,6 @@ const updateProfile = async (e) => {
     setAnchorEl(null);
   };
 
-
   const current = new Date().toLocaleString('en-us', {weekday:'short'});
   const date = current.toString().split(' ')[0]; 
 
@@ -115,36 +110,6 @@ const updateProfile = async (e) => {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-
-  const modalStyles = {
-    modal: {
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: '9999',
-    },
-    modalContent: {
-      background: 'white',
-      padding: '2rem',
-      borderRadius: '30px',
-      maxWidth: '400px',
-      width: '80%',
-      textAlign: 'center',
-      color: 'purple',
-    },
-    modalHeading: {
-      fontSize: '1.5rem',
-      margin: '1rem',
-    },
-  };
-
 
   return (
     <>   
@@ -217,7 +182,7 @@ const updateProfile = async (e) => {
                       <MenuItem>
                       <div className="aligncenter font-face-nmR" aria-live="polite">
                         {loading ? (
-                          'Saving ...'
+                          <p>Loading...</p>
                         ) : (
                           <form onSubmit={updateProfile} className="form-widget">
                             {/*<div>
@@ -265,17 +230,17 @@ const updateProfile = async (e) => {
         <div className="modal">
         <div className="modalContent">
        {loading ? (
-            'Saving ...'
+            <p>Loading...</p>
           ) : (
             <form onSubmit={updateProfile} className="form-widget">
               <div>
-                <h2 className="modalHeading">Hi there, your profile isn't available, please add your username to continue</h2>
-                <h2>Username</h2>
+                <p className="modalHeading">Hi there, your profile isn't available, please add your username to continue</p>
                 <input
                   id="username"
                   type="text"
                   style={{ border: '1px solid purple',marginTop: '1rem' }}
                   value={username || ''}
+                  placeholder="Enter a username..."
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>

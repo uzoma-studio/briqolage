@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
     "contentful": "^9.2.14",
+    "date-fns": "^2.30.0",
     "env-cmd": "^10.1.0",
     "material-ui-popup-state": "^5.0.4",
     "node-sass": "^8.0.0",
