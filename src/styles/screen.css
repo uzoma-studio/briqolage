@@ -180,11 +180,11 @@ max-width: 120px;
 }
 
 
-p , li , button{
+p , li , button, input {
     font-family: "NeueMachinaRegular" !important;
 }
 
-h1{
+h1 {
  font-family: "NeueMachinaBold" !important;
 }
 
@@ -215,9 +215,10 @@ h1{
     width: 80%;
     text-align: center;
     color: purple;
+    box-shadow: 4px 4px 2px purple;
   }
 
   .modalHeading {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 1rem;
   }

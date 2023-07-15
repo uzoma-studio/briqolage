@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styledd from "styled-components";
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,10 +13,11 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import { pink } from '@mui/material/colors';
 import '../styles/screen.css';
 import '../styles/chat.css';
 import { supabase } from '../supabaseClient';
+
+import helpers from '../utils/helpers'
 
 function PaperComponent(props) {
   return (
@@ -56,14 +56,6 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(pink[500]),
-  backgroundColor: pink[500],
-  '&:hover': {
-    backgroundColor: pink[700],
-  },
-}));
-
 
 export default function Chat({ username, setUsername }) {
   const [open, setOpen] = React.useState(false);
@@ -97,7 +89,9 @@ export default function Chat({ username, setUsername }) {
   }, []);
 
   const fetchMessages = async () => {
-    const { data, error } = await supabase.from('messages').select();
+    const { data, error } = await supabase
+      .from('messages').select()
+      .order('created_at', { ascending: false })
     if (error) {
       console.error('Error fetching messages:', error);
     } else {
@@ -109,7 +103,7 @@ export default function Chat({ username, setUsername }) {
     e.preventDefault();
     if (username.trim() !== '' && content.trim() !== '') {
       const newMessage = { username, content };
-      setMessages((prevMessages) => [...prevMessages, newMessage]); // Add the new message to the messages array
+      setMessages((prevMessages) => [newMessage, ...prevMessages]); // Add the new message to the messages array
   
       const { data, error } = await supabase.from('messages').insert([newMessage]);
       if (error) {
@@ -129,19 +123,18 @@ export default function Chat({ username, setUsername }) {
       }
   
       setUsername('');
-      setUsername('');
       setContent('');
     }
   };
   
-  
+  const { formatDate } = helpers
 
   return (
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
         <Draggable>
-          <Tooltip title="Instagram">
-                <img alt="instagram"  src="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"  width={90} height={90}  />
+          <Tooltip title="Chat">
+            <img alt="chat"  src="https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"  width={90} height={90}  />
           </Tooltip>
         </Draggable>
       </Button>
@@ -200,9 +193,6 @@ export default function Chat({ username, setUsername }) {
            
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             </Box>
-
-           
-           
            
             <TabPanel value={value} index={0}>
               <div className=" chatbox-container">
@@ -213,6 +203,11 @@ export default function Chat({ username, setUsername }) {
                       .reverse()
                       .map((message) => (
                         <div className="message chatcard" key={message.id}>
+                          {message.created_at ?
+                            <small style={{fontSize: '12px'}}>{formatDate(Date.parse(message.created_at))}</small>
+                            :
+                            <small style={{fontSize: '12px'}}>just now</small>
+                          }
                           <div className='image-name'>
                             <p className='username name'>{message.username}</p>
                           </div>
@@ -229,13 +224,14 @@ export default function Chat({ username, setUsername }) {
 
                 <form className="form" onSubmit={handleSubmit}>
               
-                <input
-                className="input chatinput w50"
-                type="text"
-                value={username}
-                disabled
-                placeholder="Username"
-              />
+                  <input
+                    className="input chatinput w50"
+                    type="text"
+                    value={username}
+                    disabled
+                    placeholder="Username"
+                  />
+
                   <input
                     className="input w100"
                     type="text"
