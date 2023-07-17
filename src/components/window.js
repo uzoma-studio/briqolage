@@ -71,17 +71,12 @@ export default function Window({ children, title, iconUrl, isOpenByDefault, styl
             cancel={'[class*="MuiDialogContent-root"]'}
             >
                 {
-                    !fullscreen ? (
-                        <>
-                            <span style={style} className='MuiPaper-root-container'>
-                                <Paper {...props} />
-                            </span>
-                        </>
-                        ):(
-                            <>
-                                <Paper {...props} />
-                            </>
-                        )
+                    !fullscreen ? 
+                        <span style={style} className='MuiPaper-root-container'>
+                            <Paper {...props} />
+                        </span>
+                        :
+                        <Paper {...props} />
                 }
             </Draggable>
         );
