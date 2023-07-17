@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 
 import '../artworks/img-gallery.css'
 
-const FAVGallery = (props) => {
+const FAVGallery = () => {
   const [slideNumber, setSlideNumber] = useState(0)
   const [openModal, setOpenModal] = useState(false)
 
@@ -44,22 +44,24 @@ const FAVGallery = (props) => {
     setOpenModal(false)
   }
 
+  const artworkImages = JSON.parse(localStorage.getItem('briq-app-favourites'));
+
   // Previous Image
   const prevSlide = () => {
     slideNumber === 0 
-    ? setSlideNumber( props.artworkImages.length -1 ) 
+    ? setSlideNumber( artworkImages.length -1 ) 
     : setSlideNumber( slideNumber - 1 )
   }
 
   // Next Image  
   const nextSlide = () => {
-    slideNumber + 1 === props.artworkImages.length 
+    slideNumber + 1 === artworkImages.length 
     ? setSlideNumber(0) 
     : setSlideNumber(slideNumber + 1)
   }
 
   return (
-    <div>
+    <div className='Gallery'>
 
       {openModal && 
         <div className='sliderWrap'>
@@ -76,9 +78,9 @@ const FAVGallery = (props) => {
           </GreenButton>
           
           <div className='fullScreenImage'>
-            <img src={props.artworkImages[slideNumber].galleryImage} alt='' />
+            <img src={artworkImages[slideNumber].galleryImage} alt='' />
             <ImageListItemBar
-                   subtitle={props.artworkImages[slideNumber].galleryTitle} />
+                   subtitle={artworkImages[slideNumber].galleryTitle} />
           </div>
         </div>
       }
@@ -86,14 +88,14 @@ const FAVGallery = (props) => {
       {/* <br />
       Current slide number:  {slideNumber}
       <br />
-      Total Slides: {props.artworkImages.length}
+      Total Slides: {artworkImages.length}
       <br /><br /> */}
 
         <AppContainer>
         <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
 
             {
-               props.artworkImages.map((slide, index) => {
+               artworkImages.map((slide, index) => {
                 const {id, galleryImage, galleryTitle, galleryDescription} = slide
                 return(
                   <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={id}>

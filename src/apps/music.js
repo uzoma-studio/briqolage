@@ -1,20 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import styledd from "styled-components";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import Brightness1Icon from '@mui/icons-material/Brightness1';
 import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/music.css';
+
+import Window from "../components/window";
 
 // Import components
 import Player from "../components/music/Player";
@@ -23,17 +17,6 @@ import Library from "../components/music/Library";
 
 import Contentful from "../utils/contentful";
 import { v4 as uuidv4 } from "uuid";
-
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,29 +52,10 @@ function a11yProps(index) {
 }
 
 export default function Music() {
-  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
-  const [fullscreen, setFullScreen] = React.useState(false);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setFullScreen(false)
-  };
-
-  const handleFull = () => {
-    setFullScreen(true)
-  };
-
-  const handleCloseFull = () => {
-    setFullScreen(false)
   };
   
   	// Ref
@@ -143,7 +107,7 @@ export default function Music() {
         setSongs(songs)
         setCurrentSong(songs[0])
       });
-  }, []);
+  }, [query]);
 
 	// Functions
 	const updateTimeHandler = (e) => {
@@ -177,125 +141,63 @@ export default function Music() {
 		}
 	};
 
-  return (
-    <div>
-      <Button className="fmsec" onClick={handleClickOpen}>
-        <Draggable>
-          <Tooltip title="Briq FM">
-            <img id="fmIcon" alt="BriqFM icon" src="https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png"  width={148} height={100}  />
-          </Tooltip>
-        </Draggable>
-      </Button>
+  const playSongContainer = <div className="PlaySongContainer">
+    {
+      currentSong ?
+        <>
+          <Player
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            currentSong={currentSong}
+            setCurrentSong={setCurrentSong}
+            audioRef={audioRef}
+            songInfo={songInfo}
+            setSongInfo={setSongInfo}
+            songs={songs}
+            setSongs={setSongs}
+          />
+          <Song currentSong={currentSong} />
+        </>
+        :
+        <p>Loading...</p>
+    }
+  </div>
 
-      
-      <Dialog
-       fullScreen={fullscreen}
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title">
-
-        <AppContainer libraryStatus={libraryStatus}>
-          <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
-            <div className="DialogTags">
-              <DialogActions className="DialogTags" > 
-                  <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#FF4A92'}} autoFocus onClick={handleClose} />
-
-                      
-                    <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
-
-                      <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
-              
-              </DialogActions>
-
-                <div className="PlaySongContainer">
-                  {
-                    currentSong ?
-                      <>
-                        <Player
-                          isPlaying={isPlaying}
-                          setIsPlaying={setIsPlaying}
-                          currentSong={currentSong}
-                          setCurrentSong={setCurrentSong}
-                          audioRef={audioRef}
-                          songInfo={songInfo}
-                          setSongInfo={setSongInfo}
-                          songs={songs}
-                          setSongs={setSongs}
-                        />
-                        <Song currentSong={currentSong} />
-                      </>
-                      :
-                      <p>Loading...</p>
-                  }
-                </div>
-            </div>
-
-          
-          </DialogTitle>
-          
-          <DialogContent  className='DIALOGRESIZE'>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+  const tabs = <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab sx={{ color: 'gray', fontSize: 10, fontWeight: 'light' }} label="Channel" {...a11yProps(0)} />
               </Tabs>
-            </Box>
 
-            <TabPanel value={value} index={0}>
-              {
-                currentSong ?
-                <>
-                  <Library
-                    songs={songs}
-                    setCurrentSong={setCurrentSong}
-                    audioRef={audioRef}
-                    isPlaying={isPlaying}
-                    setSongs={setSongs}
-                    libraryStatus={libraryStatus}
-                  />
-                
-                  <audio
-                    onLoadedMetadata={updateTimeHandler}
-                    onTimeUpdate={updateTimeHandler}
-                    onEnded={songEndHandler}
-                    ref={audioRef}
-                    src={currentSong.audioUrl}
-                  />
-                </>
-                :
-                <p>Loading...</p>
-              }
-            </TabPanel>
-    
-          </DialogContent>
-        </AppContainer>
-      </Dialog>
-    </div>
-  );
+  return (
+    <Window title="Music" icon={{
+      id: 'fmIcon',
+      alt: 'BriqFM icon',
+      src: 'https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png'
+    }} music={{libraryStatus, playSongContainer}} windowTabs={tabs}>
+      {/* {
+        <
+        currentSong ?
+        <>
+          <Library
+            songs={songs}
+            setCurrentSong={setCurrentSong}
+            audioRef={audioRef}
+            isPlaying={isPlaying}
+            setSongs={setSongs}
+            libraryStatus={libraryStatus}
+          />
+        
+          <audio
+            onLoadedMetadata={updateTimeHandler}
+            onTimeUpdate={updateTimeHandler}
+            onEnded={songEndHandler}
+            ref={audioRef}
+            src={currentSong.audioUrl}
+          />
+        </>
+        :
+        <p>Loading...</p>
+      } */}
+      <p>Music...</p>
+    </Window>
+  )
 }
-
-const AppContainer = styledd.div`
-	transition: all 0.5s ease;
-	margin-left: ${(p) => (p.libraryStatus ? "20rem" : "0")};
-	@media screen and (max-width: 768px) {
-		margin-left: 0;
-	}
-`;

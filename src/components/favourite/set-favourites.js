@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import helpers from '../../utils/helpers';
 
 export const getFavourites = () => JSON.parse(localStorage.getItem('briq-app-favourites')) || [];
 
 const SetFavourite = ({ artworkData }) => {
 
-	const saveToLocalStorage = (items) => {
-		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
-	};
-
   	const addToFavourites = (slide) => {
 		const newFavouriteList = [...getFavourites(), slide];
 		// setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
+		helpers.saveToLocalStorage(newFavouriteList);
 	};
 
   	const removeFromFavourites = (slide) => {
@@ -22,7 +19,7 @@ const SetFavourite = ({ artworkData }) => {
 		);
 
 		// setFavourites(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
+		helpers.saveToLocalStorage(newFavouriteList);
 	};
 
 	const favourites = getFavourites()
