@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +43,7 @@ TabPanel.propTypes = {
 };
 
 
-export default function Window({ children, title, iconUrl, isOpenByDefault, style }) {
+export default function Window({ children, title, icon, isOpenByDefault, style, windowTabs, music }) {
   const [isOpen, setIsOpen] = useState(isOpenByDefault);
   const [value, setValue] = useState(0);
   const [fullscreen, setFullScreen] = useState(false);
@@ -97,11 +98,12 @@ export default function Window({ children, title, iconUrl, isOpenByDefault, styl
       }, [fullscreen]);
 
   return (
+
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
         <Draggable>
           <Tooltip title={title}>
-            <img alt={`${title} icon`}  src={iconUrl}  width={90} height={90}  />
+            <img id={icon.id} alt={icon.alt}  src={icon.src}  width={90} height={90}  />
           </Tooltip>
         </Draggable>
       </Button>
@@ -115,44 +117,48 @@ export default function Window({ children, title, iconUrl, isOpenByDefault, styl
         aria-labelledby="draggable-dialog-title"
         ref={dialogRef}>
 
-        <AppContainer>
+        <AppContainer libraryStatus={music && music.libraryStatus}>
             <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
                 <div className="DialogTags">
-                <DialogActions className="DialogTags" > 
-                    <Brightness1Icon sx={{ 
+                    <DialogActions className="DialogTags" > 
+                        <Brightness1Icon sx={{ 
+                            left: 8,
+                            top: 2,
+                            cursor: 'pointer',
+                            fontSize: 'small',
+                            pl: '0px',
+                            color: '#FF4A92'}} autoFocus onClick={handleClose} />
+                        
+                        <Brightness1Icon sx={{ 
                         left: 8,
                         top: 2,
                         cursor: 'pointer',
                         fontSize: 'small',
                         pl: '0px',
-                        color: '#FF4A92'}} autoFocus onClick={handleClose} />
-                       
-                      <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
+                        color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
 
-                      <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
-                
-                </DialogActions>
+                        <Brightness1Icon sx={{ 
+                        left: 8,
+                        top: 2,
+                        cursor: 'pointer',
+                        fontSize: 'small',
+                        pl: '0px',
+                        color: '#3D6AFC'}} autoFocus onClick={handleFull} />
+                    
+                    </DialogActions>
 
-                    <Typography className='font-face-nmB' variant="body2" gutterBottom sx={{
+                    { music && music.playSongContainer ?
+                        music.playSongContainer
+                        :
+                        <Typography className='font-face-nmB' variant="body2" gutterBottom sx={{
                             width: '100%',
                             pt: '0.4rem',
                             textAlign: 'center',
 
                         }}>
-                        {title}
-                    </Typography>
+                            {title}
+                        </Typography>
+                    }
                 </div>
             
             </DialogTitle>
@@ -160,13 +166,18 @@ export default function Window({ children, title, iconUrl, isOpenByDefault, styl
           <DialogContent className='DIALOGRESIZE'>
            
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                {windowTabs && windowTabs}
             </Box>
            
            {/* The actual content that this Window component is serving 👇🏾 */}
 
-            <TabPanel value={value} index={0}>
-              { children }
-            </TabPanel>
+            { !windowTabs ?
+                <TabPanel value={value} index={0}>
+                    { children }
+                </TabPanel>
+                :
+                children
+            }
     
           </DialogContent>
         </AppContainer>

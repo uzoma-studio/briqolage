@@ -176,6 +176,8 @@ max-width: 120px;
 .MuiPaper-root-container {
     position: absolute !important;
     margin: 0 !important;
+    top: 50%;
+    left: 50%;
 }
 
 .DIALOGRESIZE {
