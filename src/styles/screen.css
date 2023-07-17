@@ -169,8 +169,13 @@ max-width: 120px;
     display: flex !important;
 }
 
-.MuiDialog-root {
-    z-index: 0 !important;
+.MuiDialog-root, .MuiBackdrop-root {
+    height: 0; width: 0
+}
+
+.MuiPaper-root-container {
+    position: absolute !important;
+    margin: 0 !important;
 }
 
 .DIALOGRESIZE {

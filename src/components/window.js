@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styledd from "styled-components";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -14,17 +14,6 @@ import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
-
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,11 +42,10 @@ TabPanel.propTypes = {
 };
 
 
-export default function Window({ children, title, iconUrl, isOpenByDefault }) {
+export default function Window({ children, title, iconUrl, isOpenByDefault, style }) {
   const [isOpen, setIsOpen] = useState(isOpenByDefault);
   const [value, setValue] = useState(0);
   const [fullscreen, setFullScreen] = useState(false);
-  
 
   const handleClickOpen = () => {
     setIsOpen(true);
@@ -76,6 +64,43 @@ export default function Window({ children, title, iconUrl, isOpenByDefault }) {
     setFullScreen(false)
   };
 
+    function PaperComponent(props) {
+        return (
+            <Draggable
+            handle="#draggable-dialog-title"
+            cancel={'[class*="MuiDialogContent-root"]'}
+            >
+                {
+                    !fullscreen ? (
+                        <>
+                            <span style={style} className='MuiPaper-root-container'>
+                                <Paper {...props} />
+                            </span>
+                        </>
+                        ):(
+                            <>
+                                <Paper {...props} />
+                            </>
+                        )
+                }
+            </Draggable>
+        );
+    }
+
+    const dialogRef = useRef(null)
+
+    useEffect(() => {
+        if(dialogRef.current){
+            if(fullscreen){ 
+                dialogRef.current.style.height = '100%'
+                dialogRef.current.style.width = '100%'
+            } else {
+                dialogRef.current.style.height = '0'
+                dialogRef.current.style.width = '0'
+            }
+        }
+      }, [fullscreen]);
+
   return (
     <div>
       <Button  className="instasec"  onClick={handleClickOpen}>
@@ -92,7 +117,8 @@ export default function Window({ children, title, iconUrl, isOpenByDefault }) {
         open={isOpen}
         onClose={handleClose}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title">
+        aria-labelledby="draggable-dialog-title"
+        ref={dialogRef}>
 
         <AppContainer>
             <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
@@ -124,12 +150,12 @@ export default function Window({ children, title, iconUrl, isOpenByDefault }) {
                 
                 </DialogActions>
 
-                <Typography className='font-face-nmB' variant="body2" gutterBottom sx={{
-                        width: '100%',
-                        pt: '0.4rem',
-                        textAlign: 'center',
+                    <Typography className='font-face-nmB' variant="body2" gutterBottom sx={{
+                            width: '100%',
+                            pt: '0.4rem',
+                            textAlign: 'center',
 
-                    }}>
+                        }}>
                         {title}
                     </Typography>
                 </div>
