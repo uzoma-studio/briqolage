@@ -25,6 +25,7 @@
     "react-alert-template-mui": "^1.0.7",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
+    "react-player": "^2.12.0",
     "react-resizable": "^3.0.4",
     "react-router-dom": "^6.4.3",
     "sass": "^1.57.1",
