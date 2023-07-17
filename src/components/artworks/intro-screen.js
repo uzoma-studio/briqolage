@@ -5,10 +5,20 @@ import Button from '@mui/material/Button';
 
 const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage }) => {
 
-    const image = bgImage ? `http://${bgImage.slice(2)}` : null
-
   return (
-    <Box className="font-face-nmR" sx={{ padding: 5, backgroundImage: `url(${image})` }}>
+    <Box className="font-face-nmR" sx={{ padding: 5 }}>
+          { bgImage &&
+          <video loop autoPlay style={{
+            zIndex: '-1',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%'
+          }}>
+            <source src={bgImage} type="video/webm" />
+          </video>
+          }
+   
         <Typography paragraph={true} variant="h5" align="center" color='#fff'>
             Welcome to the Briqolage Art Explorer
         </Typography>

@@ -30,7 +30,6 @@ const Home = ({ session }) =>  {
   const [data, setData] = useState(null); // Add this line to define 'data' variable
 
 useEffect(() => {
-
   const getProfile = async () => {
     try {
       setLoading(true);
@@ -64,9 +63,9 @@ useEffect(() => {
   getProfile()
 }, [session])
 
+
 const updateProfile = async (e) => {
   e.preventDefault();
-
   try {
     setLoading(true);
     const { user } = session;
