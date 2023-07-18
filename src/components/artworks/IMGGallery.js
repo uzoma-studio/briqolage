@@ -79,8 +79,7 @@ const IMGGallery = (props) => {
           </GreenButton>
           
           <div className='fullScreenImage'>
-          <ReactPlayer url={props.artworkImages[slideNumber].url} playing={true} loop={true} controls={false} />
-            
+            <ReactPlayer url={props.artworkImages[slideNumber].url} playing={true} loop={true} controls={false} />
           </div>
         </div>
       }
