@@ -19,7 +19,7 @@ import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
 import Chat from '../apps/chat';
-import BackgroundVid from '../components/background.js'
+import Screensaver from '../components/screensaver';
 
 
 
@@ -123,18 +123,12 @@ const updateProfile = async (e) => {
   };
 
 
-
- // Function to activate the screensaver
- const activateScreenSaver = () => {
-  setScreenSaverActive(true);
-};
-
 useEffect(() => {
   let timer;
   // Function to reset the inactivity timer when the mouse is moved
   const resetInactivityTimer = () => {
     clearTimeout(timer);
-    timer = setTimeout(activateScreenSaver, inactivityTimeout);
+    timer = setTimeout(setScreenSaverActive(true), inactivityTimeout);
   };
 
   // Event listener to detect mouse movement and resett the inactivity timer
@@ -155,34 +149,7 @@ useEffect(() => {
   return (
     <>   
      {isScreenSaverActive && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 1000,
-            backgroundColor: 'black',
-          }}>
-          <BackgroundVid/>
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              color: 'white',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-              animation: 'floatAnimation 25s infinite', // Updated animation with more keyframes
-            }}>
-            <h1 className="login-title">
-              Briqolage
-            </h1>
-          </div>
-        </div>
+        <Screensaver />
       )}
       <Box component="span" className="MainMenu" sx={{position: 'absolute', top: 0, left: 0, right: 0,  zIndex: '1000'  }}>
         <div>
