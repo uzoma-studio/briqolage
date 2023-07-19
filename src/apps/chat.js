@@ -97,7 +97,7 @@ export default function Chat({ username, setUsername }) {
         <form className="form" onSubmit={handleSubmit}>
       
           <input
-            className="input chatinput w50"
+            className="input chatinput w40"
             type="text"
             value={username}
             disabled
