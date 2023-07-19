@@ -60,7 +60,7 @@ export default function Blog() {
     <Window title="Briq Blog" icon={{
       id: 'blogIcon',
       alt: "Briq Blog",
-      src: "https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png",
+      src: "https://res.cloudinary.com/nieleche/image/upload/v1689804241/blog-icon_jc9e4t.png",
     }} style={{
       width: '50em',
       height: '30em'
