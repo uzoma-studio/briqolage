@@ -11,7 +11,7 @@ export default function Gallery() {
       alt: 'gallery',
       src: 'https://res.cloudinary.com/nieleche/image/upload/v1676945963/art_s9ina0.png'
     }}
-      style={{top: '50vh', left: '15vw', width: '40em'}}
+      style={{top: '50vh', left: '15vw', width: '55em'}}
     >
       <Artworks className="ArtworksCon" />
     </Window>

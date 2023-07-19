@@ -63,14 +63,14 @@ h1.login-title {
 }
 
 
-.FooterTag .artsec img{
+.FooterTag #galleryid {
     width: 70px !important;
     height: 70px !important;
     padding:0px 10px 0px 10px !important; 
 }
 
-.FooterTag .fmsec img{
-    width: 102px !important;
+.FooterTag #fmIcon{
+    width: 108px !important;
     height: 70px !important;
     padding:0px 10px 0px 10px !important; 
 }   
@@ -80,6 +80,7 @@ h1.login-title {
     height: 70px !important;
     padding:0px 10px 0px 10px !important; 
 }
+
 
 .abouttext .abtImg{
    display: none !important;
@@ -123,6 +124,7 @@ max-width: 120px;
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
    border-radius:11px !important;
    border: 3px solid black;
+   max-width: 100% !important;
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
@@ -170,7 +172,9 @@ max-width: 120px;
 }
 
 .MuiDialog-root, .MuiBackdrop-root {
-    height: 0; width: 0
+    height: 0; 
+    width: 0;
+    z-index: 100 !important; 
 }
 
 .MuiPaper-root-container {

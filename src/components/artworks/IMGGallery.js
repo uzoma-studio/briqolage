@@ -10,18 +10,20 @@ import ImageListItemBar from '@mui/material/ImageListItemBar'
 import Box from '@mui/material/Box';
 import SetFavourite from '../favourite/set-favourites';
 import ReactPlayer from 'react-player';
+import ReactDOM from 'react-dom';
 
 import './img-gallery.css'
 
 const IMGGallery = (props) => {
   const [slideNumber, setSlideNumber] = useState(0)
   const [openModal, setOpenModal] = useState(false)
-
+  const [isFullScreen, setIsFullScreen] = useState(false); 
 
 
   const handleOpenModal = (index) => {
     setSlideNumber(index)
     setOpenModal(true)
+    setIsFullScreen(true); 
   }
 
   const ColorButton = styled(Button)(({ theme }) => ({
@@ -62,28 +64,52 @@ const IMGGallery = (props) => {
   
 
   return (
-    <div>
+    <div style={{ height: '350px' }}>
 
-      {openModal && 
+      {isFullScreen && openModal && ReactDOM.createPortal(
         <div className='sliderWrap'>
             <Brightness1Icon className='btnClose' sx={{ 
                       cursor: 'pointer',
                       fontSize: 'small',
                       color: '#FF4A92'}} autoFocus onClick={handleCloseModal} />
-          <ColorButton className='btnPrev' onClick={prevSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
-            Prev
-          </ColorButton>
+            <ColorButton className='btnPrev' onClick={prevSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
+              Prev
+            </ColorButton>
 
-          <GreenButton className='btnNext' onClick={nextSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
-            Next
-          </GreenButton>
+            <GreenButton className='btnNext' onClick={nextSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
+              Next
+            </GreenButton>
           
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 1000, // Set a higher z-index if necessary to ensure it's on top of other elements
+            backgroundColor: 'black',
+            width: '100vw', 
+            height: '100vh', 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          className='fullScreenImageContainer'>
           <div className='fullScreenImage'>
-          <ReactPlayer url={props.artworkImages[slideNumber].url} playing={true} loop={true} controls={false} />
-            
+            <ReactPlayer
+              width='100%'
+              height='100%'
+              url={props.artworkImages[slideNumber].url}
+              playing={true}
+              loop={true}
+              controls={false}
+            />
           </div>
         </div>
-      }
+        </div>
+        ,document.body // Render the portal as a direct child of the body element
+      )}
 
       {/* <br />
       Current slide number:  {slideNumber}

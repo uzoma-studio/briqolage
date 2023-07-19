@@ -7,7 +7,7 @@ import Contentful from '../../utils/contentful'
 import IntroScreen from './intro-screen';
 import helpers from '../../utils/helpers';
 
-const Artworks = () => {
+const  Artworks = () => {
   const [ bgImageList, setBgImageList ] = useState(null)
   const [bgImage, setBgImage] = useState(null)
 
