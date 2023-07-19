@@ -25,10 +25,11 @@ import Blog from '../apps/blog';
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
+  const [username, setUsername] = useState('null')
   const [avatar_url, setAvatarUrl] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState(null); // Add this line to define 'data' variable
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
 useEffect(() => {
   const getProfile = async () => {
@@ -111,9 +112,18 @@ const updateProfile = async (e) => {
     minute: "2-digit",
   });
 
+  const handleToggle = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleDropdownClose = () => {
+    setDropdownOpen(false);
+  };
+
+
   return (
     <>   
-      <Box component="span" className="MainMenu" sx={{position: 'fixed', top: 0, left: 0, right: 0 }}>
+      <Box component="span" className="MainMenu" sx={{position: 'absolute', top: 0, left: 0, right: 0,  zIndex: '1000'  }}>
         <div>
           <ul className='MenuTag'>
                 <li>
@@ -157,28 +167,16 @@ const updateProfile = async (e) => {
                       aria-controls={open ? 'demo-positioned-menu1' : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? 'true' : undefined}
-                      onClick={handleClick}
+                      onClick={handleToggle}
                       sx={{color: 'white'}}
                     >
                        <IconButton className="padding0" aria-label="account" color="inherit">
                         <AccountCircleIcon sx={{ fontSize: 'medium'}} />
                       </IconButton>
                     </Button>
-                    <Menu
-                      id="demo-positioned-menu1"
-                      aria-labelledby="demo-positioned-button1"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                    >
+                    {isDropdownOpen && (
+                       <div  style={{ position: 'absolute', backgroundColor: 'white' }} className="dropdown-content">
+                  
                       <MenuItem>
                       <div className="aligncenter font-face-nmR" aria-live="polite">
                         {loading ? (
@@ -189,13 +187,23 @@ const updateProfile = async (e) => {
                               <label htmlFor="username"> {session.user.email}</label>
                             </div>*/}
                             <div>
-                              <label htmlFor="username">Name</label>
+                              <label  style={{
+                                  color: 'purple', 
+                                }} htmlFor="username">Name</label>
                               <input
                                 id="username"
                                 type="text"
                                 value={username || ''}
+                                style={{
+                                  maxWidth: '150px', 
+                                  borderColor: 'purple', // Set the border color here
+                                  borderWidth: '2px', // Optional: Set the border width
+                                  borderStyle: 'solid', // Optional: Set the border style
+                                }}
                                 onChange={(e) => setUsername(e.target.value)}
                               />
+
+                  
                             </div>
                             <div>
                               <button className="button primary" disabled={loading}>
@@ -210,7 +218,9 @@ const updateProfile = async (e) => {
                       </div>
           
                       </MenuItem>
-                    </Menu>
+                  
+                     </div>
+                     )}
                   </div>
                 </li>
 
@@ -238,7 +248,7 @@ const updateProfile = async (e) => {
                 <input
                   id="username"
                   type="text"
-                  style={{ border: '1px solid purple',marginTop: '1rem' }}
+                  style={{ border: '1px solid purple', marginTop: '1rem', zIndex: '1000'}}
                   value={username || ''}
                   placeholder="Enter a username..."
                   onChange={(e) => setUsername(e.target.value)}
@@ -255,8 +265,9 @@ const updateProfile = async (e) => {
       </div>
       )}
 
-      <div>
+      <div style={{marginTop: '70px', zIndex: '100'}}> 
         <div id="title-container">
+          
           <div className="flex-container">
               <div>
             

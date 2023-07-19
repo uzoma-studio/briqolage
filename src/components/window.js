@@ -103,7 +103,13 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
       <Button  className="instasec"  onClick={handleClickOpen}>
         <Draggable>
           <Tooltip title={title}>
-            <img id={icon.id} alt={icon.alt}  src={icon.src}  width={90} height={90}  />
+            <img
+                id={icon.id}
+                alt={icon.alt}
+                src={icon.src}
+                width={title === "Music" ? 138 : (title === "Artworks" ? 140 : 90)}
+                height={title === "Artworks" ? 140 : 90}
+              />
           </Tooltip>
         </Draggable>
       </Button>
