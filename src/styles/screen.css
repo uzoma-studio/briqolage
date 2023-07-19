@@ -12,7 +12,7 @@
 
 .fav-container {
     position: absolute;
-    bottom: 60%;
+    bottom: 70%;
     right: 5%;
     text-align: center;
     color: #fff;
@@ -124,6 +124,7 @@ max-width: 120px;
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
    border-radius:11px !important;
    border: 3px solid black;
+   max-width: 100% !important;
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
@@ -171,7 +172,9 @@ max-width: 120px;
 }
 
 .MuiDialog-root, .MuiBackdrop-root {
-    height: 0; width: 0
+    height: 0; 
+    width: 0;
+    z-index: 100 !important; 
 }
 
 .MuiPaper-root-container {

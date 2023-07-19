@@ -56,13 +56,13 @@
 .sliderWrap .btnPrev {
   top: 87%;
   transform: translateY(-50%);
-  right: 150px;
+  right: 55%;
 }
 
 .sliderWrap .btnNext {
   top: 87%;
   transform: translateY(-50%);
-  right: 50px;
+  left: 55%;
 }
 
 .fullScreenImage {
