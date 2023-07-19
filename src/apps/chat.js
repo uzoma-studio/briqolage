@@ -66,7 +66,7 @@ export default function Chat({ username, setUsername }) {
       src: "https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
     }}
     isOpenByDefault={true}
-    style={{minWidth: '500px', top: '5vh', left: '25vw'}}
+    style={{width: '30em', top: '25vh', left: `calc(100vw - 30em)`}}
     >
       <div className=" chatbox-container">
         <div className="messages-container">
