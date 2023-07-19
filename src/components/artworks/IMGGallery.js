@@ -62,7 +62,7 @@ const IMGGallery = (props) => {
   
 
   return (
-    <div>
+    <div style={{ height: '350px' }}>
 
       {openModal && 
         <div className='sliderWrap'>
