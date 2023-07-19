@@ -1,0 +1,64 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: black;
+}
+
+.animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: floatAnimation 25s infinite;
+}
+
+@keyframes floatAnimation {
+    0%, 100% {
+      top: 50%;
+      left: 50%;
+    }
+    10% {
+      top: 10%;
+      left: 25%;
+    }
+    20% {
+      top: 90%;
+      left: 75%;
+    }
+    30% {
+      top: 25%;
+      left: 90%;
+    }
+    40% {
+      top: 70%;
+      left: 10%;
+    }
+    50% {
+      top: 40%;
+      left: 70%;
+    }
+    60% {
+      top: 20%;
+      left: 30%;
+    }
+    70% {
+      top: 60%;
+      left: 40%;
+    }
+    80% {
+      top: 80%;
+      left: 20%;
+    }
+    90% {
+      top: 30%;
+      left: 80%;
+    }
+  }

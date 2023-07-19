@@ -70,7 +70,7 @@ const Background = ({ children }) => {
             <source src={bgImage} type="video/webm" />
           </video>
       }
-      {children}
+      {children && children}
     </div>
   )
 }
