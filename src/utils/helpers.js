@@ -6,6 +6,11 @@ const helpers = {
     getRandomItem : (items) => {
         return items[Math.floor(Math.random()*items.length)];
     },
+
+    saveToLocalStorage : (items) => {
+        localStorage.setItem('briq-app-favourites', JSON.stringify(items));
+    },
+    
     formatDate : (date) => {
         return format(date, 'd/L/y HH:mm')
     }

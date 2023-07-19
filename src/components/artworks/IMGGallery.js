@@ -9,6 +9,7 @@ import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
 import Box from '@mui/material/Box';
 import SetFavourite from '../favourite/set-favourites';
+import ReactPlayer from 'react-player';
 
 import './img-gallery.css'
 
@@ -58,6 +59,7 @@ const IMGGallery = (props) => {
     ? setSlideNumber(0) 
     : setSlideNumber(slideNumber + 1)
   }
+  
 
   return (
     <div>
@@ -77,7 +79,8 @@ const IMGGallery = (props) => {
           </GreenButton>
           
           <div className='fullScreenImage'>
-            <img src={props.artworkImages[slideNumber].galleryImage} alt='' />
+          <ReactPlayer url={props.artworkImages[slideNumber].url} playing={true} loop={true} controls={false} />
+            
           </div>
         </div>
       }
@@ -93,19 +96,19 @@ const IMGGallery = (props) => {
 
             {
                props.artworkImages.map((slide, index) => {
-                const {id, galleryImage, galleryTitle, galleryDescription} = slide
                 return(
-                  <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={id}>
-                   
+                  <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={index}>
+                    
                   <div 
                     className='single' 
                     key={index}
                     onClick={ () => handleOpenModal(index) }
                   >
-                    <img src={`${galleryImage}`} alt='' />
+                     <video loop autoPlay>
+                      <source src={`${slide.url}`} type="video/webm" />
+                    </video>
                   </div>
-                   <ImageListItemBar
-                   subtitle={galleryTitle} />
+                   <ImageListItemBar />
                    
                     <Box sx={{position: 'absolute',  color: 'black', fontWeight: 'bold', px: 1, mt: 1}} size="small" variant="contained">
                       <SetFavourite 
