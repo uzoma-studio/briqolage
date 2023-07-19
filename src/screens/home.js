@@ -10,7 +10,6 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import '../styles/screen.css';
 import Music from '../apps/music';
 import About from '../apps/about';
@@ -20,6 +19,8 @@ import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
 import Chat from '../apps/chat';
+import BackgroundVid from '../components/background.js'
+
 
 
 const Home = ({ session }) =>  {
@@ -29,6 +30,9 @@ const Home = ({ session }) =>  {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState(null); // Add this line to define 'data' variable
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [briqMenuOpen, setBriqMenuOpen] = useState(false);
+  const [isScreenSaverActive, setScreenSaverActive] = useState(false);
+  const inactivityTimeout = 30000; // 30 seconds of inactivity
 
 useEffect(() => {
   const getProfile = async () => {
@@ -96,13 +100,6 @@ const updateProfile = async (e) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const current = new Date().toLocaleString('en-us', {weekday:'short'});
   const date = current.toString().split(' ')[0]; 
 
@@ -115,32 +112,100 @@ const updateProfile = async (e) => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleDropdownClose = () => {
-    setDropdownOpen(false);
+
+  const handleToggleBriqMenu = () => {
+    setBriqMenuOpen(!briqMenuOpen);
+  };
+
+  const handleScreenSaverButtonClick = () => {
+    setScreenSaverActive(true);
+    setBriqMenuOpen(false);
   };
 
 
+
+ // Function to activate the screensaver
+ const activateScreenSaver = () => {
+  setScreenSaverActive(true);
+};
+
+useEffect(() => {
+  let timer;
+  // Function to reset the inactivity timer when the mouse is moved
+  const resetInactivityTimer = () => {
+    clearTimeout(timer);
+    timer = setTimeout(activateScreenSaver, inactivityTimeout);
+  };
+
+  // Event listener to detect mouse movement and resett the inactivity timer
+  const handleMouseMove = () => {
+    resetInactivityTimer();
+    setScreenSaverActive(false);
+  };
+
+  // Add the event listener on mount
+  document.addEventListener('mousemove', handleMouseMove);
+
+  // Clear the event listener on unmount
+  return () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    clearTimeout(timer); // Clear the timeout when the component unmounts
+  };
+}, []);
   return (
     <>   
+     {isScreenSaverActive && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1000,
+            backgroundColor: 'black',
+          }}>
+          <BackgroundVid/>
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              color: 'white',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+              animation: 'floatAnimation 25s infinite', // Updated animation with more keyframes
+            }}>
+            <h1 className="login-title">
+              Briqolage
+            </h1>
+          </div>
+        </div>
+      )}
       <Box component="span" className="MainMenu" sx={{position: 'absolute', top: 0, left: 0, right: 0,  zIndex: '1000'  }}>
         <div>
           <ul className='MenuTag'>
                 <li>
                   <div>
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                    {(popupState) => (
-                      <React.Fragment>
-                        <Button  className="HomeMenu font-face-nmR" {...bindTrigger(popupState)}>
-                        B Menu
-                        </Button>
-                        <Menu {...bindMenu(popupState)}>
-                          <MenuItem onClick={popupState.close}>Screen Saver</MenuItem>
-                          <MenuItem onClick={popupState.close}>Pick Playist</MenuItem>
-                          <MenuItem onClick={popupState.close}>Login</MenuItem>
-                        </Menu>
-                      </React.Fragment>
+                    <Button onClick={handleToggleBriqMenu} className="HomeMenu font-face-nmR" >
+                    B Menu
+                    </Button>
+                    {briqMenuOpen && (
+                    <div  style={{ position: 'absolute', backgroundColor: 'white' }} className="dropdown-content">
+                  
+                    <MenuItem>
+                    <div className="aligncenter font-face-nmR" aria-live="polite">
+                      <button type="button" sx={{color: 'white'}}  onClick={handleScreenSaverButtonClick} className="button">
+                       Screen Saver
+                      </button>
+                    </div>
+        
+                    </MenuItem>
+                
+                   </div>
                     )}
-                    </PopupState>
                   </div>
                 </li>
                 <li className="abouttext">

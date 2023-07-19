@@ -235,3 +235,48 @@ h1 {
     font-size: 1rem;
     margin: 1rem;
   }
+
+
+
+  @keyframes floatAnimation {
+    0%, 100% {
+      top: 50%;
+      left: 50%;
+    }
+    10% {
+      top: 10%;
+      left: 25%;
+    }
+    20% {
+      top: 90%;
+      left: 75%;
+    }
+    30% {
+      top: 25%;
+      left: 90%;
+    }
+    40% {
+      top: 70%;
+      left: 10%;
+    }
+    50% {
+      top: 40%;
+      left: 70%;
+    }
+    60% {
+      top: 20%;
+      left: 30%;
+    }
+    70% {
+      top: 60%;
+      left: 40%;
+    }
+    80% {
+      top: 80%;
+      left: 20%;
+    }
+    90% {
+      top: 30%;
+      left: 80%;
+    }
+  }
