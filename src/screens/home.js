@@ -175,7 +175,7 @@ useEffect(() => {
                   </div>
                 </li>
                 <li className="abouttext">
-                    <About/> 
+                    <About icon={null} /> 
                 </li>
                 <li>
                     <Help/>

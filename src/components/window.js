@@ -14,7 +14,6 @@ import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
-import { library } from "@fortawesome/fontawesome-svg-core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,20 +99,28 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
   return (
 
     <div>
-      <Button  className="instasec"  onClick={handleClickOpen}>
-        <Draggable>
-          <Tooltip title={title}>
-            <img
-                id={icon.id}
-                alt={icon.alt}
-                src={icon.src}
-                width={title === "Music" ? 138 : (title === "Artworks" ? 140 : 90)}
-                height={title === "Artworks" ? 140 : 90}
-                className='icon'
-              />
-          </Tooltip>
-        </Draggable>
-      </Button>
+      { icon ?
+          <Button className="instasec" onClick={handleClickOpen}>
+            <Draggable>
+              <Tooltip title={title}>
+                <img
+                    id={icon.id}
+                    alt={icon.alt}
+                    src={icon.src}
+                    width={title === "Music" ? 138 : (title === "Artworks" ? 140 : 90)}
+                    height={title === "Artworks" ? 140 : 90}
+                    className='icon'
+                  />
+              </Tooltip>
+            </Draggable>
+          </Button>
+          :
+          <Button className="abtTypo" sx={{px: 0}} onClick={handleClickOpen}>
+            <Typography className="font-face-nmR" sx={{fontSize: 12}} variant="body2" gutterBottom>
+              {title}
+            </Typography>
+          </Button>
+      }
 
       
       <Dialog

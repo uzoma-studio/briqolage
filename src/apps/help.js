@@ -19,7 +19,7 @@ const HelpAndContactApp = () => {
         pageTitle='Help'
         isTooltip={false}
         icon={null}
-        tabLabel='Help and Contact'
+        style={{width: '50vw'}}
     />
   )
 }
