@@ -109,6 +109,7 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
                 src={icon.src}
                 width={title === "Music" ? 138 : (title === "Artworks" ? 140 : 90)}
                 height={title === "Artworks" ? 140 : 90}
+                className='icon'
               />
           </Tooltip>
         </Draggable>

@@ -19,9 +19,8 @@ import Help from '../apps/help';
 import Favourite from '../apps/favourite';
 import Search from '../apps/search';
 import Chat from '../apps/chat';
+import Blog from '../apps/blog';
 import Screensaver from '../components/screensaver';
-
-
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
@@ -329,6 +328,13 @@ useEffect(() => {
           <div className="flex-container">
               <div className="drag-wrapper">
                 <Insta />
+              </div>
+             
+          </div>
+
+          <div className="flex-container">
+              <div className="drag-wrapper">
+                <Blog />
               </div>
              
           </div>
