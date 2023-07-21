@@ -308,7 +308,7 @@ useEffect(() => {
 
               <div className="aboutimage">
                     <div className="drag-wrapper">
-                        <About/>
+                        <About icon={{id: 'aboutIcon', alt: 'about', src: "https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png" }}/>
                     </div>
               </div>
           </div>
