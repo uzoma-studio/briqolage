@@ -77,9 +77,9 @@ export default function Chat({ username, setUsername }) {
               .map((message) => (
                 <div className="message chatcard" key={message.id}>
                   {message.created_at ?
-                    <small style={{fontSize: '12px'}}>{formatDate(Date.parse(message.created_at))}</small>
+                    <small style={{fontSize: '0.75rem'}}>{formatDate(Date.parse(message.created_at))}</small>
                     :
-                    <small style={{fontSize: '12px'}}>just now</small>
+                    <small style={{fontSize: '0.75rem'}}>just now</small>
                   }
                   <div className='image-name'>
                     <p className='username name'>{message.username}</p>
