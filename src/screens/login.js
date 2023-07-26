@@ -6,24 +6,27 @@ import '../styles/login.css'
 export default function Login() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('');
 
 const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const { error } = await supabase.auth.signInWithOtp({ 
+      email,
+      options: {
+        emailRedirectTo: process.env.REACT_APP_EMAIL_REDIRECT
+      }
+    });
     if (error) throw error;
 
     // Save user data to local storage
     const { data: user } = await supabase.auth.getUser();
     localStorage.setItem('user', JSON.stringify(user));
-    console.log(user);
 
     // Redirect or perform other actions upon successful login
     // For example, you can navigate to the home page
-    window.location.href = '/home';
+    window.location.href = '/';
 
     // Display alert box with message
     alert('Check your mail for the login link');
@@ -66,7 +69,7 @@ const handleLogin = async (e) => {
 
               
                     <button className="Loginbtn button block" aria-live="polite">
-                    Send magic link
+                      Send magic link
                     </button>
                 </form>
                 )}
