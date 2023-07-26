@@ -5,3 +5,24 @@
     background-repeat: no-repeat;
     background-position: center center;
   }
+
+  
+
+
+.backgroundVideo{
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+
+/* Media query for small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .backgroundVideo {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+  }
+}

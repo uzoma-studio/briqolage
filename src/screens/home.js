@@ -150,7 +150,7 @@ useEffect(() => {
      {isScreenSaverActive && (
         <Screensaver />
       )}
-      <Box component="span" className="MainMenu" sx={{position: 'absolute', top: 0, left: 0, right: 0,  zIndex: '1000'  }}>
+      <Box component="span" className="MainMenu" sx={{position: 'absolute', top: 0, left: 0, right: 0,  display: 'block' }}>
         <div>
           <ul className='MenuTag'>
                 <li>
@@ -159,7 +159,7 @@ useEffect(() => {
                     B Menu
                     </Button>
                     {briqMenuOpen && (
-                    <div  style={{ position: 'absolute', backgroundColor: 'white' }} className="dropdown-content">
+                    <div  style={{ position: 'absolute', backgroundColor: 'white', zIndex: '1000' }} className="dropdown-content">
                   
                     <MenuItem>
                     <div className="aligncenter font-face-nmR" aria-live="polite">
@@ -205,7 +205,7 @@ useEffect(() => {
                       </IconButton>
                     </Button>
                     {isDropdownOpen && (
-                       <div  style={{ position: 'absolute', backgroundColor: 'white' }} className="dropdown-content">
+                       <div  style={{ position: 'absolute', backgroundColor: 'white', zIndex: '1000'}} className="dropdown-content">
                   
                       <MenuItem>
                       <div className="aligncenter font-face-nmR" aria-live="polite">
@@ -295,7 +295,7 @@ useEffect(() => {
       </div>
       )}
 
-      <div style={{marginTop: '70px', zIndex: '100'}}> 
+      <div style={{ zIndex: '100'}}> 
         <div id="title-container">
           
           <div className="flex-container">
@@ -315,7 +315,7 @@ useEffect(() => {
           
           <div className="flex-container">
               
-              <div className="drag-wrapper">
+              <div className="drag-wrapper" style={{padding: '25px'}}>
               <Chat username={data ? data.username : session.user.email} setUsername={setUsername} />
 
               </div>
@@ -329,14 +329,9 @@ useEffect(() => {
               <div className="drag-wrapper">
                 <Insta />
               </div>
-             
-          </div>
-
-          <div className="flex-container">
-              <div className="drag-wrapper">
+              <div className="drag-wrapper"  style={{padding: '40px'}}>
                 <Blog />
               </div>
-             
           </div>
         </div>
 

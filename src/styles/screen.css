@@ -183,6 +183,15 @@ max-width: 120px;
     top: 50%;
     left: 50%;
 }
+
+
+@media (max-width: 768px) {
+    .MuiPaper-root-container{
+      width: 25em !important;
+    }
+  }
+
+
 .MuiPaper-root {
     height: 100%; 
 }
@@ -237,4 +246,11 @@ h1 {
   .modalHeading {
     font-size: 1rem;
     margin: 1rem;
+  }
+
+
+  @media (max-width: 768px) {
+    .customWindow {
+      width: 25em !important;
+    }
   }

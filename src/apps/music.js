@@ -197,7 +197,8 @@ export default function Music() {
         :
         <p>Loading...</p>
       } */}
-      <p>Music...</p>
+      <p style={{padding: '20px'}}>MUSIC COMING SOON...</p>
     </Window>
+
   )
 }

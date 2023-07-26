@@ -60,13 +60,7 @@ const Background = ({ children }) => {
     //   }}/>
     <div>
       { bgImage &&
-          <video loop autoPlay style={{
-            zIndex: '-1',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            width: '100%'
-          }}>
+          <video className='backgroundVideo' loop autoPlay >
             <source src={bgImage} type="video/webm" />
           </video>
       }
