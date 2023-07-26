@@ -26,7 +26,7 @@ const handleLogin = async (e) => {
 
     // Redirect or perform other actions upon successful login
     // For example, you can navigate to the home page
-    window.location.href = '/';
+    // window.location.href = '/';
 
     // Display alert box with message
     alert('Check your mail for the login link');
