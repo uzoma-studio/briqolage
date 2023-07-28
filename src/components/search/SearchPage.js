@@ -5,20 +5,20 @@ import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import SearchIcon from '@mui/icons-material/Search';
 
-function SearchPage({ details }) {
+function SearchPage({ artworkImages, blogPosts }) {
 
   const [searchField, setSearchField] = useState("");
   const [searchShow, setSearchShow] = useState(false); 
 
+  const combinedData = [...artworkImages, ...blogPosts];
   
 
-  const filteredPersons = details.filter(
-    artwork => {
-      return (
-        artwork.galleryTitle.toLowerCase().includes(searchField.toLowerCase())
-      );
-    }
-  );
+
+
+  const filteredPersons = combinedData.filter((item) => {
+    return item.galleryTitle.toLowerCase().includes(searchField.toLowerCase());
+  });
+
 
   const handleChange = e => {
     setSearchField(e.target.value);

@@ -167,6 +167,13 @@ max-width: 120px;
     padding-left: 45px;
 }
 
+#Search{
+    min-width: 16px !important;
+    width: 16px;
+    height: 16px;
+}
+
+
 .flex-container{
     display: flex !important;
 }

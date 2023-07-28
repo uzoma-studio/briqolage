@@ -1,12 +1,16 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
 import '../artworks/img-gallery.css'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-function Card({artwork}) {
+
+function Card({item}) {
 
   const [openModal, setOpenModal] = useState(false)
+
+  const [richTextData, setRichTextData] = useState(null);
 
   
   const handleOpenModal = (index) => {
@@ -17,6 +21,14 @@ function Card({artwork}) {
   const handleCloseModal = () => {
     setOpenModal(false)
   }
+
+  useEffect(() => {
+    // Extract and store the rich text content in the state
+    if (item.blogBody) {
+      setRichTextData(item.blogBody);
+    }
+  }, [item.blogBody]);
+
 
 
   return (
@@ -30,25 +42,28 @@ function Card({artwork}) {
                       color: '#FF4A92'}} autoFocus onClick={handleCloseModal} />
           
           <div className='fullScreenImage'>
-            <img src={artwork.galleryImage} alt='' />
+            <img  src={item.galleryImage} alt='' />
+            <div className='fullScreenDesc'>
+              <h4 className='headingText'>{item.galleryTitle}</h4>
+              <p>{item.galleryDescription}</p>
+              {richTextData && documentToReactComponents(richTextData)}
+            </div>
           </div>
         </div>
       }
 
 
-      <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={artwork.id}>
+      <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={item.id}>
       <div 
         className='single' 
-        key={artwork.id}
-        onClick={ () => handleOpenModal(artwork.id) }
+        key={item.id}
+        onClick={ () => handleOpenModal(item.id) }
       >
-        <img alt={artwork.galleryTitle}  src={artwork.galleryImage}/>
-      </div>
+        <img alt={item.galleryTitle}  src={item.galleryImage}/>
+     </div>
         <ImageListItemBar
-        subtitle={artwork.galleryTitle} />
+        subtitle={item.galleryTitle} />
       </ImageListItem>
-                  
-
     </div>
   )
 }

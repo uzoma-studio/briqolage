@@ -186,7 +186,8 @@ useEffect(() => {
         <div>
           <ul className='MenuTag MTright'>
                 <li>
-                    <IconButton className="padding0" aria-label="account" color="inherit">
+                    <IconButton 
+                     aria-label="account" color="inherit">
                       <VolumeUpIcon sx={{ fontSize: 'medium'}} />
                     </IconButton>
                 </li>
@@ -319,7 +320,7 @@ useEffect(() => {
               <Chat username={data ? data.username : session.user.email} setUsername={setUsername} />
 
               </div>
-              <div className="drag-wrapper">
+              <div className="drag-wrapper" style={{paddingTop: '35px'}}>
                 <Music />
               </div>
           </div>
