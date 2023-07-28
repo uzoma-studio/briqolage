@@ -21,6 +21,7 @@ import Search from '../apps/search';
 import Chat from '../apps/chat';
 import Blog from '../apps/blog';
 import Screensaver from '../components/screensaver';
+import Shop from '../apps/shop';
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
@@ -322,6 +323,10 @@ useEffect(() => {
               <div className="drag-wrapper">
                 <Music />
               </div>
+
+              <div className="drag-wrapper" style={{position: 'relative', left: '25px', top: '100px'}}>
+                <Shop />
+              </div>
           </div>
 
 
@@ -337,7 +342,7 @@ useEffect(() => {
 
         <div className="fav-container"> 
           <div className="drag-wrapper">
-              <Favourite />
+            <Favourite />
           </div>
         </div>
 
