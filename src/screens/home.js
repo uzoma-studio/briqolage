@@ -21,6 +21,7 @@ import Search from '../apps/search';
 import Chat from '../apps/chat';
 import Blog from '../apps/blog';
 import Screensaver from '../components/screensaver';
+import Shop from '../apps/shop';
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
@@ -299,7 +300,7 @@ useEffect(() => {
       <div style={{ zIndex: '100'}}> 
         <div id="title-container">
           
-          <div className="flex-container">
+          <div className="flex-container" style={{paddingTop: '15px'}}>
               <div>
             
                     <div className="drag-wrapper">
@@ -311,6 +312,12 @@ useEffect(() => {
                     <div className="drag-wrapper">
                         <About icon={{id: 'aboutIcon', alt: 'about', src: "https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png" }}/>
                     </div>
+              </div>
+
+              <div>
+                <div className="drag-wrapper">
+                  <Favourite />
+                </div>
               </div>
           </div>
           
@@ -330,17 +337,15 @@ useEffect(() => {
               <div className="drag-wrapper">
                 <Insta />
               </div>
-              <div className="drag-wrapper"  style={{padding: '40px'}}>
+              <div className="drag-wrapper"  style={{padding: '0px'}}>
                 <Blog />
+              </div>
+              <div className="drag-wrapper" style={{position: 'relative', top: '70px'}}>
+                <Shop />
               </div>
           </div>
         </div>
 
-        <div className="fav-container"> 
-          <div className="drag-wrapper">
-              <Favourite />
-          </div>
-        </div>
 
       </div>
 

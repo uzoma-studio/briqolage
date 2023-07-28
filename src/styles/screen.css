@@ -165,7 +165,6 @@ max-width: 120px;
 
 #aboutIcon{
     padding-top: 20px !important;
-    padding-left: 30px;
 }
 
 #fmIcon{
@@ -181,6 +180,7 @@ max-width: 120px;
 
 .flex-container{
     display: flex !important;
+    justify-content: space-around;
 }
 
 .MuiDialog-root, .MuiBackdrop-root {
