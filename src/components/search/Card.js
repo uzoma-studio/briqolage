@@ -3,7 +3,7 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
 import '../artworks/img-gallery.css'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import Contentful from '../../utils/contentful'
 
 
 function Card({item}) {
@@ -11,7 +11,6 @@ function Card({item}) {
   const [openModal, setOpenModal] = useState(false)
 
   const [richTextData, setRichTextData] = useState(null);
-
   
   const handleOpenModal = (index) => {
     setOpenModal(true)
@@ -29,7 +28,7 @@ function Card({item}) {
     }
   }, [item.blogBody]);
 
-
+  console.log('rich text data', richTextData)
 
   return (
     <div>
@@ -46,7 +45,7 @@ function Card({item}) {
             <div className='fullScreenDesc'>
               <h4 className='headingText'>{item.galleryTitle}</h4>
               <p>{item.galleryDescription}</p>
-              {richTextData && documentToReactComponents(richTextData)}
+              <div dangerouslySetInnerHTML={{ __html: Contentful.parseRichText(richTextData)}} />
             </div>
           </div>
         </div>
