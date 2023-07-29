@@ -28,8 +28,6 @@ function Card({item}) {
     }
   }, [item.blogBody]);
 
-  console.log('rich text data', richTextData)
-
   return (
     <div>
 
