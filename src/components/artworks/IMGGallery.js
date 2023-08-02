@@ -26,6 +26,7 @@ const IMGGallery = (props) => {
     setIsFullScreen(true); 
   }
 
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(pink[500]),
     backgroundColor: pink[500],
@@ -122,9 +123,10 @@ const IMGGallery = (props) => {
 
             {
                props.artworkImages.map((slide, index) => {
+              
                 return(
                   <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={index}>
-                    
+           
                   <div 
                     className='single' 
                     key={index}

@@ -1,34 +1,19 @@
 import React, {useState, useEffect} from "react";
 import styledd from "styled-components";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import Brightness1Icon from '@mui/icons-material/Brightness1';
 import Typography from '@mui/material/Typography'; 
-import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 
+import Window from "../components/window";
+
 import Favourites from '../components/favourite/favourites'
 import { getFavourites } from "../components/favourite/set-favourites";
 
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -81,22 +66,8 @@ export default function Favourite() {
     setValue(newValue);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-    setFullScreen(false)
-  };
 
-  const handleFull = () => {
-    setFullScreen(true)
-  };
-
-  const handleCloseFull = () => {
-    setFullScreen(false)
-  };
   
 
   const tabNames =['Art', 'Music']
@@ -113,86 +84,36 @@ export default function Favourite() {
 
 
   return (
+    <Window title="Your Favourites" icon={{
+      id: 'favourites',
+      alt: 'favourites',
+      src: "https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png"
+    }}
+    style={{width: '40em', left: `calc(100vw - 50em)`}}
+    >
     <div>
-      <Button onClick={handleClickOpen}>
-        <Draggable>
-        <ul>
-            <li>
-              <Tooltip title="Your Favourites">
-                <img alt="favourites" src="https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png" width={90} height={90} />
-                </Tooltip>
-            </li>
-        </ul>
-        </Draggable>
-      </Button>
-
-      
-      <Dialog
-        fullScreen={fullscreen}
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title">
-
-        <AppContainer>
-          <DialogTitle style={{ cursor: 'move',   border: '3px solid black;' }} id="draggable-dialog-title">
-            <div className="DialogTags">
-              <DialogActions className="DialogTags" > 
-                  <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#FF4A92'}} autoFocus onClick={handleClose} />
-
-                    
-                      <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
-
-                      <Brightness1Icon sx={{ 
-                      left: 8,
-                      top: 2,
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      pl: '0px',
-                      color: '#3D6AFC'}} autoFocus onClick={handleFull} />
-              
-              </DialogActions>
-            </div>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Art" {...a11yProps(0)} />
+            <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel px={0} value={value} index={0}>
           
-          </DialogTitle>
-          
-          <DialogContent className='DIALOGRESIZE'>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Art" {...a11yProps(0)} />
-                <Tab sx={{ color: 'gray', fontSize: 13, fontWeight: 'bold' }} label="Music" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-            <TabPanel px={0} value={value} index={0}>
-              
-              {
-                getFavourites().length > 0 ?
-                  <Favourites className="ArtworksCon" />
-                  :
-                  defaultText
-              }
-            
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                {defaultText}
-            </TabPanel>
-    
-          </DialogContent>
-        </AppContainer>
-      </Dialog>
+          {
+            getFavourites().length > 0 ?
+              <Favourites className="ArtworksCon" />
+              :
+              defaultText
+          }
+        
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+            {defaultText}
+        </TabPanel>
+  
     </div>
+    </Window>
   );
 }
 

@@ -330,10 +330,6 @@ useEffect(() => {
               <div className="drag-wrapper" style={{paddingTop: '35px'}}>
                 <Music />
               </div>
-
-              <div className="drag-wrapper" style={{position: 'relative', left: '25px', top: '100px'}}>
-                <Shop />
-              </div>
           </div>
 
 
