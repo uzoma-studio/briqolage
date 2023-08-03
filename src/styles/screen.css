@@ -1,3 +1,8 @@
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    background-color: #FEFED8 !important;
+    z-index: 1;
+}
+
 .aligncenter{
     text-align: center;
 }
@@ -160,15 +165,22 @@ max-width: 120px;
 
 #aboutIcon{
     padding-top: 20px !important;
-    padding-left: 30px;
 }
 
 #fmIcon{
     padding-left: 45px;
 }
 
+#Search{
+    min-width: 16px !important;
+    width: 16px;
+    height: 16px;
+}
+
+
 .flex-container{
     display: flex !important;
+    justify-content: space-around;
 }
 
 .MuiDialog-root, .MuiBackdrop-root {

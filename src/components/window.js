@@ -79,6 +79,8 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
                         <Paper {...props} />
                 }
             </Draggable>
+
+       
         );
     }
 
@@ -132,35 +134,36 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
         ref={dialogRef}>
 
         <AppContainer libraryStatus={music && music.libraryStatus}>
+                <DialogActions className="DialogTags" style={{ display: 'flex', justifyContent: 'flex-start', padding: '2px'}}> 
+                    <Brightness1Icon sx={{ 
+                        left: 8,
+                        top: 2,
+                        cursor: 'pointer',
+                        fontSize: 'large',
+                        pl: '0px',
+                        color: '#FF4A92'}} autoFocus onClick={handleClose} />
+                    
+                    <Brightness1Icon sx={{ 
+                    left: 8,
+                    top: 2,
+                    cursor: 'pointer',
+                    fontSize: 'small',
+                    pl: '0px',
+                    color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
+
+
+                    <Brightness1Icon sx={{ 
+                    left: 8,
+                    top: 2,
+                    cursor: 'pointer',
+                    fontSize: 'small',
+                    pl: '0px',
+                    color: '#3D6AFC'}} autoFocus onClick={handleFull} />
+                
+                </DialogActions>
             <DialogTitle style={{ cursor: 'move', p: '0',  border: '3px solid black;' }} id="draggable-dialog-title">
                 <div className="DialogTags">
-                    <DialogActions className="DialogTags" > 
-                        <Brightness1Icon sx={{ 
-                            left: 8,
-                            top: 2,
-                            cursor: 'pointer',
-                            fontSize: 'small',
-                            pl: '0px',
-                            color: '#FF4A92'}} autoFocus onClick={handleClose} />
-                        
-                        <Brightness1Icon sx={{ 
-                        left: 8,
-                        top: 2,
-                        cursor: 'pointer',
-                        fontSize: 'small',
-                        pl: '0px',
-                        color: '#FFCF14'}} autoFocus onClick={handleCloseFull} />
-
-                        <Brightness1Icon sx={{ 
-                        left: 8,
-                        top: 2,
-                        cursor: 'pointer',
-                        fontSize: 'small',
-                        pl: '0px',
-                        color: '#3D6AFC'}} autoFocus onClick={handleFull} />
-                    
-                    </DialogActions>
-
+                  
                     { music && music.playSongContainer ?
                         music.playSongContainer
                         :
@@ -176,7 +179,6 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
                 </div>
             
             </DialogTitle>
-          
           <DialogContent className='DIALOGRESIZE'>
            
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

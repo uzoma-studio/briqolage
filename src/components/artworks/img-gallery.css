@@ -68,7 +68,6 @@
 .fullScreenImage {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -91,4 +90,15 @@
 
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
   padding-top: 0 !important;
+}
+
+.fullScreenDesc{
+  bottom: 0%;
+  background-color: white;
+  padding: 10px;
+}
+
+.headingText{
+  font-size: 1.3em;
+  color: black;
 }

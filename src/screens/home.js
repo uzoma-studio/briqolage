@@ -187,7 +187,8 @@ useEffect(() => {
         <div>
           <ul className='MenuTag MTright'>
                 <li>
-                    <IconButton className="padding0" aria-label="account" color="inherit">
+                    <IconButton 
+                     aria-label="account" color="inherit">
                       <VolumeUpIcon sx={{ fontSize: 'medium'}} />
                     </IconButton>
                 </li>
@@ -299,7 +300,7 @@ useEffect(() => {
       <div style={{ zIndex: '100'}}> 
         <div id="title-container">
           
-          <div className="flex-container">
+          <div className="flex-container" style={{paddingTop: '15px'}}>
               <div>
             
                     <div className="drag-wrapper">
@@ -312,6 +313,12 @@ useEffect(() => {
                         <About icon={{id: 'aboutIcon', alt: 'about', src: "https://res.cloudinary.com/nieleche/image/upload/v1669859352/aboutbriq_grwbqc.png" }}/>
                     </div>
               </div>
+
+              <div>
+                <div className="drag-wrapper">
+                  <Favourite />
+                </div>
+              </div>
           </div>
           
           <div className="flex-container">
@@ -320,7 +327,7 @@ useEffect(() => {
               <Chat username={data ? data.username : session.user.email} setUsername={setUsername} />
 
               </div>
-              <div className="drag-wrapper">
+              <div className="drag-wrapper" style={{paddingTop: '35px'}}>
                 <Music />
               </div>
 
@@ -334,17 +341,15 @@ useEffect(() => {
               <div className="drag-wrapper">
                 <Insta />
               </div>
-              <div className="drag-wrapper"  style={{padding: '40px'}}>
+              <div className="drag-wrapper"  style={{padding: '0px'}}>
                 <Blog />
+              </div>
+              <div className="drag-wrapper" style={{position: 'relative', top: '70px'}}>
+                <Shop />
               </div>
           </div>
         </div>
 
-        <div className="fav-container"> 
-          <div className="drag-wrapper">
-            <Favourite />
-          </div>
-        </div>
 
       </div>
 

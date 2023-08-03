@@ -9,58 +9,28 @@ import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 import SearchResult from '../components/search/search-results';
-
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
+import Window from "../components/window";
 
 
 
 export default function Search() {
-  const [open, setOpen] = React.useState(false);
-    
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
 
   return (
+
+    <Window title='Search' icon={{
+      id: 'Search',
+      alt: 'search',
+      src: 'https://res.cloudinary.com/nieleche/image/upload/v1689951723/1024px-Search_Icon.svg_tvgimc.png'
+      }}
+      style={{ width: '50em', height: '30em'}}>
+
+
     <div>
-      <IconButton className="padding0" aria-label="search" color="inherit" onClick={handleClickOpen}>
-    
-            <SearchIcon sx={{ fontSize: 'medium'}} />
-            
-        </IconButton>
-      
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title">
-
-        <AppContainer>
-       
-          <DialogContent className='DIALOGRESIZE'>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <SearchResult className="ArtworksCon" />
-            </Box>
-
-          </DialogContent>
-        </AppContainer>
-      </Dialog>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <SearchResult className="ArtworksCon" />
+      </Box>
     </div>
+    </Window>
   );
 }
 
