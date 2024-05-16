@@ -66,7 +66,7 @@ export default function Chat({ username, setUsername }) {
       src: "https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
     }}
     isOpenByDefault={true}
-    style={{width: '30em', top: '25vh', left: `calc(100vw - 30em)`}}
+    style={{width: '30em', top: '15vh', left: `calc(100vw - 30em)`}}
     >
       <div className=" chatbox-container">
         <div className="messages-container">
@@ -110,7 +110,9 @@ export default function Chat({ username, setUsername }) {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Message"
+            autoFocus
           />
+    
           <button className="button w50" type="submit">Send</button>
         </form>
       </div>

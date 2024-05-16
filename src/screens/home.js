@@ -22,6 +22,7 @@ import Chat from '../apps/chat';
 import Blog from '../apps/blog';
 import Screensaver from '../components/screensaver';
 import Shop from '../apps/shop';
+import Login from './login';
 
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
@@ -35,37 +36,44 @@ const Home = ({ session }) =>  {
   const inactivityTimeout = 30000; // 30 seconds of inactivity
 
 useEffect(() => {
-  const getProfile = async () => {
-    try {
-      setLoading(true);
-      const { user } = session;
-  
-      let { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, avatar_url`)
-        .eq('id', user.id)
-        .single();
-  
-      if (error && status !== 406) {
-        throw error;
-      }
-  
-      if (data) {
-        setUsername(data.username);
-        setAvatarUrl(data.avatar_url);
-      } else {
-        setIsModalOpen(true);
-      }
-      setData(data); // Update 'data' state with the retrieved profile data
-     
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  getProfile()
+  if (session) {
+    // Fetch profile data only if session is not null
+    const getProfile = async () => {
+      try {
+        setLoading(true);
+        const { user } = session;
+    
+        let { data, error, status } = await supabase
+          .from('profiles')
+          .select(`username, avatar_url`)
+          .eq('id', user.id)
+          .single();
+    
+        if (error && status !== 406) {
+          throw error;
+        }
+    
+        if (data) {
+          setUsername(data.username);
+          setAvatarUrl(data.avatar_url);
+        } else {
+          setIsModalOpen(true);
+        }
+        setData(data); // Update 'data' state with the retrieved profile data
+       
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    getProfile()
+  } else {
+    setLoading(false);
+  }
+  
 }, [session])
 
 
@@ -123,6 +131,7 @@ const updateProfile = async (e) => {
   };
 
 
+
 useEffect(() => {
   let timer;
   // Function to reset the inactivity timer when the mouse is moved
@@ -148,6 +157,7 @@ useEffect(() => {
 }, []);
   return (
     <>   
+  
      {isScreenSaverActive && (
         <Screensaver />
       )}
@@ -168,7 +178,6 @@ useEffect(() => {
                        Screen Saver
                       </button>
                     </div>
-        
                     </MenuItem>
                 
                    </div>
@@ -210,44 +219,50 @@ useEffect(() => {
                        <div  style={{ position: 'absolute', backgroundColor: 'white', zIndex: '1000'}} className="dropdown-content">
                   
                       <MenuItem>
-                      <div className="aligncenter font-face-nmR" aria-live="polite">
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <form onSubmit={updateProfile} className="form-widget">
-                            {/*<div>
-                              <label htmlFor="username"> {session.user.email}</label>
-                            </div>*/}
-                            <div>
-                              <label  style={{
-                                  color: 'purple', 
-                                }} htmlFor="username">Name</label>
-                              <input
-                                id="username"
-                                type="text"
-                                value={username || ''}
-                                style={{
-                                  maxWidth: '150px', 
-                                  borderColor: 'purple', // Set the border color here
-                                  borderWidth: '2px', // Optional: Set the border width
-                                  borderStyle: 'solid', // Optional: Set the border style
-                                }}
-                                onChange={(e) => setUsername(e.target.value)}
-                              />
-
-                  
-                            </div>
-                            <div>
-                              <button className="button primary" disabled={loading}>
-                                Update profile
-                              </button>
-                            </div>
-                          </form>
-                        )}
-                        <button type="button" sx={{color: 'white'}} className="button" onClick={() => supabase.auth.signOut()}>
-                          Sign Out
-                        </button>
-                      </div>
+                      {session ? (
+                         <div className="aligncenter font-face-nmR" aria-live="polite">
+                         {loading ? (
+                           <p>Loading...</p>
+                         ) : (
+                           <form onSubmit={updateProfile} className="form-widget">
+                             {/*<div>
+                               <label htmlFor="username"> {session.user.email}</label>
+                             </div>*/}
+                             <div>
+                               <label  style={{
+                                   color: 'purple', 
+                                 }} htmlFor="username">Name</label>
+                               <input
+                                 id="username"
+                                 type="text"
+                                 value={username || ''}
+                                 style={{
+                                   maxWidth: '150px', 
+                                   borderColor: 'purple', // Set the border color here
+                                   borderWidth: '2px', // Optional: Set the border width
+                                   borderStyle: 'solid', // Optional: Set the border style
+                                 }}
+                                 onChange={(e) => setUsername(e.target.value)}
+                               />
+ 
+                   
+                             </div>
+                             <div>
+                               <button className="button primary" disabled={loading}>
+                                 Update profile
+                               </button>
+                             </div>
+                           </form>
+                         )}
+                         <button type="button" sx={{color: 'white'}} className="button" onClick={() => supabase.auth.signOut()}>
+                           Sign Out
+                         </button>
+                       </div>
+                      ) : (
+                      
+                          <Login/>
+                      )}
+                     
           
                       </MenuItem>
                   
@@ -268,9 +283,11 @@ useEffect(() => {
         </div>
       </Box>
 
+    
+
       {isModalOpen && (
         <div className="modal">
-        <div className="modalContent">
+        <div className="modalContent"> 
        {loading ? (
             <p>Loading...</p>
           ) : (
@@ -297,7 +314,7 @@ useEffect(() => {
       </div>
       )}
 
-      <div style={{ zIndex: '100'}}> 
+      <div style={{ zIndex: '99'}}> 
         <div id="title-container">
           
           <div className="flex-container" style={{paddingTop: '15px'}}>
@@ -324,7 +341,7 @@ useEffect(() => {
           <div className="flex-container">
               
               <div className="drag-wrapper" style={{padding: '25px'}}>
-              <Chat username={data ? data.username : session.user.email} setUsername={setUsername} />
+              <Chat username={data ? data.username : (session?.user?.email || 'Guest')} setUsername={setUsername} />
 
               </div>
               <div className="drag-wrapper" style={{paddingTop: '35px'}}>

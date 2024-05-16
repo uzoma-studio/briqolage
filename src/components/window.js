@@ -109,8 +109,8 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
                     id={icon.id}
                     alt={icon.alt}
                     src={icon.src}
-                    width={title === "Music" ? 138 : (title === "Artworks" ? 140 : 90)}
-                    height={title === "Artworks" ? 140 : 90}
+                    width={title === "Music" ? 138 : (title === "Artworks" ? 140 : (title === "Login" ? 20 : 90))}
+                    height={title === "Artworks" ? 140 :(title === "Login" ? 20:90)}
                     className='icon'
                   />
               </Tooltip>

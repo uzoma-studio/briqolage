@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import './App.css'
 import Background from './components/background'
-import Login from './screens/login'
 import Home from './screens/home'
 
 const App = () => {
@@ -21,7 +20,8 @@ const App = () => {
   return (
     <Background>
     <div className="container" style={{ padding: '50px 0 100px 0' }}>
-  {!session ? <Login /> : <Home key={session.user.id} session={session} />}
+    <Home key={session ? session.user.id : 'guest'} session={session} />
+    
 </div>
   
 </Background>
