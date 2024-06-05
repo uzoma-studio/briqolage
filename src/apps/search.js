@@ -1,11 +1,5 @@
 import React from 'react';
 import styledd from "styled-components";
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import '../styles/screen.css';
 import SearchResult from '../components/search/search-results';

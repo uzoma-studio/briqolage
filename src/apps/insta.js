@@ -2,7 +2,6 @@ import React from "react";
 import styledd from "styled-components";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography'; 
 import Box from '@mui/material/Box';
 import { pink } from '@mui/material/colors';
 import '../styles/screen.css';
