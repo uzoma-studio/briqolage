@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';

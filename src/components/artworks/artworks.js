@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { client } from '../../client'
 import '../../styles/screen.css';
 import IMGGallery from './IMGGallery.js';
 import Contentful from '../../utils/contentful'

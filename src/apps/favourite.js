@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styledd from "styled-components";
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
 import Typography from '@mui/material/Typography'; 
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -58,9 +56,7 @@ export default function Favourite() {
 	// 	setFavourites(getFavourites())
 	// }, []);
 
-  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
-  const [fullscreen, setFullScreen] = React.useState(false);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
