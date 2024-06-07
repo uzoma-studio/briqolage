@@ -10,7 +10,7 @@ import '../styles/screen.css';
 import Window from "../components/window";
 
 import Favourites from '../components/favourite/favourites'
-import { getFavourites } from "../components/favourite/set-favourites";
+import { getFavourites } from "../components/favourite/FavoriteHandler";
 
 
 function TabPanel(props) {

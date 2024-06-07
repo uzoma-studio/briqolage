@@ -51,7 +51,7 @@ const Artworks = () => {
   // only run once the first time this component is rendered
   useEffect(() => {
 		const ArtFavourites = JSON.parse(
-			localStorage.getItem('briq-app-favourites')
+			localStorage.getItem('favorites')
 		);
 
 		if (ArtFavourites) {
@@ -62,7 +62,7 @@ const Artworks = () => {
 
   // run every time our art state changes
   const saveToLocalStorage = (items) => {
-		localStorage.setItem('briq-app-favourites', JSON.stringify(items));
+		localStorage.setItem('favorites', JSON.stringify(items));
 	};
 
  

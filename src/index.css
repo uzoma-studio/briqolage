@@ -5,7 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url('/public/cursor.png'), auto !important;
 }
+
 
 code {
   font-family: "NeueMachinaRegular", source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

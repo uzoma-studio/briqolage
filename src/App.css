@@ -1,0 +1,8 @@
+body {
+    cursor: url('/public/cursor.png'), auto !important;
+  }
+
+
+a, img, svg {
+    cursor: url('/public/cursor.png'), pointer !important;
+}

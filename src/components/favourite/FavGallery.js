@@ -8,7 +8,7 @@ import { green } from '@mui/material/colors';
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
-import SetFavourite from './set-favourites';
+import FavoriteHandler from './FavoriteHandler';
 import Box from '@mui/material/Box';
 
 import '../artworks/img-gallery.css'
@@ -44,7 +44,7 @@ const FAVGallery = () => {
     setOpenModal(false)
   }
 
-  const artworkImages = JSON.parse(localStorage.getItem('briq-app-favourites'));
+  const artworkImages = JSON.parse(localStorage.getItem('favorites'));
 
   // Previous Image
   const prevSlide = () => {
@@ -95,7 +95,7 @@ const FAVGallery = () => {
         <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
 
             {
-               artworkImages.map((slide, index) => {
+               artworkImages.map((slide, index, url) => {
                 const {id, galleryImage, galleryTitle, galleryDescription} = slide
                 return(
                   <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={id}>
@@ -103,15 +103,15 @@ const FAVGallery = () => {
                     <div 
                         className='single' 
                         key={index}
-                        onClick={ () => handleOpenModal(index) }
-                    >
-                        <img src={`${galleryImage}`} alt='' />
+                        onClick={ () => handleOpenModal(index) }>
+                        <video loop autoPlay>
+                          <source src={`${url}`} type="video/webm" />
+                        </video>
+                        <p>{id}</p>
                     </div>
                    
                     <Box sx={{position: 'absolute',  color: 'black', fontWeight: 'bold', px: 1, mt: 1}} size="small" variant="contained">
-                      <SetFavourite 
-                        artworkData={slide}
-                      />
+                    <FavoriteHandler index={index}  />
                     </Box>
                   
                 </ImageListItem>
