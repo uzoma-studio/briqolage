@@ -47,7 +47,7 @@ const FavoriteHandler = ({ index }) => {
     return (
         <>
             <FavoriteIcon
-                style={{ fill: isFavorite ? 'red' : 'grey' }}
+                style={{ fill: isFavorite ? 'red' : 'grey' , position: 'absolute'}}
                 onClick={() => {
                     if (isFavorite) {
                         removeFromFavorites();

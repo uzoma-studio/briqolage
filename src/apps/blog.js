@@ -65,7 +65,7 @@ export default function Blog() {
       width: '50em',
       height: '30em',
       top: '10vh',
-      left: '-5vw'
+     
     }} isOpenByDefault={true}>
       {
           !currentBlogpost ? (

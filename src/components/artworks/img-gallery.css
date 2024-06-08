@@ -37,6 +37,7 @@
   height: 100%;
 }
 
+
 .sliderWrap .btnClose, .sliderWrap .btnPrev, .sliderWrap .btnNext {
   position: fixed;
   cursor: pointer;
@@ -101,4 +102,9 @@
 .headingText{
   font-size: 1.3em;
   color: black;
+}
+
+
+.css-ztrqiq-MuiImageListItemBar-root {
+  background: rgba(0, 0, 0, 0.2);
 }

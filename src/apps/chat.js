@@ -15,8 +15,9 @@ export default function Chat({ username, setUsername }) {
 
   const windowStyle = isSmallScreen ? {
     top: '50%',
-    left: '50%',
+     left: '-5vw',
     transform: 'translate(-50%, -50%)',
+    
   } : {
     top: '15vh',
     left: 'calc(100vw - 30em)',

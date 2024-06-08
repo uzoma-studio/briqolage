@@ -112,15 +112,13 @@ const IMGGallery = (props) => {
           return (
             <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={index}>
             <div className='single' key={index} onClick={() => handleOpenModal(index)}>
-              <video loop autoPlay>
+              <video loop autoPlay style={{ objectFit: 'cover', width: '100%', height: '100%'}} >
                 <source src={`${slide.url}`} type="video/webm" />
               </video>
             </div>
-            <ImageListItemBar 
-              actionIcon={
+           
                 <FavoriteHandler index={index}  />
-              }
-            />
+          
           </ImageListItem>
           );
         })}
