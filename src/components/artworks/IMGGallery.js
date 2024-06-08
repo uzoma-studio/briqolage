@@ -117,7 +117,7 @@ const IMGGallery = (props) => {
               </video>
             </div>
            
-                <FavoriteHandler index={index}  />
+                <FavoriteHandler index={index}  url={slide.url} />
           
           </ImageListItem>
           );
