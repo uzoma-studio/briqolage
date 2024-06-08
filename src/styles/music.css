@@ -1,51 +1,53 @@
-
-
-.css-wt1i53-MuiButtonBase-root-MuiTab-root.Mui-selected{
-    color: black !important;
-}
-
-.css-1aquho2-MuiTabs-indicator{
-    background-color: black !important;
-}
-
-.css-1gsv261{
-    border-bottom: 1px solid !important;
-}
-
-.css-ypiqx9-MuiDialogContent-root{
-    padding: 20px 0px !important;
-}
-
-.searchMusic{
-    position: absolute;
-    left: 80%;
-    display: flex !important;
-    justify-content: center;
-    top: 8px;
-}
-
-.css-1orzy9s{
-    left: 65% !important;
-    font-size: 10px !important;
-}
-
-
-.PlaySongContainer{
-	display: flex !important;
+.music-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .player {
+    margin: 20px;
+  }
+  
+  .time-control {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-left: 2vh;
-    margin-right: 2vh;
+  }
+  
+  .play-control button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .library {
     width: 100%;
-}
-
-.MusicTime {
-    display: flex !important;
-}
-
-.css-hlj6pa-MuiDialogActions-root>:not(:first-of-type) {
-    margin-left: 0px !important;
-}
-
-.css-ypiqx9-MuiDialogContent-root {
-    padding: 10px 0px !important;
-}
+    margin-top: 20px;
+  }
+  
+  .library-songs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .library-song {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  .library-song img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .song-description {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .song-details {
+    width: 100%;
+  }
