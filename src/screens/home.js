@@ -195,12 +195,7 @@ useEffect(() => {
 
         <div>
           <ul className='MenuTag MTright'>
-                <li>
-                    <IconButton 
-                     aria-label="account" color="inherit">
-                      <VolumeUpIcon sx={{ fontSize: 'medium'}} />
-                    </IconButton>
-                </li>
+               
                 <li>
                   <div>
                     <Button

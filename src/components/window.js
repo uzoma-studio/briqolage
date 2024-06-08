@@ -102,20 +102,33 @@ export default function Window({ children, title, icon, isOpenByDefault, style, 
 
     <div>
       { icon ?
-          <Button className="instasec" onClick={handleClickOpen}>
-            <Draggable>
-              <Tooltip title={title}>
-                <img
-                    id={icon.id}
-                    alt={icon.alt}
-                    src={icon.src}
-                    width={title === "Music" ? 138 : (title === "Artworks" ? 140 : (title === "Login" ? 20 : 90))}
-                    height={title === "Artworks" ? 140 :(title === "Login" ? 20:90)}
-                    className='icon'
-                  />
-              </Tooltip>
-            </Draggable>
-          </Button>
+           <Button className="instasec" onClick={handleClickOpen}>
+           {window.innerWidth > 768 ? (
+             <Draggable>
+               <Tooltip title={title}>
+                 <img
+                   id={icon.id}
+                   alt={icon.alt}
+                   src={icon.src}
+                   width={title === "Music" ? 138 : (title === "Artworks" ? 140 : (title === "Login" ? 20 : 90))}
+                   height={title === "Artworks" ? 140 :(title === "Login" ? 20:90)}
+                   className='icon'
+                 />
+               </Tooltip>
+             </Draggable>
+           ) : (
+             <Tooltip title={title}>
+               <img
+                 id={icon.id}
+                 alt={icon.alt}
+                 src={icon.src}
+                 width={title === "Music" ? 138 : (title === "Artworks" ? 140 : (title === "Login" ? 20 : 90))}
+                 height={title === "Artworks" ? 140 :(title === "Login" ? 20:90)}
+                 className='icon'
+               />
+             </Tooltip>
+           )}
+         </Button>
           :
           <Button className="abtTypo" sx={{px: 0}} onClick={handleClickOpen}>
             <Typography className="font-face-nmR" sx={{fontSize: 12}} variant="body2" gutterBottom>
