@@ -58,7 +58,7 @@ const Background = ({ children }) => {
     //     width: '100%',
     //     height: '100vh'
     //   }}/>
-    <div>
+    <div className='coverAll'>
       { bgImage &&
           <video className='backgroundVideo' loop autoPlay >
             <source src={bgImage} type="video/webm" />

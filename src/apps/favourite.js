@@ -10,7 +10,7 @@ import '../styles/screen.css';
 import Window from "../components/window";
 
 import Favourites from '../components/favourite/favourites'
-import { getFavourites } from "../components/favourite/set-favourites";
+import { getFavourites } from "../components/favourite/FavoriteHandler";
 
 
 function TabPanel(props) {
@@ -49,13 +49,18 @@ function a11yProps(index) {
 
 
 export default function Favourite() {
-	// const [favourites, setFavourites] = useState([]);
+  const isSmallScreen = window.innerWidth < 768; // Define the breakpoint for small screens
 
-  // only run once the first time this component is rendered
-  // useEffect(() => {
-	// 	setFavourites(getFavourites())
-	// }, []);
-
+  const windowStyle = isSmallScreen ? {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  } : {
+    top: '10vh',
+    left: '40vw',
+    width: '40em',
+  };
+	
   const [value, setValue] = React.useState(0);
   
   const handleChange = (event, newValue) => {
@@ -85,7 +90,7 @@ export default function Favourite() {
       alt: 'favourites',
       src: "https://res.cloudinary.com/nieleche/image/upload/v1669862318/folder_ujxk7g.png"
     }}
-    style={{width: '40em', left: `calc(100vw - 50em)`}}
+    style={windowStyle}
     >
     <div>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -113,13 +118,4 @@ export default function Favourite() {
   );
 }
 
-const AppContainer = styledd.div`
-	transition: all 0.5s ease;
-	margin-left: ${(p) => (p.libraryStatus ? "20rem" : "0")};
-	@media screen and (max-width: 768px) {
-		margin-left: 0;
-	}
-  .css-19kzrtu{
-    padding: 0px !important;
-  }
-`;
+

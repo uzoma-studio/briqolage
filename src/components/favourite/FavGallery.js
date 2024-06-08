@@ -1,27 +1,26 @@
-import React, { useState }  from 'react';
-import styledd from "styled-components";
+import React, { useState } from 'react';
+import styledd from 'styled-components';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { pink } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
-import ImageList from '@mui/material/ImageList'
-import ImageListItem from '@mui/material/ImageListItem'
-import ImageListItemBar from '@mui/material/ImageListItemBar'
-import SetFavourite from './set-favourites';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import FavoriteHandler from './FavoriteHandler';
 import Box from '@mui/material/Box';
 
-import '../artworks/img-gallery.css'
+import '../artworks/img-gallery.css';
 
 const FAVGallery = () => {
-  const [slideNumber, setSlideNumber] = useState(0)
-  const [openModal, setOpenModal] = useState(false)
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
-  
   const handleOpenModal = (index) => {
-    setSlideNumber(index)
-    setOpenModal(true)
-  }
+    setSlideNumber(index);
+    setOpenModal(true);
+  };
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(pink[500]),
@@ -39,98 +38,108 @@ const FAVGallery = () => {
     },
   }));
 
-  // Close Modal
   const handleCloseModal = () => {
-    setOpenModal(false)
-  }
+    setOpenModal(false);
+  };
 
-  const artworkImages = JSON.parse(localStorage.getItem('briq-app-favourites'));
+  const artworkImages = JSON.parse(localStorage.getItem('favorites')) || [];
 
-  // Previous Image
   const prevSlide = () => {
-    slideNumber === 0 
-    ? setSlideNumber( artworkImages.length -1 ) 
-    : setSlideNumber( slideNumber - 1 )
-  }
+    setSlideNumber((prevSlideNumber) =>
+      prevSlideNumber === 0 ? artworkImages.length - 1 : prevSlideNumber - 1
+    );
+  };
 
-  // Next Image  
   const nextSlide = () => {
-    slideNumber + 1 === artworkImages.length 
-    ? setSlideNumber(0) 
-    : setSlideNumber(slideNumber + 1)
-  }
+    setSlideNumber((prevSlideNumber) =>
+      prevSlideNumber + 1 === artworkImages.length ? 0 : prevSlideNumber + 1
+    );
+  };
 
   return (
     <div className='Gallery'>
-
-      {openModal && 
+      {openModal && (
         <div className='sliderWrap'>
-            <Brightness1Icon className='btnClose' sx={{ 
-                      cursor: 'pointer',
-                      fontSize: 'small',
-                      color: '#FF4A92'}} autoFocus onClick={handleCloseModal} />
-          <ColorButton className='btnPrev' onClick={prevSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
+          <Brightness1Icon
+            className='btnClose'
+            sx={{
+              cursor: 'pointer',
+              fontSize: 'small',
+              color: '#FF4A92',
+            }}
+            autoFocus
+            onClick={handleCloseModal}
+          />
+          <ColorButton
+            className='btnPrev'
+            onClick={prevSlide}
+            sx={{
+              border: 2,
+              borderRadius: 10,
+              color: 'black',
+              fontSize: 10,
+              fontWeight: 'bold',
+              px: 2,
+              borderColor: 'black',
+            }}
+            size='small'
+            variant='contained'
+          >
             Prev
           </ColorButton>
 
-          <GreenButton className='btnNext' onClick={nextSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2,  borderColor: 'black'}} size="small" variant="contained">
+          <GreenButton
+            className='btnNext'
+            onClick={nextSlide}
+            sx={{
+              border: 2,
+              borderRadius: 10,
+              color: 'black',
+              fontSize: 10,
+              fontWeight: 'bold',
+              px: 2,
+              borderColor: 'black',
+            }}
+            size='small'
+            variant='contained'
+          >
             Next
           </GreenButton>
-          
+
           <div className='fullScreenImage'>
-            <img src={artworkImages[slideNumber].galleryImage} alt='' />
-            <ImageListItemBar
-                   subtitle={artworkImages[slideNumber].galleryTitle} />
+            <video loop autoPlay controls>
+              <source src={artworkImages[slideNumber].url} type='video/webm' />
+            </video>
+            <ImageListItemBar subtitle={artworkImages[slideNumber].galleryTitle} />
           </div>
         </div>
-      }
+      )}
 
-      {/* <br />
-      Current slide number:  {slideNumber}
-      <br />
-      Total Slides: {artworkImages.length}
-      <br /><br /> */}
+      <AppContainer>
+        <ImageList cols={3} sx={{ width: 500, height: 450 }}>
+          {artworkImages.map((slide, index) => (
+            <ImageListItem sx={{ width: '100%', height: '100%' }} key={slide.id}>
+              <div className='single' key={index} onClick={() => handleOpenModal(index)}>
+                <video loop autoPlay style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
+                  <source src={`${slide.url}`} type='video/webm' />
+                </video>
+              </div>
 
-        <AppContainer>
-        <ImageList cols={3}  sx={{ width: 500, height: 450 }}>
-
-            {
-               artworkImages.map((slide, index) => {
-                const {id, galleryImage, galleryTitle, galleryDescription} = slide
-                return(
-                  <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={id}>
-                    
-                    <div 
-                        className='single' 
-                        key={index}
-                        onClick={ () => handleOpenModal(index) }
-                    >
-                        <img src={`${galleryImage}`} alt='' />
-                    </div>
-                   
-                    <Box sx={{position: 'absolute',  color: 'black', fontWeight: 'bold', px: 1, mt: 1}} size="small" variant="contained">
-                      <SetFavourite 
-                        artworkData={slide}
-                      />
-                    </Box>
-                  
-                </ImageListItem>
-                )
-              })
-            }
-
-        </ImageList>   
-        </AppContainer>  
-
+              <Box sx={{ position: 'absolute', color: 'black', fontWeight: 'bold', px: 1, mt: 1 }} size='small' variant='contained'>
+                <FavoriteHandler index={index} url={slide.url} />
+              </Box>
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </AppContainer>
     </div>
-  )
-}
+  );
+};
 
-export default FAVGallery
+export default FAVGallery;
 
 const AppContainer = styledd.div`
-
-.css-uym98a-MuiImageList-root{
+  .css-uym98a-MuiImageList-root {
     height: 100% !important;
   }
 `;

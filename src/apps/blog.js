@@ -63,7 +63,9 @@ export default function Blog() {
       src: "https://res.cloudinary.com/nieleche/image/upload/v1689804241/blog-icon_jc9e4t.png",
     }} style={{
       width: '50em',
-      height: '30em'
+      height: '30em',
+      top: '10vh',
+     
     }} isOpenByDefault={true}>
       {
           !currentBlogpost ? (

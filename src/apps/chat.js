@@ -10,6 +10,20 @@ import helpers from '../utils/helpers'
 
 
 export default function Chat({ username, setUsername }) {
+
+  const isSmallScreen = window.innerWidth < 768; // Define the breakpoint for small screens
+
+  const windowStyle = isSmallScreen ? {
+    top: '50%',
+     left: '-5vw',
+    transform: 'translate(-50%, -50%)',
+    
+  } : {
+    top: '15vh',
+    left: 'calc(100vw - 30em)',
+    width: '30em',
+  };
+
  
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState('');
@@ -66,7 +80,7 @@ export default function Chat({ username, setUsername }) {
       src: "https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
     }}
     isOpenByDefault={true}
-    style={{width: '30em', top: '15vh', left: `calc(100vw - 30em)`}}
+    style={windowStyle}
     >
       <div className=" chatbox-container">
         <div className="messages-container">
