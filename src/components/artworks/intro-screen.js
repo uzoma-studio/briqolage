@@ -8,7 +8,7 @@ const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage }) => {
   return (
     <Box className="font-face-nmR" sx={{ padding: 5 }}>
           { bgImage &&
-          <video loop autoPlay style={{
+          <video loop autoPlay muted style={{
             zIndex: '-1',
             position: 'absolute',
             top: '0',
