@@ -60,7 +60,7 @@ const Background = ({ children }) => {
     //   }}/>
     <div className='coverAll'>
       { bgImage &&
-          <video className='backgroundVideo'  
+          <video
            onError={(e) => console.error('Error loading video:', e)} >
              <source src={bgImage} type='video/webm' />
              <source src={bgImage.replace('.webm', '.mp4')} type='video/mp4' />
