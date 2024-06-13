@@ -63,7 +63,7 @@ const Background = ({ children }) => {
       { bgImage &&
           <video className='backgroundVideo' loop
           autoPlay
-          muted onError={(e) => console.error('Error loading video:', e)} >
+          muted controls={false} onError={(e) => console.error('Error loading video:', e)} >
              <source src={bgImage} type='video/mp4' />
           </video>
       }
