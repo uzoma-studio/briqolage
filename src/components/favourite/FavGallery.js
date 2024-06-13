@@ -107,7 +107,7 @@ const FAVGallery = () => {
           </GreenButton>
 
           <div className='fullScreenImage'>
-            <video loop autoPlay muted controls={false}>
+            <video  muted controls={false}>
               <source src={artworkImages[slideNumber].url} type='video/mp4' />
             </video>
             <ImageListItemBar subtitle={artworkImages[slideNumber].galleryTitle} />
@@ -120,7 +120,7 @@ const FAVGallery = () => {
           {artworkImages.map((slide, index) => (
             <ImageListItem sx={{ width: '100%', height: '100%' }} key={slide.id}>
               <div className='single' key={index} onClick={() => handleOpenModal(index)}>
-                <video loop autoPlay muted controls={false} style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
+                <video  muted controls={false} style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
                   <source src={`${slide.url}`} type='video/mp4' />
                 </video>
               </div>
