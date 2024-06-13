@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../styles/background.css'
 import helpers from '../utils/helpers'
 import Contentful from '../utils/contentful'
+import ReactPlayer from 'react-player';
 
 const Background = ({ children }) => {
 
@@ -60,15 +61,14 @@ const Background = ({ children }) => {
     //   }}/>
     <div className='coverAll'>
       { bgImage &&
-          <video className='backgroundVideo' controls  loop
-          autoPlay
-          muted onError={(e) => console.error('Error loading video:', e)} >
-             <source src={bgImage} type='video/webm' />
-             <source src={bgImage.replace('.webm', '.mp4')} type='video/mp4' />
+       
 
-          </video>
-
-          
+          <ReactPlayer className='backgroundVideo' 
+          url={bgImage} 
+          controls={false}
+          width="100%"
+          height="100%"
+          />
       }
       {children && children}
     </div>
