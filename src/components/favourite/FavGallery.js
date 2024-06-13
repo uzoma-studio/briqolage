@@ -108,7 +108,7 @@ const FAVGallery = () => {
 
           <div className='fullScreenImage'>
             <video loop autoPlay controls>
-              <source src={artworkImages[slideNumber].url} type='video/webm' />
+              <source src={artworkImages[slideNumber].url} type='video/mp4' />
             </video>
             <ImageListItemBar subtitle={artworkImages[slideNumber].galleryTitle} />
           </div>
@@ -121,7 +121,7 @@ const FAVGallery = () => {
             <ImageListItem sx={{ width: '100%', height: '100%' }} key={slide.id}>
               <div className='single' key={index} onClick={() => handleOpenModal(index)}>
                 <video loop autoPlay style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
-                  <source src={`${slide.url}`} type='video/webm' />
+                  <source src={`${slide.url}`} type='video/mp4' />
                 </video>
               </div>
 

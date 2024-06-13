@@ -113,7 +113,7 @@ const IMGGallery = (props) => {
             <ImageListItem  sx={{ width:'100%', height: '100%' }}  key={index}>
             <div className='single' key={index} onClick={() => handleOpenModal(index)}>
               <video loop autoPlay style={{ objectFit: 'cover', width: '100%', height: '100%'}} >
-                <source src={`${slide.url}`} type="video/webm" />
+                <source src={`${slide.url}`} type="video/mp4" />
               </video>
             </div>
            

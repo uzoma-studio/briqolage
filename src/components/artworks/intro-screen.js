@@ -17,7 +17,7 @@ const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage }) => {
             height: '100%',
             objectFit: 'cover'
           }}>
-            <source src={bgImage} type="video/webm" />
+            <source src={bgImage} type="video/mp4" />
           </video>
           }
    
