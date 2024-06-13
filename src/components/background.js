@@ -50,6 +50,7 @@ const Background = ({ children }) => {
   }, [getRandomItem, bgImageList])
   
   return (
+    
     // <div id="background">
     //   <img src={bg} alt='glitch' style={{
     //     position: 'absolute',
@@ -60,14 +61,16 @@ const Background = ({ children }) => {
     //   }}/>
     <div className='coverAll'>
       { bgImage &&
-          <video
-           onError={(e) => console.error('Error loading video:', e)} >
-             <source src={bgImage} type='video/webm' />
-             <source src={bgImage.replace('.webm', '.mp4')} type='video/mp4' />
+       
 
+          <video class="backgroundVideo" loop autoplay >
+            <source src="https://videos.ctfassets.net/lc8eccgjroyj/1p1hIVmw2DQtz2lhjT02ar/3f662689b95e1b7293d7245f9136e783/MOSHED-2023-7-14-15-10-44.webm" type="video/webm"/>
+              <source src="https://videos.ctfassets.net/lc8eccgjroyj/1p1hIVmw2DQtz2lhjT02ar/3f662689b95e1b7293d7245f9136e783/MOSHED-2023-7-14-15-10-44.mp4" type="video/mp4"/>
+            
           </video>
       }
       {children && children}
+      
     </div>
   )
 }
