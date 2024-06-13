@@ -64,8 +64,8 @@ const Background = ({ children }) => {
           <video className='backgroundVideo' playsinline loop
           autoPlay
           muted onError={(e) => console.error('Error loading video:', e)} >
-             <source src={bgImage} type='video/webm' />
-             <source src={bgImage.replace('.webm', '.mp4')} type='video/mp4' />
+             <source src='https://res.cloudinary.com/nieleche/video/upload/v1718254156/MOSHED-2023-7-14-15-11-16_xytxrf.mp4' type='video/mp4' />
+           
           </video>
       }
       {children && children}
