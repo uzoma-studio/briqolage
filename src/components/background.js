@@ -61,7 +61,7 @@ const Background = ({ children }) => {
     //   }}/>
     <div className='coverAll'>
       { bgImage &&
-          <video className='backgroundVideo' loop
+          <video className='backgroundVideo' playsinline loop
           autoPlay
           muted onError={(e) => console.error('Error loading video:', e)} >
              <source src={bgImage} type='video/webm' />
