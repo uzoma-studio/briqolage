@@ -47,6 +47,7 @@ const Music = () => {
         alt: "BriqFM icon",
         src: "https://res.cloudinary.com/nieleche/image/upload/v1674823219/fm_ijrhhd.png",
       }} 
+      style={{ top: '5vh'}} 
     >
       <div className="music-container">
       {selectedSong && (

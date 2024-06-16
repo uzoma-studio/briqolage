@@ -9,20 +9,21 @@ import helpers from '../../utils/helpers';
 const  Artworks = () => {
   const [ bgImageList, setBgImageList ] = useState(null)
   const [bgImage, setBgImage] = useState(null)
+  const [bgVideo, setBgVideo] = useState(null);
 
   const query = `
   query {
-    assetCollection {
+    artworksCollection {
       items {
-        url
-        contentfulMetadata {
-          tags {
-              id
-              name
-            }
-          }
+        title
+        image {
+          url
+        }
+        video {
+          url
         }
       }
+    }
     }
   `
 
@@ -33,11 +34,11 @@ const  Artworks = () => {
           console.error(errors);
         }
 
-        setBgImageList(data.assetCollection.items.filter(
-          (asset) => 
-            asset.contentfulMetadata.tags[0] && 
-            asset.contentfulMetadata.tags[0].id === 'backgroundVideo'
-        ))
+        const filteredItems = data.artworksCollection.items.filter(
+          (asset) => asset.image && asset.video // Ensure both image and video exist
+        );
+
+        setBgImageList(filteredItems);
       });
   }, [query]);
 
@@ -46,9 +47,13 @@ const  Artworks = () => {
   const { getRandomItem } = helpers
  
   useEffect(() => {
-    bgImageList && setBgImage(getRandomItem(bgImageList).url);
-    return () => {}
-  }, [getRandomItem, bgImageList])
+    if (bgImageList) {
+      const randomItem = getRandomItem(bgImageList);
+      setBgImage(randomItem.image.url);
+      setBgVideo(randomItem.video.url);
+    }
+    return () => {};
+  }, [getRandomItem, bgImageList]);
  
   return (  
     <>
@@ -64,6 +69,7 @@ const  Artworks = () => {
           isExploreClicked={isExploreClicked}
           setIsExploreClicked={setIsExploreClicked} 
           bgImage={bgImage}
+          bgVideo={bgVideo}
         />
     }
     </>
