@@ -6,11 +6,11 @@ export default function Gallery() {
   const isSmallScreen = window.innerWidth < 768; // Define the breakpoint for small screens
 
   const windowStyle = isSmallScreen ? {
-    top: '50%',
+    top: '5vh',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   } : {
-    top: '50vh',
+    top: '30vh',
     left: '15vw',
     width: '55em',
   };

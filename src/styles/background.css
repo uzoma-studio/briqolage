@@ -1,7 +1,4 @@
-
-.coverAll{
-  cursor: url('/public/cursor.png'), auto ;
-} 
+ 
 
 #background {
     width: 100%;
@@ -11,23 +8,33 @@
     background-position: center center;
   }
 
-.backgroundVideo{
-  z-index: -1;
+
+
+.coverAll {
+  position: relative;
+  cursor: url('/public/cursor.png'), auto ;
+}
+
+.backgroundImage,
+.backgroundVideo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   object-fit: cover;
-
+  z-index: -1;
 }
 
+.backgroundImage {
+  display: none;
+}
 
-/* Media query for small screens (max-width: 768px) */
 @media (max-width: 768px) {
+  .backgroundImage {
+    display: block;
+  }
   .backgroundVideo {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
+    display: none;
   }
 }

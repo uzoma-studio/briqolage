@@ -14,7 +14,7 @@ export default function Chat({ username, setUsername }) {
   const isSmallScreen = window.innerWidth < 768; // Define the breakpoint for small screens
 
   const windowStyle = isSmallScreen ? {
-    top: '50%',
+    top: '5vh',
      left: '-5vw',
     transform: 'translate(-50%, -50%)',
     
