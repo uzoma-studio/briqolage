@@ -10,12 +10,29 @@ const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage, bgVideo, 
         <>
           {isLargeScreen ? (
             bgVideo && (
-              <video className="backgroundVideo" loop autoPlay muted controls={false}>
+              <video className="backgroundVideo"
+              style={{
+                zIndex: '-1',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }} loop autoPlay muted controls={false}>
                 <source src={bgVideo} type="video/mp4" />
               </video>
             )
           ) : (
-            <img className="backgroundImage" src={bgImage} alt="background" />
+            <img className="backgroundImage" style={{
+              zIndex: '-1',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }} src={bgImage} alt="background" />
           )}
         </>
       )}
