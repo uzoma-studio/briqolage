@@ -3,16 +3,36 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage, bgVideo }) => {
+const IntroScreen = ({ isExploreClicked, setIsExploreClicked, bgImage, bgVideo, isLargeScreen }) => {
   return (
     <Box className="font-face-nmR" sx={{ padding: 5 }}>
       {bgImage && (
         <>
-          <img className="backgroundImage" src={bgImage} alt="background" />
-          {bgVideo && (
-            <video className="backgroundVideo" loop autoPlay muted controls={false}>
-              <source src={bgVideo} type="video/mp4" />
-            </video>
+          {isLargeScreen ? (
+            bgVideo && (
+              <video className="backgroundVideo"
+              style={{
+                zIndex: '-1',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }} loop autoPlay muted controls={false}>
+                <source src={bgVideo} type="video/mp4" />
+              </video>
+            )
+          ) : (
+            <img className="backgroundImage" style={{
+              zIndex: '-1',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }} src={bgImage} alt="background" />
           )}
         </>
       )}

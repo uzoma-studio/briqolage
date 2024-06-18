@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -14,6 +14,7 @@ const IMGGallery = ({ artworkImages }) => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 768);
 
   const handleOpenModal = (index) => {
     setSlideNumber(index);
@@ -50,6 +51,19 @@ const IMGGallery = ({ artworkImages }) => {
     setSlideNumber((slideNumber + 1) % artworkImages.length);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial check
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div style={{ height: '350px' }}>
       {isFullScreen && openModal && ReactDOM.createPortal(
@@ -59,9 +73,11 @@ const IMGGallery = ({ artworkImages }) => {
           <GreenButton className='btnNext' onClick={nextSlide} sx={{ border: 2, borderRadius: 10, color: 'black', fontSize: 10, fontWeight: 'bold', px: 2, borderColor: 'black' }} size="small" variant="contained">Next</GreenButton>
           <div className='fullScreenImageContainer' style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, zIndex: 1000, backgroundColor: 'black', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div className='fullScreenImage'>
-              <ReactPlayer className="backgroundVideo" style={{ objectFit: 'cover', width: '100%', height: '100%' }} width='100%' height='100%' url={artworkImages[slideNumber].video.url} playing loop controls={false} />
-              <img className="backgroundImage" src={artworkImages[slideNumber].image.url} alt="background" style={{ objectFit: 'contain', width: '100%', height: '100%' }}/>
-
+              {isLargeScreen ? (
+                <ReactPlayer className="backgroundVideo" style={{ objectFit: 'cover', width: '100%', height: '100%' }} width='100%' height='100%' url={artworkImages[slideNumber].video.url} playing loop controls={false} />
+              ) : (
+                <img className="backgroundImage" src={artworkImages[slideNumber].image.url} alt="background" style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
+              )}
             </div>
           </div>
         </div>, document.body
@@ -70,10 +86,13 @@ const IMGGallery = ({ artworkImages }) => {
         {artworkImages.map((slide, index) => (
           <ImageListItem sx={{ width: '100%', height: '100%' }} key={index}>
             <div className='single' onClick={() => handleOpenModal(index)}>
-              <video className="backgroundVideo" loop autoPlay muted controls={false} style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
-                <source src={slide.video.url} type="video/mp4" />
-              </video>
-              <img className="backgroundImage" src={slide.image.url} alt="background" style={{ objectFit: 'cover', width: '100%', height: '100%' }}/>
+              {isLargeScreen ? (
+                <video className="backgroundVideo" loop autoPlay muted controls={false} style={{ objectFit: 'cover', width: '100%', height: '100%' }}>
+                  <source src={slide.video.url} type="video/mp4" />
+                </video>
+              ) : (
+                <img className="backgroundImage" src={slide.image.url} alt="background" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+              )}
             </div>
             <FavoriteHandler index={index} url={slide.image.url} />
           </ImageListItem>
