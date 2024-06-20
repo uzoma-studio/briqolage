@@ -71,6 +71,9 @@ export default function Chat({ username, setUsername }) {
     }
   };
   
+
+  const isOpenByDefault = !isSmallScreen;
+
   const { formatDate } = helpers
 
   return (
@@ -79,7 +82,7 @@ export default function Chat({ username, setUsername }) {
       alt: 'chat',
       src: "https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
     }}
-    isOpenByDefault={true}
+    isOpenByDefault={isOpenByDefault}
     style={windowStyle}
     >
       <div className=" chatbox-container">
