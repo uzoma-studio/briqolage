@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import Window from '../components/window';
 import Contentful from '../utils/contentful';
-
+import { useMediaQuery } from '@mui/material';
 import styles from '../styles/blog.module.css'
 
 import helpers from '../utils/helpers';
@@ -54,6 +54,9 @@ export default function Blog() {
 
   const { formatDate } = helpers
 
+   const isSmallScreen = useMediaQuery('(max-width:600px)');
+   const isOpenByDefault = !isSmallScreen;
+
   const [ currentBlogpost, setCurrentBlogpost ] = useState(null)
   
   return (
@@ -66,7 +69,7 @@ export default function Blog() {
       height: '30em',
       top: '10vh',
      
-    }} isOpenByDefault={true}>
+    }} isOpenByDefault={isOpenByDefault}>
       {
           !currentBlogpost ? (
             <>
