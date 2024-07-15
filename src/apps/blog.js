@@ -69,7 +69,7 @@ export default function Blog() {
       height: '30em',
       top: '10vh',
      
-    }} isOpenByDefault={isOpenByDefault}>
+    }} >
       {
           !currentBlogpost ? (
             <>

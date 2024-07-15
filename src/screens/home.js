@@ -32,6 +32,8 @@ const Home = ({ session }) =>  {
   const [briqMenuOpen, setBriqMenuOpen] = useState(false);
   const [isScreenSaverActive, setScreenSaverActive] = useState(false);
   const inactivityTimeout = 30000; // 30 seconds of inactivity
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
 useEffect(() => {
 
@@ -104,15 +106,27 @@ const updateProfile = async (e) => {
 
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const current = new Date().toLocaleString('en-us', {weekday:'short'});
-  const date = current.toString().split(' ')[0]; 
+const [dateTime, setDateTime] = useState({
+  date: new Date().toLocaleString('en-us', { weekday: 'short' }).split(' ')[0],
+  time: new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }),
+});
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+useEffect(() => {
+  const interval = setInterval(() => {
+    setDateTime({
+      date: new Date().toLocaleString('en-us', { weekday: 'short' }).split(' ')[0],
+      time: new Date().toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    });
+  }, 1000); // Update every second
+
+  return () => clearInterval(interval); // Cleanup interval on component unmount
+}, []);
 
   const handleToggle = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -269,7 +283,7 @@ useEffect(() => {
                 </li>
                 <li>
                   <Typography variant="body2" className='font-face-nmR' gutterBottom>
-                    {date} {time}
+                  {dateTime.date} {dateTime.time}
                   </Typography>
                 </li>
             </ul>
