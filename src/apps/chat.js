@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
-import '../styles/screen.css';
+import '../styles/screen.css';  
 import '../styles/chat.css';
 import { supabase } from '../supabaseClient';
 import Window from "../components/window";
@@ -82,7 +82,7 @@ export default function Chat({ username, setUsername }) {
       alt: 'chat',
       src: "https://res.cloudinary.com/nieleche/image/upload/v1688460648/IMG_1916_fpfp9d.png"
     }}
-    isOpenByDefault={isOpenByDefault}
+    
     style={windowStyle}
     >
       <div className=" chatbox-container">
