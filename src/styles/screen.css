@@ -193,6 +193,14 @@ max-width: 120px;
     left: 50%;
 }
 
+.cursor-image {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999; /* Ensure the image is above other elements on the page */
+}
+
 
 @media (max-width: 768px) {
     .MuiPaper-root-container{

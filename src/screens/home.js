@@ -22,6 +22,8 @@ import Screensaver from '../components/screensaver';
 import Shop from '../apps/shop';
 import Login from './login';
 
+import cursorImage from '../assets/cursor_alt.png'
+
 const Home = ({ session }) =>  {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState('null')
@@ -167,6 +169,22 @@ useEffect(() => {
     clearTimeout(timer); // Clear the timeout when the component unmounts
   };
 }, []);
+
+// Handle custom cursor move
+useEffect(() => {
+  const handleMouseMove = (event) => {
+    const cursorImage = document.querySelector('.cursor-image');
+    cursorImage.style.top = event.clientY + 'px';
+    cursorImage.style.left = event.clientX + 'px';
+  }
+
+  document.addEventListener('mousemove', handleMouseMove)
+
+  return () => {
+    document.removeEventListener('mousemove', handleMouseMove)
+  }
+}, [])
+
   return (
     <>   
   
@@ -379,6 +397,8 @@ useEffect(() => {
         <BottomNavigationAction sx={{bottom: 37,}} label="briq Art" icon={ <Gallery/> } />
         <BottomNavigationAction sx={{bottom: 37,}} label="Instagram" icon={   <Insta /> } />
       </BottomNavigation>
+
+      <img src={cursorImage} alt='Briq cursor' className='cursor-image' />
     </>
   )
 }
